@@ -24,6 +24,10 @@ class CharacterItemSelectFragment : Fragment() {
         _binding = FragmentCharacterItemBinding.inflate(inflater, container, false)
         var character_init_binding = CharacterInitActivity.character_init_binding
         character_init_binding.userCharacterInitType.text = "Item"
+        character_init_binding.userCharacterInitFirstBar.setImageResource(R.drawable.init_rest_steps)
+        character_init_binding.userCharacterInitSecondBar.setImageResource(R.drawable.init_rest_steps)
+        character_init_binding.userCharacterInitThirdBar.setImageResource(R.drawable.init_rest_steps)
+        character_init_binding.userCharacterInitForthBar.setImageResource(R.drawable.init_current_step)
 
         var next = character_init_binding.userCharacterInitNextBtn
         next.setImageResource(R.drawable.start)
@@ -51,6 +55,7 @@ class CharacterItemSelectFragment : Fragment() {
             1 -> {
                 binding.bodyColorOneBtn.setOnClickListener {
                     character_body_binding.userCharacterInit.item.visibility = View.INVISIBLE
+                    CharacterInitActivity.character_init_item = 1
                     clickButton(button)
                 }
 
@@ -59,6 +64,7 @@ class CharacterItemSelectFragment : Fragment() {
                 binding.bodyColorTwoBtn.setOnClickListener {
                     character_body_binding.userCharacterInit.item.visibility = View.VISIBLE
                     character_body_binding.userCharacterInit.item.setImageResource(item_kind("ribbon"))
+                    CharacterInitActivity.character_init_item = 2
                     clickButton(button)
                 }
             }
@@ -66,6 +72,7 @@ class CharacterItemSelectFragment : Fragment() {
                 binding.bodyColorThreeBtn.setOnClickListener {
                     character_body_binding.userCharacterInit.item.visibility = View.VISIBLE
                     character_body_binding.userCharacterInit.item.setImageResource(item_kind("crown"))
+                    CharacterInitActivity.character_init_item = 3
                     clickButton(button)
                 }
             }
@@ -73,6 +80,7 @@ class CharacterItemSelectFragment : Fragment() {
                 binding.bodyColorFourBtn.setOnClickListener {
                     character_body_binding.userCharacterInit.item.visibility = View.VISIBLE
                     character_body_binding.userCharacterInit.item.setImageResource(item_kind("merong"))
+                    CharacterInitActivity.character_init_item = 4
                     clickButton(button)
                 }
             }
@@ -80,6 +88,7 @@ class CharacterItemSelectFragment : Fragment() {
                 binding.bodyColorFiveBtn.setOnClickListener {
                     character_body_binding.userCharacterInit.item.visibility = View.VISIBLE
                     character_body_binding.userCharacterInit.item.setImageResource(item_kind("glasses"))
+                    CharacterInitActivity.character_init_item = 5
                     clickButton(button)
                 }
             }

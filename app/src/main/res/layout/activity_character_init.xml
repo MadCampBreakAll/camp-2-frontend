@@ -39,7 +39,7 @@
         android:id="@+id/user_character_init_next_btn"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@drawable/character_init_next_btn2"
+        android:src="@drawable/character_init_next_btn"
         app:layout_constraintHeight_percent="0.1"
         app:layout_constraintWidth_percent="0.15"
         android:scaleType="fitCenter"
@@ -56,7 +56,7 @@
         android:id="@+id/user_character_init_prev_btn"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:src="@drawable/character_init_next_btn2"
+        android:src="@drawable/character_init_next_btn"
         app:layout_constraintHeight_percent="0.1"
         app:layout_constraintWidth_percent="0.15"
         android:scaleType="fitCenter"
@@ -68,6 +68,62 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintHorizontal_bias="0.1"
         app:layout_constraintVertical_bias="0.95"/>
+
+    <ImageView
+        android:id="@+id/user_character_init_first_bar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.06"
+        app:layout_constraintDimensionRatio="1"
+        android:src="@drawable/init_current_step"
+        app:layout_constraintLeft_toRightOf="@id/user_character_init_prev_btn"
+        app:layout_constraintRight_toLeftOf="@id/user_character_init_next_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.92"
+        app:layout_constraintHorizontal_bias="0.2"/>
+
+    <ImageView
+        android:id="@+id/user_character_init_second_bar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.05"
+        app:layout_constraintDimensionRatio="1"
+        android:src="@drawable/init_rest_steps"
+        app:layout_constraintLeft_toRightOf="@id/user_character_init_prev_btn"
+        app:layout_constraintRight_toLeftOf="@id/user_character_init_next_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.92"
+        app:layout_constraintHorizontal_bias="0.4"/>
+
+    <ImageView
+        android:id="@+id/user_character_init_third_bar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.05"
+        app:layout_constraintDimensionRatio="1"
+        android:src="@drawable/init_rest_steps"
+        app:layout_constraintLeft_toRightOf="@id/user_character_init_prev_btn"
+        app:layout_constraintRight_toLeftOf="@id/user_character_init_next_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.92"
+        app:layout_constraintHorizontal_bias="0.6"/>
+
+    <ImageView
+        android:id="@+id/user_character_init_forth_bar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.05"
+        app:layout_constraintDimensionRatio="1"
+        android:src="@drawable/init_rest_steps"
+        app:layout_constraintLeft_toRightOf="@id/user_character_init_prev_btn"
+        app:layout_constraintRight_toLeftOf="@id/user_character_init_next_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.92"
+        app:layout_constraintHorizontal_bias="0.8"/>
 
 
 

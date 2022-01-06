@@ -5,8 +5,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import com.example.myapplication.databinding.ActivityCharacterInitBinding
 import com.example.myapplication.databinding.FragmentCharacterBodySelectBinding
 
 class CharacterBodySelectFragment : Fragment() {
@@ -28,6 +26,10 @@ class CharacterBodySelectFragment : Fragment() {
 
         var character_init_binding = CharacterInitActivity.character_init_binding
         character_init_binding.userCharacterInitType.text="Body Color"
+        character_init_binding.userCharacterInitFirstBar.setImageResource(R.drawable.init_rest_steps)
+        character_init_binding.userCharacterInitSecondBar.setImageResource(R.drawable.init_current_step)
+        character_init_binding.userCharacterInitThirdBar.setImageResource(R.drawable.init_rest_steps)
+        character_init_binding.userCharacterInitForthBar.setImageResource(R.drawable.init_rest_steps)
 
         var prev = character_init_binding.userCharacterInitPrevBtn
         prev.visibility=View.VISIBLE
@@ -38,6 +40,7 @@ class CharacterBodySelectFragment : Fragment() {
         }
 
         var next = character_init_binding.userCharacterInitNextBtn
+        next.setImageResource(R.drawable.character_init_next_btn)
         next.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.selecting_fragment, bodyblushselectfragment)
