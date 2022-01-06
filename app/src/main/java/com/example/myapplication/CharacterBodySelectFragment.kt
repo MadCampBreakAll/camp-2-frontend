@@ -23,15 +23,6 @@ class CharacterBodySelectFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentCharacterBodySelectBinding.inflate(inflater, container, false)
-        val buttons: List<ImageButton> = mutableListOf(binding.bodyColorOneBtn, binding.bodyColorTwoBtn, binding.bodyColorThreeBtn, binding.bodyColorFourBtn, binding.bodyColorFiveBtn).toList()
-        val click_img: List<Int> = mutableListOf(R.drawable.one_btn_click, R.drawable.two_btn_click, R.drawable.three_btn_click, R.drawable.four_btn_click, R.drawable.five_btn_click).toList()
-        val nonclick_img: List<Int> = mutableListOf(R.drawable.one_btn_nonclick, R.drawable.two_btn_nonclick, R.drawable.three_btn_nonclick, R.drawable.four_btn_nonclick, R.drawable.five_btn_nonclick).toList()
-
-//        var character_init_binding=CharacterInitActivity.character_init_binding
-//
-//        binding.bodyColorOneBtn.setOnClickListener{
-//            character_init_binding.userCharacterInit.body.setColorFilter(resources.getColor(R.color.dark_brown))
-//        }
 
         setColor(1)
         setColor(2)
@@ -81,7 +72,7 @@ class CharacterBodySelectFragment : Fragment() {
                     binding.bodyColorFiveBtn.setOnClickListener {
                         character_body_binding.userCharacterInit.body.setColorFilter(
                             resources.getColor(
-                                R.color.body_green
+                                R.color.body_yellow
                             )
                         )
                         clickButton(button)

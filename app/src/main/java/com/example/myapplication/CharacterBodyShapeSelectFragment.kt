@@ -5,55 +5,117 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.myapplication.databinding.FragmentCharacterBodyShapeSelectBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [CharacterBodyShapeSelectFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class CharacterBodyShapeSelectFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    private var _binding: FragmentCharacterBodyShapeSelectBinding? = null
+    private val binding get() = _binding!!
+    private val bodyselectfragment by lazy {CharacterBodySelectFragment()}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_character_body_shape_select, container, false)
+        _binding = FragmentCharacterBodyShapeSelectBinding.inflate(inflater, container, false)
+        setShape(1)
+        setShape(2)
+        setShape(3)
+        setShape(4)
+        setShape(5)
+
+        var character_init_binding = CharacterInitActivity.character_init_binding
+
+        character_init_binding.userCharacterInitNextBtn.setOnClickListener{
+
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.selecting_fragment, bodyselectfragment)
+                .commit()
+        }
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment CharacterBodyShapeSelectFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            CharacterBodyShapeSelectFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    fun setShape(button: Int) {
+        //        binding.userCharacterInit.body.setImageResource(R.drawable.five_btn_nonclick)
+        var character_body_binding = CharacterInitActivity.character_init_binding
+        when(button){
+            1 -> {
+                binding.bodyColorOneBtn.setOnClickListener {
+                    character_body_binding.userCharacterInit.body.setImageResource(R.drawable.body_shape_triangle)
+                    clickButton(button)
+                }
+
+            }
+            2 -> {
+                binding.bodyColorTwoBtn.setOnClickListener {
+                    character_body_binding.userCharacterInit.body.setImageResource(R.drawable.body_shape_cloud)
+                    clickButton(button)
                 }
             }
+            3 -> {
+                binding.bodyColorThreeBtn.setOnClickListener {
+                    character_body_binding.userCharacterInit.body.setImageResource(R.drawable.body_shape_bean)
+                    clickButton(button)
+                }
+            }
+            4 -> {
+                binding.bodyColorFourBtn.setOnClickListener {
+                    character_body_binding.userCharacterInit.body.setImageResource(R.drawable.body_shape_square)
+                    clickButton(button)
+                }
+            }
+            5 -> {
+                binding.bodyColorFiveBtn.setOnClickListener {
+                    character_body_binding.userCharacterInit.body.setImageResource(R.drawable.body_shape_bread)
+                    clickButton(button)
+                }
+            }
+        }
+
+    }
+
+    fun clickButton(button: Int) {
+        var i = 0
+        when(button) {
+            1 -> {
+                binding.bodyColorOneBtn.setImageResource(R.drawable.one_btn_click)
+                binding.bodyColorTwoBtn.setImageResource(R.drawable.two_btn_nonclick)
+                binding.bodyColorThreeBtn.setImageResource(R.drawable.three_btn_nonclick)
+                binding.bodyColorFourBtn.setImageResource(R.drawable.four_btn_nonclick)
+                binding.bodyColorFiveBtn.setImageResource(R.drawable.five_btn_nonclick)
+            }
+            2 -> {
+                binding.bodyColorTwoBtn.setImageResource(R.drawable.two_btn_click)
+                binding.bodyColorOneBtn.setImageResource(R.drawable.one_btn_nonclick)
+                binding.bodyColorThreeBtn.setImageResource(R.drawable.three_btn_nonclick)
+                binding.bodyColorFourBtn.setImageResource(R.drawable.four_btn_nonclick)
+                binding.bodyColorFiveBtn.setImageResource(R.drawable.five_btn_nonclick)
+            }
+            3 -> {
+                binding.bodyColorThreeBtn.setImageResource(R.drawable.three_btn_click)
+                binding.bodyColorTwoBtn.setImageResource(R.drawable.two_btn_nonclick)
+                binding.bodyColorOneBtn.setImageResource(R.drawable.one_btn_nonclick)
+                binding.bodyColorFourBtn.setImageResource(R.drawable.four_btn_nonclick)
+                binding.bodyColorFiveBtn.setImageResource(R.drawable.five_btn_nonclick)
+            }
+            4 -> {
+                binding.bodyColorFourBtn.setImageResource(R.drawable.four_btn_click)
+                binding.bodyColorTwoBtn.setImageResource(R.drawable.two_btn_nonclick)
+                binding.bodyColorThreeBtn.setImageResource(R.drawable.three_btn_nonclick)
+                binding.bodyColorOneBtn.setImageResource(R.drawable.one_btn_nonclick)
+                binding.bodyColorFiveBtn.setImageResource(R.drawable.five_btn_nonclick)
+            }
+            5 -> {
+                binding.bodyColorFiveBtn.setImageResource(R.drawable.five_btn_click)
+                binding.bodyColorTwoBtn.setImageResource(R.drawable.two_btn_nonclick)
+                binding.bodyColorThreeBtn.setImageResource(R.drawable.three_btn_nonclick)
+                binding.bodyColorFourBtn.setImageResource(R.drawable.four_btn_nonclick)
+                binding.bodyColorOneBtn.setImageResource(R.drawable.one_btn_nonclick)
+            }
+        }
     }
 }

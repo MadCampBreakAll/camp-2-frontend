@@ -4,13 +4,14 @@ package com.example.myapplication
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityCharacterInitBinding
+import com.example.myapplication.databinding.FragmentCharacterBodyShapeSelectBinding
 import java.util.*
 
 
 class CharacterInitActivity : AppCompatActivity() {
     private var _binding: ActivityCharacterInitBinding? = null
     private val binding get() = _binding!!
-    private val bodyselectfragment by lazy {CharacterBodySelectFragment()}
+    private val bodyshapeselectfragment by lazy {CharacterBodyShapeSelectFragment()}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,10 +19,13 @@ class CharacterInitActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         character_init_binding = binding
-//        binding.userCharacterInit.body.setImageResource(R.drawable.five_btn_nonclick)
+        var next = binding.userCharacterInitNextBtn
+        next.setColorFilter(resources.getColor(R.color.body_pink))
+
         supportFragmentManager.beginTransaction()
-            .replace(R.id.selecting_fragment, bodyselectfragment)
+            .replace(R.id.selecting_fragment, bodyshapeselectfragment)
             .commit()
+
     }
     companion object {
         lateinit var character_init_binding : ActivityCharacterInitBinding

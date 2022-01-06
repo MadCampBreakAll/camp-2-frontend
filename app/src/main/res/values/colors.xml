@@ -18,8 +18,8 @@
     <color name="transparent">#00000000</color>
 
     <color name="body_blue">#86abbe</color>
-    <color name="body_purple">#9996be</color>
+    <color name="body_purple">#9986be</color>
     <color name="body_brown">#bfafa2</color>
-    <color name="body_pink">#d7c2d2</color>
-    <color name="body_green">#c2d4d7</color>
+    <color name="body_pink">#be8686</color>
+    <color name="body_yellow">#d5c05b</color>
 </resources>
