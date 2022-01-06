@@ -6,91 +6,80 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.myapplication.databinding.FragmentCharacterBodyShapeSelectBinding
+import com.example.myapplication.databinding.FragmentCharacterItemBinding
 
-class CharacterBodyShapeSelectFragment : Fragment() {
-    private var _binding: FragmentCharacterBodyShapeSelectBinding? = null
+class CharacterItemSelectFragment : Fragment() {
+    private var _binding: FragmentCharacterItemBinding? = null
     private val binding get() = _binding!!
-    private val bodyselectfragment by lazy {CharacterBodySelectFragment()}
+    private val blushselectfragment by lazy { CharacterBlushFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCharacterBodyShapeSelectBinding.inflate(inflater, container, false)
-
+        _binding = FragmentCharacterItemBinding.inflate(inflater, container, false)
         var character_init_binding = CharacterInitActivity.character_init_binding
-        character_init_binding.userCharacterInitType.text="Body Shape"
-        character_init_binding.userCharacterInitPrevBtn.visibility=View.INVISIBLE
+        character_init_binding.userCharacterInitType.text = "Item"
 
-        character_init_binding.userCharacterInitNextBtn.setOnClickListener{
+        var next = character_init_binding.userCharacterInitNextBtn
+        next.setImageResource(R.drawable.start)
+        next.setColorFilter(resources.getColor(R.color.body_pink))
 
+        var prev = character_init_binding.userCharacterInitPrevBtn
+        prev.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.selecting_fragment, bodyselectfragment)
+                .replace(R.id.selecting_fragment, blushselectfragment)
                 .commit()
         }
 
-        setShape(1)
-        setShape(2)
-        setShape(3)
-        setShape(4)
-        setShape(5)
+        setItem(1)
+        setItem(2)
+        setItem(3)
+        setItem(4)
+        setItem(5)
 
         return binding.root
     }
 
-    fun setShape(button: Int) {
-        //        binding.userCharacterInit.body.setImageResource(R.drawable.five_btn_nonclick)
+    fun setItem(button: Int) {
         var character_body_binding = CharacterInitActivity.character_init_binding
-
-        when(button){
+        when (button) {
             1 -> {
                 binding.bodyColorOneBtn.setOnClickListener {
-                    CharacterInitActivity.character_init_body_shape = 1
-                    character_body_binding.userCharacterInit.body.setImageResource(R.drawable.body_shape_triangle)
-                    character_body_binding.userCharacterInit.face.setImageResource(R.drawable.face_traingle)
-                    character_body_binding.userCharacterInit.blush.setImageResource(R.drawable.blush_triangle)
+                    character_body_binding.userCharacterInit.item.visibility = View.INVISIBLE
                     clickButton(button)
                 }
 
             }
             2 -> {
                 binding.bodyColorTwoBtn.setOnClickListener {
-                    CharacterInitActivity.character_init_body_shape = 2
-                    character_body_binding.userCharacterInit.body.setImageResource(R.drawable.body_shape_cloud)
-                    character_body_binding.userCharacterInit.face.setImageResource(R.drawable.face_cloud)
-                    character_body_binding.userCharacterInit.blush.setImageResource(R.drawable.blush_cloud)
+                    character_body_binding.userCharacterInit.item.visibility = View.VISIBLE
+                    character_body_binding.userCharacterInit.item.setImageResource(item_kind("ribbon"))
                     clickButton(button)
                 }
             }
             3 -> {
                 binding.bodyColorThreeBtn.setOnClickListener {
-                    CharacterInitActivity.character_init_body_shape = 3
-                    character_body_binding.userCharacterInit.body.setImageResource(R.drawable.body_shape_bean)
-                    character_body_binding.userCharacterInit.face.setImageResource(R.drawable.face_bean_bread_square)
-                    character_body_binding.userCharacterInit.blush.setImageResource(R.drawable.blush_bean_bread_square)
+                    character_body_binding.userCharacterInit.item.visibility = View.VISIBLE
+                    character_body_binding.userCharacterInit.item.setImageResource(item_kind("crown"))
                     clickButton(button)
                 }
             }
             4 -> {
                 binding.bodyColorFourBtn.setOnClickListener {
-                    CharacterInitActivity.character_init_body_shape = 4
-                    character_body_binding.userCharacterInit.body.setImageResource(R.drawable.body_shape_square)
-                    character_body_binding.userCharacterInit.face.setImageResource(R.drawable.face_bean_bread_square)
-                    character_body_binding.userCharacterInit.blush.setImageResource(R.drawable.blush_bean_bread_square)
+                    character_body_binding.userCharacterInit.item.visibility = View.VISIBLE
+                    character_body_binding.userCharacterInit.item.setImageResource(item_kind("merong"))
                     clickButton(button)
                 }
             }
             5 -> {
                 binding.bodyColorFiveBtn.setOnClickListener {
-                    CharacterInitActivity.character_init_body_shape = 5
-                    character_body_binding.userCharacterInit.body.setImageResource(R.drawable.body_shape_bread)
-                    character_body_binding.userCharacterInit.face.setImageResource(R.drawable.face_bean_bread_square)
-                    character_body_binding.userCharacterInit.blush.setImageResource(R.drawable.blush_bean_bread_square)
+                    character_body_binding.userCharacterInit.item.visibility = View.VISIBLE
+                    character_body_binding.userCharacterInit.item.setImageResource(item_kind("glasses"))
                     clickButton(button)
                 }
             }
@@ -100,7 +89,7 @@ class CharacterBodyShapeSelectFragment : Fragment() {
 
     fun clickButton(button: Int) {
         var i = 0
-        when(button) {
+        when (button) {
             1 -> {
                 binding.bodyColorOneBtn.setImageResource(R.drawable.one_btn_click)
                 binding.bodyColorTwoBtn.setImageResource(R.drawable.two_btn_nonclick)
@@ -138,4 +127,38 @@ class CharacterBodyShapeSelectFragment : Fragment() {
             }
         }
     }
+
+    fun item_kind(item: String): Int {
+        var shape = CharacterInitActivity.character_init_body_shape
+        var result_item = 0
+        when (shape) {
+            1 -> {
+                when (item) {
+                    "ribbon" -> result_item = R.drawable.item_ribbon_triangle
+                    "crown" -> result_item = R.drawable.item_crown_triangle
+                    "merong" -> result_item = R.drawable.item_merong_triangle
+                    "glasses" -> result_item = R.drawable.item_glasses_triangle
+                }
+            }
+            2 -> {
+                when (item) {
+                    "ribbon" -> result_item = R.drawable.item_ribbon_cloud
+                    "crown" -> result_item = R.drawable.item_crown_cloud
+                    "merong" -> result_item = R.drawable.item_merong_cloud
+                    "glasses" -> result_item = R.drawable.item_glasses_cloud
+                }
+            }
+            else -> {
+                when (item) {
+                    "ribbon" -> result_item = R.drawable.item_ribbon_bean_bread_square
+                    "crown" -> result_item = R.drawable.item_crown_bean_bread_square
+                    "merong" -> result_item = R.drawable.item_merong_bean_bread_square
+                    "glasses" -> result_item = R.drawable.item_glasses_bean_bread_square
+                }
+            }
+        }
+        return result_item
+    }
+
+
 }

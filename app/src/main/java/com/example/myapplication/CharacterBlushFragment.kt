@@ -11,6 +11,7 @@ class CharacterBlushFragment : Fragment() {
     private var _binding: FragmentCharacterBlushShapeBinding? = null
     private val binding get() = _binding!!
     private val bodyselectfragment by lazy {CharacterBodySelectFragment()}
+    private val itemselectfragment by lazy {CharacterItemSelectFragment()}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,6 +34,13 @@ class CharacterBlushFragment : Fragment() {
                 .commit()
         }
 
+        var next = character_init_binding.userCharacterInitNextBtn
+        next.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.selecting_fragment, itemselectfragment)
+                .commit()
+        }
+
         setBlush(1)
         setBlush(2)
         setBlush(3)
@@ -45,6 +53,7 @@ class CharacterBlushFragment : Fragment() {
 
         when(button){
             1 -> {
+                CharacterInitActivity.character_init_blush = 1
                 binding.bodyColorOneBtn.setOnClickListener {
                     character_body_binding.userCharacterInit.blush.setColorFilter(resources.getColor(R.color.blush_pink))
                     clickButton(button)
@@ -52,12 +61,14 @@ class CharacterBlushFragment : Fragment() {
 
             }
             2 -> {
+                CharacterInitActivity.character_init_blush = 2
                 binding.bodyColorTwoBtn.setOnClickListener {
                     character_body_binding.userCharacterInit.blush.setColorFilter(resources.getColor(R.color.blush_orange))
                     clickButton(button)
                 }
             }
             3 -> {
+                CharacterInitActivity.character_init_blush = 3
                 binding.bodyColorThreeBtn.setOnClickListener {
                     character_body_binding.userCharacterInit.blush.setColorFilter(
                         resources.getColor(

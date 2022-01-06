@@ -57,6 +57,7 @@ class CharacterBodySelectFragment : Fragment() {
             when(button){
                 1 -> {
                     binding.bodyColorOneBtn.setOnClickListener {
+                        CharacterInitActivity.character_init_body_color = 1
                         character_body_binding.userCharacterInit.body.setColorFilter(resources.getColor(R.color.body_blue))
                         clickButton(button)
                     }
@@ -64,12 +65,14 @@ class CharacterBodySelectFragment : Fragment() {
                 }
                 2 -> {
                     binding.bodyColorTwoBtn.setOnClickListener {
+                        CharacterInitActivity.character_init_body_color = 2
                         character_body_binding.userCharacterInit.body.setColorFilter(resources.getColor(R.color.body_purple))
                         clickButton(button)
                         }
                 }
                 3 -> {
                     binding.bodyColorThreeBtn.setOnClickListener {
+                        CharacterInitActivity.character_init_body_color = 3
                         character_body_binding.userCharacterInit.body.setColorFilter(
                             resources.getColor(
                                 R.color.body_brown
@@ -80,6 +83,7 @@ class CharacterBodySelectFragment : Fragment() {
                 }
                 4 -> {
                     binding.bodyColorFourBtn.setOnClickListener {
+                        CharacterInitActivity.character_init_body_color = 4
                         character_body_binding.userCharacterInit.body.setColorFilter(
                             resources.getColor(
                                 R.color.body_pink
@@ -90,6 +94,7 @@ class CharacterBodySelectFragment : Fragment() {
                 }
                 5 -> {
                     binding.bodyColorFiveBtn.setOnClickListener {
+                        CharacterInitActivity.character_init_body_color = 5
                         character_body_binding.userCharacterInit.body.setColorFilter(
                             resources.getColor(
                                 R.color.body_yellow

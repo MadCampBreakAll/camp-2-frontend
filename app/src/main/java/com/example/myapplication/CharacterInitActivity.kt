@@ -2,6 +2,7 @@ package com.example.myapplication
 
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityCharacterInitBinding
 import com.example.myapplication.databinding.FragmentCharacterBodyShapeSelectBinding
@@ -18,6 +19,8 @@ class CharacterInitActivity : AppCompatActivity() {
         _binding = ActivityCharacterInitBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.userCharacterInit.item.visibility= View.INVISIBLE
+
         character_init_binding = binding
         var next = binding.userCharacterInitNextBtn
         next.setColorFilter(resources.getColor(R.color.body_pink))
@@ -29,9 +32,12 @@ class CharacterInitActivity : AppCompatActivity() {
         supportFragmentManager.beginTransaction()
             .replace(R.id.selecting_fragment, bodyshapeselectfragment)
             .commit()
-
     }
     companion object {
         lateinit var character_init_binding : ActivityCharacterInitBinding
+        var character_init_body_color = 1
+        var character_init_body_shape = 1
+        var character_init_blush = 1
+        var character_init_item = 1
     }
 }
