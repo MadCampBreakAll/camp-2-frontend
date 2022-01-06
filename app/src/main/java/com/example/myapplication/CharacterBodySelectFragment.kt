@@ -69,7 +69,7 @@ class CharacterBodySelectFragment : Fragment() {
                 2 -> {
                     binding.bodyColorTwoBtn.setOnClickListener {
                         CharacterInitActivity.character_init_body_color = 2
-                        character_body_binding.userCharacterInit.body.setColorFilter(resources.getColor(R.color.body_purple))
+                        character_body_binding.userCharacterInit.body.setColorFilter(resources.getColor(R.color.body_dark_navy))
                         clickButton(button)
                         }
                 }
@@ -89,7 +89,7 @@ class CharacterBodySelectFragment : Fragment() {
                         CharacterInitActivity.character_init_body_color = 4
                         character_body_binding.userCharacterInit.body.setColorFilter(
                             resources.getColor(
-                                R.color.body_pink
+                                R.color.body_red
                             )
                         )
                         clickButton(button)

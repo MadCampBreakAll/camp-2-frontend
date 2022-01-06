@@ -31,7 +31,7 @@ class CharacterItemSelectFragment : Fragment() {
 
         var next = character_init_binding.userCharacterInitNextBtn
         next.setImageResource(R.drawable.start)
-        next.setColorFilter(resources.getColor(R.color.body_pink))
+        next.setColorFilter(resources.getColor(R.color.body_red))
 
         var prev = character_init_binding.userCharacterInitPrevBtn
         prev.setOnClickListener {

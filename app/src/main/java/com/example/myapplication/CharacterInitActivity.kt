@@ -20,13 +20,15 @@ class CharacterInitActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.userCharacterInit.item.visibility= View.INVISIBLE
+        binding.userCharacterInit.blush.setColorFilter(resources.getColor(R.color.blush_pink))
+        binding.userCharacterInit.body.setColorFilter(resources.getColor(R.color.body_blue))
 
         character_init_binding = binding
         var next = binding.userCharacterInitNextBtn
-        next.setColorFilter(resources.getColor(R.color.body_pink))
+        next.setColorFilter(resources.getColor(R.color.body_red))
 
         var prev = binding.userCharacterInitPrevBtn
-        prev.setColorFilter(resources.getColor(R.color.body_pink))
+        prev.setColorFilter(resources.getColor(R.color.body_red))
         prev.scaleX=-1f
 
         supportFragmentManager.beginTransaction()
