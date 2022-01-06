@@ -9,7 +9,7 @@ import com.example.myapplication.permission.Permission
 
 class LoadingActivity : AppCompatActivity() {
 
-    private val permission: Permission = Permission(this);
+    private var permission: Permission = Permission(this);
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,12 +18,17 @@ class LoadingActivity : AppCompatActivity() {
         permission.request();
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        permission.onRequestPermissionResult(requestCode, resultCode, data) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        permission.onRequestPermissionResult(requestCode, permissions, grantResults){
             val intent = Intent(this, LoginActivity::class.java)
-            finish();
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent);
+            finish();
         }
     }
 

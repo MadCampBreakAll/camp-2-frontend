@@ -10,20 +10,19 @@ import androidx.core.app.ActivityCompat
 
 class Permission(private val activity: Activity){
 
-    private val requestCode : Int = 1;
+    private val requestCode : Int = 100;
 
-    fun onRequestPermissionResult(requestCode: Int, resultCode: Int, data: Intent?, callback: Runnable){
-        if(this.requestCode != requestCode){
+    fun onRequestPermissionResult(requestCode: Int, permission: Array<out String>, grantResults:IntArray, callback: Runnable){
+        if(requestCode != requestCode){
             return;
         }
-        println("Hello");
         callback.run();
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
     fun request(){
         val permissions: Array<String> = arrayOf(
-            android.Manifest.permission.INTERNET
+            android.Manifest.permission.INTERNET,
         );
 
         activity.requestPermissions(permissions, requestCode);
