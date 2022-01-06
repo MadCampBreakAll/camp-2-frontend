@@ -3,17 +3,20 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.22685185185185186" />
         <entry key="app/src/main/res/drawable-xxxhdpi/user_character.xml" value="0.17447916666666666" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.22685185185185186" />
         <entry key="app/src/main/res/layout-w1240dp/activity_login.xml" value="0.25546875" />
         <entry key="app/src/main/res/layout-w936dp/activity_login.xml" value="0.158984375" />
         <entry key="app/src/main/res/layout/activity.xml" value="0.21197916666666666" />
-        <entry key="app/src/main/res/layout/activity_character_init.xml" value="0.21927083333333333" />
+        <entry key="app/src/main/res/layout/activity_character_init.xml" value="0.1853408544508593" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.25226449275362317" />
         <entry key="app/src/main/res/layout/activity_loading.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25226449275362317" />
+        <entry key="app/src/main/res/layout/fragment_character_blush_shape.xml" value="0.190625" />
         <entry key="app/src/main/res/layout/fragment_character_body_select.xml" value="0.18026089142300514" />
+        <entry key="app/src/main/res/layout/fragment_character_body_shape_select.xml" value="0.1140625" />
+        <entry key="app/src/main/res/layout/fragment_character_item.xml" value="0.16770833333333332" />
         <entry key="app/src/main/res/layout/user_character.xml" value="0.15833333333333333" />
       </map>
     </option>

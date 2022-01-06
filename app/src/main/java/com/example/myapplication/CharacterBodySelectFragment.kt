@@ -5,13 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import com.example.myapplication.databinding.ActivityCharacterInitBinding
 import com.example.myapplication.databinding.FragmentCharacterBodySelectBinding
 
 class CharacterBodySelectFragment : Fragment() {
     private var _binding:FragmentCharacterBodySelectBinding? = null
     private val binding get() = _binding!!
+    private val bodyshapeselectfragment by lazy {CharacterBodyShapeSelectFragment()}
+    private val bodyblushselectfragment by lazy {CharacterBlushFragment()}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,15 +23,29 @@ class CharacterBodySelectFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentCharacterBodySelectBinding.inflate(inflater, container, false)
-        val buttons: List<ImageButton> = mutableListOf(binding.bodyColorOneBtn, binding.bodyColorTwoBtn, binding.bodyColorThreeBtn, binding.bodyColorFourBtn, binding.bodyColorFiveBtn).toList()
-        val click_img: List<Int> = mutableListOf(R.drawable.one_btn_click, R.drawable.two_btn_click, R.drawable.three_btn_click, R.drawable.four_btn_click, R.drawable.five_btn_click).toList()
-        val nonclick_img: List<Int> = mutableListOf(R.drawable.one_btn_nonclick, R.drawable.two_btn_nonclick, R.drawable.three_btn_nonclick, R.drawable.four_btn_nonclick, R.drawable.five_btn_nonclick).toList()
 
-//        var character_init_binding=CharacterInitActivity.character_init_binding
-//
-//        binding.bodyColorOneBtn.setOnClickListener{
-//            character_init_binding.userCharacterInit.body.setColorFilter(resources.getColor(R.color.dark_brown))
-//        }
+        var character_init_binding = CharacterInitActivity.character_init_binding
+        character_init_binding.userCharacterInitType.text="Body Color"
+        character_init_binding.userCharacterInitFirstBar.setImageResource(R.drawable.init_rest_steps)
+        character_init_binding.userCharacterInitSecondBar.setImageResource(R.drawable.init_current_step)
+        character_init_binding.userCharacterInitThirdBar.setImageResource(R.drawable.init_rest_steps)
+        character_init_binding.userCharacterInitForthBar.setImageResource(R.drawable.init_rest_steps)
+
+        var prev = character_init_binding.userCharacterInitPrevBtn
+        prev.visibility=View.VISIBLE
+        prev.setOnClickListener{
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.selecting_fragment, bodyshapeselectfragment)
+                .commit()
+        }
+
+        var next = character_init_binding.userCharacterInitNextBtn
+        next.setImageResource(R.drawable.character_init_next_btn)
+        next.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.selecting_fragment, bodyblushselectfragment)
+                .commit()
+        }
 
         setColor(1)
         setColor(2)
@@ -46,6 +60,7 @@ class CharacterBodySelectFragment : Fragment() {
             when(button){
                 1 -> {
                     binding.bodyColorOneBtn.setOnClickListener {
+                        CharacterInitActivity.character_init_body_color = 1
                         character_body_binding.userCharacterInit.body.setColorFilter(resources.getColor(R.color.body_blue))
                         clickButton(button)
                     }
@@ -53,12 +68,14 @@ class CharacterBodySelectFragment : Fragment() {
                 }
                 2 -> {
                     binding.bodyColorTwoBtn.setOnClickListener {
-                        character_body_binding.userCharacterInit.body.setColorFilter(resources.getColor(R.color.body_purple))
+                        CharacterInitActivity.character_init_body_color = 2
+                        character_body_binding.userCharacterInit.body.setColorFilter(resources.getColor(R.color.body_dark_navy))
                         clickButton(button)
                         }
                 }
                 3 -> {
                     binding.bodyColorThreeBtn.setOnClickListener {
+                        CharacterInitActivity.character_init_body_color = 3
                         character_body_binding.userCharacterInit.body.setColorFilter(
                             resources.getColor(
                                 R.color.body_brown
@@ -69,9 +86,10 @@ class CharacterBodySelectFragment : Fragment() {
                 }
                 4 -> {
                     binding.bodyColorFourBtn.setOnClickListener {
+                        CharacterInitActivity.character_init_body_color = 4
                         character_body_binding.userCharacterInit.body.setColorFilter(
                             resources.getColor(
-                                R.color.body_pink
+                                R.color.body_red
                             )
                         )
                         clickButton(button)
@@ -79,9 +97,10 @@ class CharacterBodySelectFragment : Fragment() {
                 }
                 5 -> {
                     binding.bodyColorFiveBtn.setOnClickListener {
+                        CharacterInitActivity.character_init_body_color = 5
                         character_body_binding.userCharacterInit.body.setColorFilter(
                             resources.getColor(
-                                R.color.body_green
+                                R.color.body_yellow
                             )
                         )
                         clickButton(button)

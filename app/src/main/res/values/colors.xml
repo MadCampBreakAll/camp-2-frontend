@@ -17,9 +17,13 @@
     <color name="light_khaki">#b7b7a4</color>
     <color name="transparent">#00000000</color>
 
-    <color name="body_blue">#86abbe</color>
-    <color name="body_purple">#9996be</color>
+    <color name="body_blue">#118ab2</color>
+    <color name="body_dark_navy">#4a4e69</color>
     <color name="body_brown">#bfafa2</color>
-    <color name="body_pink">#d7c2d2</color>
-    <color name="body_green">#c2d4d7</color>
+    <color name="body_red">#d62828</color>
+    <color name="body_yellow">#e9c46a</color>
+
+    <color name="blush_pink">#f28482</color>
+    <color name="blush_orange">#f4a261</color>
+    <color name="blush_blue">#6781ba</color>
 </resources>

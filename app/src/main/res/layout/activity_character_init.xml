@@ -6,12 +6,23 @@
     android:layout_height="match_parent"
     android:background="@color/oatmeal"
     tools:context=".CharacterInitActivity">
-
+    <TextView
+        android:id="@+id/user_character_init_type"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/user_character_frame"
+        android:text="color"
+        android:textSize="50dp"
+        android:gravity="center"/>
     <FrameLayout
         android:id="@+id/user_character_frame"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintHeight_percent="0.7">
+        app:layout_constraintHeight_percent="0.5"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.35">
         <include
             android:id="@+id/user_character_init"
             layout="@layout/user_character"/>
@@ -24,6 +35,96 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"/>
+    <ImageButton
+        android:id="@+id/user_character_init_next_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/character_init_next_btn"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintWidth_percent="0.15"
+        android:scaleType="fitCenter"
+        android:background="@color/transparent"
+        android:backgroundTint="@color/body_red"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.9"
+        app:layout_constraintVertical_bias="0.95"/>
+
+    <ImageButton
+        android:id="@+id/user_character_init_prev_btn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/character_init_next_btn"
+        app:layout_constraintHeight_percent="0.1"
+        app:layout_constraintWidth_percent="0.15"
+        android:scaleType="fitCenter"
+        android:background="@color/transparent"
+        android:backgroundTint="@color/body_red"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintVertical_bias="0.95"/>
+
+    <ImageView
+        android:id="@+id/user_character_init_first_bar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.06"
+        app:layout_constraintDimensionRatio="1"
+        android:src="@drawable/init_current_step"
+        app:layout_constraintLeft_toRightOf="@id/user_character_init_prev_btn"
+        app:layout_constraintRight_toLeftOf="@id/user_character_init_next_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.92"
+        app:layout_constraintHorizontal_bias="0.2"/>
+
+    <ImageView
+        android:id="@+id/user_character_init_second_bar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.05"
+        app:layout_constraintDimensionRatio="1"
+        android:src="@drawable/init_rest_steps"
+        app:layout_constraintLeft_toRightOf="@id/user_character_init_prev_btn"
+        app:layout_constraintRight_toLeftOf="@id/user_character_init_next_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.92"
+        app:layout_constraintHorizontal_bias="0.4"/>
+
+    <ImageView
+        android:id="@+id/user_character_init_third_bar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.05"
+        app:layout_constraintDimensionRatio="1"
+        android:src="@drawable/init_rest_steps"
+        app:layout_constraintLeft_toRightOf="@id/user_character_init_prev_btn"
+        app:layout_constraintRight_toLeftOf="@id/user_character_init_next_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.92"
+        app:layout_constraintHorizontal_bias="0.6"/>
+
+    <ImageView
+        android:id="@+id/user_character_init_forth_bar"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintWidth_percent="0.05"
+        app:layout_constraintDimensionRatio="1"
+        android:src="@drawable/init_rest_steps"
+        app:layout_constraintLeft_toRightOf="@id/user_character_init_prev_btn"
+        app:layout_constraintRight_toLeftOf="@id/user_character_init_next_btn"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="0.92"
+        app:layout_constraintHorizontal_bias="0.8"/>
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
