@@ -73,7 +73,7 @@
         android:id="@+id/user_character_init_first_bar"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintWidth_percent="0.06"
+        app:layout_constraintWidth_percent="0.05"
         app:layout_constraintDimensionRatio="1"
         android:src="@drawable/init_current_step"
         app:layout_constraintLeft_toRightOf="@id/user_character_init_prev_btn"
