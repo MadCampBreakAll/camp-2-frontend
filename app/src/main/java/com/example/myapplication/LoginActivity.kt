@@ -13,12 +13,12 @@ import com.kakao.sdk.user.UserApiClient
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var authManager: AcessTokenManager;
+    private lateinit var authManager: TokenManager;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        authManager = AcessTokenManager(this);
+        authManager = TokenManager(this);
         setContentView(binding.root)
         binding.kakaoLoginButton.setOnClickListener {
             if(UserApiClient.instance.isKakaoTalkLoginAvailable(this)){
