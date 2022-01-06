@@ -3,8 +3,6 @@ package com.example.myapplication
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import com.example.myapplication.databinding.ActivityCharacterInitBinding
 import com.example.myapplication.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
@@ -16,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.diaryAddBtn.setOnClickListener {
-            val intent = Intent(this, CharacterInit::class.java)
+            val intent = Intent(this, CharacterInitActivity::class.java)
             startActivity(intent)
         }
     }
