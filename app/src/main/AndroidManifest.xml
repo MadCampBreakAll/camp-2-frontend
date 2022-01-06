@@ -17,7 +17,7 @@
             android:name=".LoadingActivity"
             android:exported="false" />
         <activity
-            android:name=".CharacterInit"
+            android:name=".CharacterInitActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
