@@ -1,6 +1,7 @@
-package com.example.myapplication
+package com.example.myapplication.application
 
 import android.app.Application
+import com.example.myapplication.BuildConfig
 import com.kakao.sdk.common.KakaoSdk
 
 class GlobalApplication : Application() {

@@ -24,6 +24,9 @@ android {
 
         resValue("string", "APP_KEY", (project.findProperty('NATIVE_APP_KEY') ?: ""))
         buildConfigField("String", "APP_KEY", "\"${apiKeyProperties.getProperty('NATIVE_APP_KEY')}\"")
+
+        resValue("string", "BASE_URI", (project.findProperty('BASE_URI') ?: ""))
+        buildConfigField("String", "BASE_URI", "\"${apiKeyProperties.getProperty('BASE_URI')}\"")
     }
 
     buildTypes {
