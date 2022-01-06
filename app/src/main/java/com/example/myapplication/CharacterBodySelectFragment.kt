@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.myapplication.databinding.ActivityCharacterInitBinding
 import com.example.myapplication.databinding.FragmentCharacterBodySelectBinding
 
 class CharacterBodySelectFragment : Fragment() {
@@ -21,6 +22,11 @@ class CharacterBodySelectFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentCharacterBodySelectBinding.inflate(inflater, container, false)
+        var character_init_binding=CharacterInitActivity.character_init_binding
+
+        binding.bodyColorOneBtn.setOnClickListener{
+            character_init_binding.userCharacterInit.body.setColorFilter(resources.getColor(R.color.dark_brown))
+        }
         return binding.root
     }
 

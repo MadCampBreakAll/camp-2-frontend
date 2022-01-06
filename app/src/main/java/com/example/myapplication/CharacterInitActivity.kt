@@ -16,11 +16,14 @@ class CharacterInitActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityCharacterInitBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.userCharacterInit.body.setColorFilter(resources.getColor(R.color.dark_brown))
+
+        character_init_binding = binding
 //        binding.userCharacterInit.body.setImageResource(R.drawable.five_btn_nonclick)
         supportFragmentManager.beginTransaction()
             .replace(R.id.selecting_fragment, bodyselectfragment)
             .commit()
-
+    }
+    companion object {
+        lateinit var character_init_binding : ActivityCharacterInitBinding
     }
 }
