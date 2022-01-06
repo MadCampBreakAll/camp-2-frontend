@@ -22,4 +22,8 @@
     <color name="body_brown">#bfafa2</color>
     <color name="body_pink">#be8686</color>
     <color name="body_yellow">#d5c05b</color>
+
+    <color name="blush_pink">#d47676</color>
+    <color name="blush_orange">#d39978</color>
+    <color name="blush_blue">#6781ba</color>
 </resources>

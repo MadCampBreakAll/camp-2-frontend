@@ -12,6 +12,8 @@ import com.example.myapplication.databinding.FragmentCharacterBodySelectBinding
 class CharacterBodySelectFragment : Fragment() {
     private var _binding:FragmentCharacterBodySelectBinding? = null
     private val binding get() = _binding!!
+    private val bodyshapeselectfragment by lazy {CharacterBodyShapeSelectFragment()}
+    private val bodyblushselectfragment by lazy {CharacterBlushFragment()}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,6 +25,24 @@ class CharacterBodySelectFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         _binding = FragmentCharacterBodySelectBinding.inflate(inflater, container, false)
+
+        var character_init_binding = CharacterInitActivity.character_init_binding
+        character_init_binding.userCharacterInitType.text="Body Color"
+
+        var prev = character_init_binding.userCharacterInitPrevBtn
+        prev.visibility=View.VISIBLE
+        prev.setOnClickListener{
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.selecting_fragment, bodyshapeselectfragment)
+                .commit()
+        }
+
+        var next = character_init_binding.userCharacterInitNextBtn
+        next.setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.selecting_fragment, bodyblushselectfragment)
+                .commit()
+        }
 
         setColor(1)
         setColor(2)

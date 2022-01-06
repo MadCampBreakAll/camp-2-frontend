@@ -22,6 +22,10 @@ class CharacterInitActivity : AppCompatActivity() {
         var next = binding.userCharacterInitNextBtn
         next.setColorFilter(resources.getColor(R.color.body_pink))
 
+        var prev = binding.userCharacterInitPrevBtn
+        prev.setColorFilter(resources.getColor(R.color.body_pink))
+        prev.scaleX=-1f
+
         supportFragmentManager.beginTransaction()
             .replace(R.id.selecting_fragment, bodyshapeselectfragment)
             .commit()
