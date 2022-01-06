@@ -24,8 +24,8 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CharacterInit"
-            android:exported="true" />
+            android:name=".CharacterInitActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
