@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
 
-class AuthManager{
+class AcessTokenManager{
 
     private var sharedPreferences : SharedPreferences;
 

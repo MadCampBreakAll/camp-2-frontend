@@ -1,11 +1,9 @@
 package com.example.myapplication
 
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentActivity
 import com.example.myapplication.databinding.ActivityLoginBinding
 import com.kakao.sdk.auth.model.OAuthToken
 
@@ -15,12 +13,12 @@ import com.kakao.sdk.user.UserApiClient
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
-    private lateinit var authManager: AuthManager;
+    private lateinit var authManager: AcessTokenManager;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
-        authManager = AuthManager(this);
+        authManager = AcessTokenManager(this);
         setContentView(binding.root)
         binding.kakaoLoginButton.setOnClickListener {
             if(UserApiClient.instance.isKakaoTalkLoginAvailable(this)){
