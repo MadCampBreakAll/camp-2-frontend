@@ -21,14 +21,28 @@ class TokenManager{
     }
 
     fun getAccessToken(): String{
-        return getSharedPreferences(this.context).getString("test", "empty!!")!!;
+        return getSharedPreferences(this.context).getString(getString(R.string.kakao_access_token), TokenManager.STATUS.EMPTY_ACCESS_TOKEN)!!;
     }
 
     fun setAccessToken(token: String) {
         val editor : Editor = getSharedPreferences(this.context).edit();
-        editor.putString("test", token);
+        editor.putString(getString(R.string.kakao_access_token), token);
         editor.apply();
-        editor.commit();
+    }
+
+    fun getJWT(): String {
+        return getSharedPreferences(this.context).getString(getString(R.string.json_web_token), TokenManager.STATUS.EMPTY_JWT)!!;
+    }
+
+    fun setJWT(token: String) {
+        val editor: Editor = getSharedPreferences(this.context).edit();
+        editor.putString(getString(R.string.json_web_token), token);
+        editor.apply();
+    }
+
+    object STATUS {
+        var EMPTY_JWT = "EMPTY_JWT";
+        var EMPTY_ACCESS_TOKEN = "EMPTY_ACCESS_TOKEN";
     }
 
 }
