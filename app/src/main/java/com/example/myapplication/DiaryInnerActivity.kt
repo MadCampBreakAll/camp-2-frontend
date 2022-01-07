@@ -52,7 +52,5 @@ class DiaryInnerActivity : AppCompatActivity() {
         }
 
         pageLetterViewPageAdapter.pageList = pageList
-
-        println("diaryId: ${diaryId}")
     }
 }
