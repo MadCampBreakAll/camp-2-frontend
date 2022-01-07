@@ -1,5 +1,10 @@
 package com.example.myapplication.api.dto
 
-class RegisterResponseDto {
+import com.google.gson.annotations.SerializedName
 
-}
+data class RegisterResponseDto(
+    @SerializedName("status")
+    val status: Boolean,
+    @SerializedName("token")
+    val token: String
+)

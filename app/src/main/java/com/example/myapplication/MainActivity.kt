@@ -3,16 +3,13 @@ package com.example.myapplication
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import com.example.myapplication.api.dto.GetMeResponseDto
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.databinding.UserCharacterBinding
-import com.example.myapplication.service.api.BasicApiService
-import com.example.myapplication.service.api.dto.LoginRequestDto
-import com.example.myapplication.service.api.dto.UserResponseDto
-import android.util.Log
 import com.example.myapplication.api.user.UserApiProvider
 import com.example.myapplication.api.user.UserApiService
-import com.example.myapplication.api.dto.GetMeResponseDto
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,6 +19,8 @@ class MainActivity : AppCompatActivity() {
     private val binding get() = _binding!!
     private var tokenManager: TokenManager? = null;
     private var userApiProvider: UserApiProvider? = null;
+    private var icon: UserCharacterBinding?= null;
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         tokenManager = TokenManager(applicationContext);
@@ -29,22 +28,9 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var icon = binding.userCharacterIcon
+        icon = binding.userCharacterIcon
 
-        settingUserIcon(icon)
-
-        userApiProvider!!.getMe().enqueue(object : Callback<GetMeResponseDto> {
-            override fun onResponse(
-                call: Call<GetMeResponseDto>,
-                response: Response<GetMeResponseDto>
-            ) {
-                println(response.body());
-            }
-
-            override fun onFailure(call: Call<GetMeResponseDto>, t: Throwable) {
-                println(t);
-            }
-        })
+        getUser();
 
         bindLayouts();
     }
@@ -216,23 +202,62 @@ class MainActivity : AppCompatActivity() {
         return face_draw
     }
 
-    fun settingUserIcon(icon: UserCharacterBinding) {
+    private fun getUser(){
+        userApiProvider!!.getMe().enqueue(object : Callback<GetMeResponseDto> {
+            override fun onResponse(
+                call: Call<GetMeResponseDto>,
+                response: Response<GetMeResponseDto>
+            ) {
+                Log.d("DEBUG", "GET_USER 성공");
+                Log.d("DEBUG", response.body().toString());
+                Log.d("DEBUG", response.toString());
+                Log.d("DEBUG", response.headers().toString());
+
+
+                getUserHandler(response);
+            }
+
+            override fun onFailure(call: Call<GetMeResponseDto>, t: Throwable) {
+                Log.d("DEBUG", "GET_USER 실패");
+            }
+        })
+    }
+
+    fun getUserHandler(response: Response<GetMeResponseDto>){
+        val dto = response.body()!!;
+
+        if(dto.status == false){
+            val intent = Intent(this, LoginActivity::class.java);
+            tokenManager!!.removeAccessToken()
+            tokenManager!!.removeJWT()
+            startActivity(intent)
+            finish();
+            return;
+        }
+
         var body_shape = CharacterInitActivity.character_init_body_shape
         var body_color = CharacterInitActivity.character_init_body_color
         var blush = CharacterInitActivity.character_init_blush
         var item = CharacterInitActivity.character_init_item
 
-        icon.body.setImageResource(getShape(body_shape))
-        icon.body.setColorFilter(resources.getColor(getBodyColor(body_color)))
-        icon.blush.setColorFilter(resources.getColor(getBlush(blush, body_shape).first))
-        icon.blush.setImageResource(getBlush(blush, body_shape).second)
+        var (_, nickname, body, bodyColor, blushColor, font, tem) = response.body()!!;
+
+        icon!!.body.setImageResource(getShape(body!!))
+        icon!!.body.setColorFilter(resources.getColor(getBodyColor(bodyColor!!)))
+        icon!!.blush.setColorFilter(resources.getColor(getBlush(1, body_shape).first))
+        icon!!.blush.setImageResource(getBlush(blush, body_shape).second)
         if (item == 1) {
-            icon.item.visibility= View.INVISIBLE
+            icon!!.item.visibility= View.INVISIBLE
         }
         else {
-            icon.item.visibility=View.VISIBLE
-            icon.item.setImageResource(item_kind(item))
+            icon!!.item.visibility=View.VISIBLE
+            icon!!.item.setImageResource(item_kind(tem!!))
         }
-        icon.face.setImageResource(getFace(body_shape))
+        icon!!.face.setImageResource(getFace(body))
     }
+
+    fun setUserNickname(nickname: String){
+        this.binding.userNickname.text = nickname;
+    }
+
 }

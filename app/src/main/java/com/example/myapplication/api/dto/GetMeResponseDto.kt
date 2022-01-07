@@ -8,13 +8,15 @@ data class GetMeResponseDto (
     @SerializedName("nickname")
     val nickname: String?,
     @SerializedName("body")
-    val body: String?,
+    val body: Int?,
     @SerializedName("bodyColor")
-    val bodyColor: String?,
+    val bodyColor: Int?,
     @SerializedName("blushColor")
-    val blushColor: String?,
+    val blushColor: Int?,
     @SerializedName("font")
-    val font: String?,
+    val font: Int?,
     @SerializedName("item")
-    val item: String?,
+    val item: Int?,
+    @SerializedName("status")
+    val status: Boolean?,
 )

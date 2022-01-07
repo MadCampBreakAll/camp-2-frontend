@@ -30,6 +30,18 @@ class TokenManager{
         editor.apply();
     }
 
+    fun removeAccessToken() {
+        val editor : Editor = getSharedPreferences(this.context).edit();
+        editor.putString(getString(R.string.kakao_access_token),TokenManager.STATUS.EMPTY_ACCESS_TOKEN);
+        editor.apply();
+    }
+
+    fun removeJWT(){
+        val editor : Editor = getSharedPreferences(this.context).edit();
+        editor.putString(getString(R.string.json_web_token),TokenManager.STATUS.EMPTY_JWT);
+        editor.apply();
+    }
+
     fun getJWT(): String {
         return getSharedPreferences(this.context).getString(getString(R.string.json_web_token), TokenManager.STATUS.EMPTY_JWT)!!;
     }

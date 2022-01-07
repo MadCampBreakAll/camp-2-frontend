@@ -6,6 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.myapplication.api.auth.AuthApiProvider
+import com.example.myapplication.api.auth.AuthApiService
+import com.example.myapplication.api.dto.RegisterRequestDto
+import com.example.myapplication.api.user.UserApiProvider
+import com.example.myapplication.api.user.UserApiService
 import com.example.myapplication.databinding.FragmentCharacterBodyShapeSelectBinding
 import com.example.myapplication.databinding.FragmentCharacterItemBinding
 
@@ -13,9 +18,13 @@ class CharacterItemSelectFragment : Fragment() {
     private var _binding: FragmentCharacterItemBinding? = null
     private val binding get() = _binding!!
     private val blushselectfragment by lazy { CharacterBlushFragment() }
+    private var authApiProvider: AuthApiProvider? = null;
+    private var tokenManager: TokenManager? = null;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        tokenManager = TokenManager(requireContext().applicationContext);
+        authApiProvider = AuthApiService(tokenManager!!).getProvider();
     }
 
     override fun onCreateView(
@@ -35,6 +44,16 @@ class CharacterItemSelectFragment : Fragment() {
         next.setColorFilter(resources.getColor(R.color.body_red))
         next.setOnClickListener {
             val intent = Intent(activity, MainActivity::class.java)
+            val registerRequestDto = RegisterRequestDto(
+                tokenManager!!.getAccessToken(),
+                nickname = "TEST",
+                body = CharacterInitActivity.character_init_body_shape,
+                bodyColor = CharacterInitActivity.character_init_body_color,
+                font = 0,
+                item = CharacterInitActivity.character_init_item,
+                blushColor = CharacterInitActivity.character_init_blush,
+            );
+            createCharacter(registerRequestDto);
             startActivity(intent)
         }
 
@@ -174,5 +193,7 @@ class CharacterItemSelectFragment : Fragment() {
         return result_item
     }
 
-
+    fun createCharacter(registerRequestDto: RegisterRequestDto){
+        authApiProvider!!.register(registerRequestDto);
+    }
 }
