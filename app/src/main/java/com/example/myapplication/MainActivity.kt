@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import com.example.myapplication.api.dto.GetMeResponseDto
+import com.example.myapplication.api.user.dto.GetMeResponseDto
+import com.example.myapplication.api.user.dto.GetMyFriendsResponseDto
+import com.example.myapplication.api.user.dto.GetPendingFriendResponseDto
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.databinding.UserCharacterBinding
 import com.example.myapplication.api.user.UserApiProvider
@@ -31,8 +33,39 @@ class MainActivity : AppCompatActivity() {
         icon = binding.userCharacterIcon
 
         getUser();
-
         bindLayouts();
+
+        userApiProvider!!.getFriends().enqueue(object: Callback<GetMyFriendsResponseDto>{
+            override fun onResponse(
+                call: Call<GetMyFriendsResponseDto>,
+                response: Response<GetMyFriendsResponseDto>
+            ) {
+                Log.d("DEBUG", "getFriends 성공")
+                Log.d("DEBUG", response.body().toString())
+                println(response.body().toString())
+            }
+
+            override fun onFailure(call: Call<GetMyFriendsResponseDto>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
+
+        userApiProvider!!.getFendingFriends().enqueue(object: Callback<GetPendingFriendResponseDto>{
+            override fun onResponse(
+                call: Call<GetPendingFriendResponseDto>,
+                response: Response<GetPendingFriendResponseDto>
+            ) {
+                Log.d("DEBUG", "getPendingFriends 성공")
+                Log.d("DEBUG", response.body().toString())
+            }
+
+            override fun onFailure(call: Call<GetPendingFriendResponseDto>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
+
+        userApiProvider!!.
+
     }
 
     fun bindLayouts(){
@@ -209,29 +242,30 @@ class MainActivity : AppCompatActivity() {
                 response: Response<GetMeResponseDto>
             ) {
                 Log.d("DEBUG", "GET_USER 성공");
-                Log.d("DEBUG", response.body().toString());
-                Log.d("DEBUG", response.toString());
-                Log.d("DEBUG", response.headers().toString());
+                Log.d("DEBUG", response.body().toString())
+                Log.d("DEBUG", response.toString())
+                Log.d("DEBUG", response.headers().toString())
 
 
-                getUserHandler(response);
+                getUserHandler(response.body())
             }
 
             override fun onFailure(call: Call<GetMeResponseDto>, t: Throwable) {
-                Log.d("DEBUG", "GET_USER 실패");
+                Log.d("DEBUG", "GET_USER 실패")
             }
         })
     }
 
-    fun getUserHandler(response: Response<GetMeResponseDto>){
-        val dto = response.body()!!;
+    fun getUserHandler(response: GetMeResponseDto?){
+        val viewHandler = ViewHandler(this)
+        val dto = response!!
 
-        if(dto.status == false){
-            val intent = Intent(this, LoginActivity::class.java);
-            tokenManager!!.removeAccessToken()
-            tokenManager!!.removeJWT()
-            startActivity(intent)
-            finish();
+        if(viewHandler.goLoginActivityIfNull(response)){
+            return;
+        }
+
+        if(dto!!.status == false){
+            viewHandler.goLoginActivityAndRemoveTokens()
             return;
         }
 
@@ -240,10 +274,10 @@ class MainActivity : AppCompatActivity() {
         var blush = CharacterInitActivity.character_init_blush
         var item = CharacterInitActivity.character_init_item
 
-        var (_, nickname, body, bodyColor, blushColor, font, tem) = response.body()!!;
+        var (_, user) = dto!!;
 
-        icon!!.body.setImageResource(getShape(body!!))
-        icon!!.body.setColorFilter(resources.getColor(getBodyColor(bodyColor!!)))
+        icon!!.body.setImageResource(getShape(user?.body?:1))
+        icon!!.body.setColorFilter(resources.getColor(getBodyColor(user?.bodyColor?:1)))
         icon!!.blush.setColorFilter(resources.getColor(getBlush(1, body_shape).first))
         icon!!.blush.setImageResource(getBlush(blush, body_shape).second)
         if (item == 1) {
@@ -251,13 +285,14 @@ class MainActivity : AppCompatActivity() {
         }
         else {
             icon!!.item.visibility=View.VISIBLE
-            icon!!.item.setImageResource(item_kind(tem!!))
+            icon!!.item.setImageResource(item_kind(user?.item?:1))
         }
-        icon!!.face.setImageResource(getFace(body))
+        icon!!.face.setImageResource(getFace(user?.body?:1))
+        setUserNickname(nickname = user?.nickname?:"unknown")
     }
 
     fun setUserNickname(nickname: String){
-        this.binding.userNickname.text = nickname;
+        this.binding.userNickname.text = nickname
     }
 
 }

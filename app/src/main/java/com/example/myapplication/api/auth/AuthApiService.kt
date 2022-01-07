@@ -22,7 +22,7 @@ class AuthApiService {
         val api_interceptor = Interceptor {
             val originalRequest = it.request()
             val newHttp = originalRequest.newBuilder()
-                .header("Authorization", "Bearer" + this.tokenManager)
+                .header("Authorization", "Bearer " + this.tokenManager)
                 .build()
             it.proceed(newHttp)
         }
@@ -38,6 +38,5 @@ class AuthApiService {
             .build()
             .create(AuthApiProvider::class.java);
     }
-
 
 }

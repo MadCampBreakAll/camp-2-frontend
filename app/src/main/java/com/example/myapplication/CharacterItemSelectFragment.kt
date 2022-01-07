@@ -1,6 +1,5 @@
 package com.example.myapplication
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -8,11 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.myapplication.api.auth.AuthApiProvider
 import com.example.myapplication.api.auth.AuthApiService
-import com.example.myapplication.api.dto.RegisterRequestDto
-import com.example.myapplication.api.user.UserApiProvider
-import com.example.myapplication.api.user.UserApiService
-import com.example.myapplication.databinding.FragmentCharacterBodyShapeSelectBinding
+import com.example.myapplication.api.auth.dto.RegisterRequestDto
+import com.example.myapplication.api.auth.dto.RegisterResponseDto
 import com.example.myapplication.databinding.FragmentCharacterItemBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class CharacterItemSelectFragment : Fragment() {
     private var _binding: FragmentCharacterItemBinding? = null
@@ -43,7 +43,6 @@ class CharacterItemSelectFragment : Fragment() {
         next.setImageResource(R.drawable.start)
         next.setColorFilter(resources.getColor(R.color.body_red))
         next.setOnClickListener {
-            val intent = Intent(activity, MainActivity::class.java)
             val registerRequestDto = RegisterRequestDto(
                 tokenManager!!.getAccessToken(),
                 nickname = "TEST",
@@ -53,8 +52,7 @@ class CharacterItemSelectFragment : Fragment() {
                 item = CharacterInitActivity.character_init_item,
                 blushColor = CharacterInitActivity.character_init_blush,
             );
-            createCharacter(registerRequestDto);
-            startActivity(intent)
+            register(registerRequestDto);
         }
 
         var prev = character_init_binding.userCharacterInitPrevBtn
@@ -193,7 +191,36 @@ class CharacterItemSelectFragment : Fragment() {
         return result_item
     }
 
-    fun createCharacter(registerRequestDto: RegisterRequestDto){
-        authApiProvider!!.register(registerRequestDto);
+    fun register(registerRequestDto: RegisterRequestDto){
+        authApiProvider!!.register(registerRequestDto).enqueue(object :
+            Callback<RegisterResponseDto> {
+            override fun onResponse(
+                call: Call<RegisterResponseDto>,
+                response: Response<RegisterResponseDto>
+            ) {
+                registerHandler(response.body());
+            }
+
+            override fun onFailure(call: Call<RegisterResponseDto>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+
+        });
+    }
+
+    fun registerHandler(registerResponseDto: RegisterResponseDto?) {
+        val viewHandler = ViewHandler(requireActivity());
+
+        if(viewHandler.goLoginActivityIfNull(registerResponseDto)){
+            return;
+        }
+
+        if(!registerResponseDto!!.status){
+            viewHandler.goLoginActivityAndRemoveTokens();
+            return;
+        }
+
+        this.tokenManager!!.setJWT(registerResponseDto!!.token);
+        viewHandler.goMainActivity();
     }
 }

@@ -2,7 +2,7 @@ package com.example.myapplication.api.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class User(
+data class NextUser (
     @SerializedName("id")
     val id: String?,
     @SerializedName("nickname")
@@ -12,9 +12,7 @@ data class User(
     @SerializedName("bodyColor")
     val bodyColor: Int?,
     @SerializedName("blushColor")
-    val blush_color: Int?,
+    val blushColor: Int?,
     @SerializedName("item")
-    val item: Int?,
-    @SerializedName("font")
-    val font: String?,
+    val item: Int?
 )

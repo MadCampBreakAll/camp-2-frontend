@@ -1,30 +1,34 @@
-package com.example.myapplication.api.user
+package com.example.myapplication.api.auth
 
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.TokenManager
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-class UserApiService {
+import java.io.IOException
+
+class DiaryApiService {
+
     val tokenManager: TokenManager;
 
     constructor(tokenManager: TokenManager){
         this.tokenManager = tokenManager;
     }
 
-    fun getProvider(): UserApiProvider {
-
-        val apiInterceptor = Interceptor {
+    fun getProvider(): DiaryApiService {
+        val api_interceptor = Interceptor {
             val originalRequest = it.request()
             val newHttp = originalRequest.newBuilder()
-                .header("Authorization", "Bearer " + this.tokenManager.getJWT())
+                .header("Authorization", "Bearer " + this.tokenManager)
                 .build()
             it.proceed(newHttp)
         }
 
         val httpClient = OkHttpClient.Builder()
-            .addInterceptor(apiInterceptor)
+            .addInterceptor(api_interceptor)
             .build();
 
         return Retrofit.Builder()
@@ -32,7 +36,7 @@ class UserApiService {
             .client(httpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(UserApiProvider::class.java);
+            .create(DiaryApiService::class.java);
     }
 
 }

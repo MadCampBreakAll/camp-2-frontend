@@ -1,4 +1,4 @@
-package com.example.myapplication.api.dto
+package com.example.myapplication.api.auth.dto
 
 import com.google.gson.annotations.SerializedName
 

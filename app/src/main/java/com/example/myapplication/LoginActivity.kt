@@ -1,21 +1,19 @@
 package com.example.myapplication
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityLoginBinding
 import com.example.myapplication.api.auth.AuthApiProvider
 import com.example.myapplication.api.auth.AuthApiService
-import com.example.myapplication.api.dto.LoginRequestDto
-import com.example.myapplication.api.dto.LoginResponseDto
+import com.example.myapplication.api.auth.dto.LoginRequestDto
+import com.example.myapplication.api.auth.dto.LoginResponseDto
 import com.kakao.sdk.auth.model.OAuthToken
 
 
 import com.kakao.sdk.user.UserApiClient
 import retrofit2.Call
 import retrofit2.Response
-import java.lang.Error
 
 class LoginActivity : AppCompatActivity() {
 
@@ -46,9 +44,8 @@ class LoginActivity : AppCompatActivity() {
             return;
         }
 
-        var intent = Intent(this, MainActivity::class.java);
-        startActivity(intent);
-        finish();
+        val viewHandler = ViewHandler(this);
+        viewHandler.goMainActivity();
     }
 
     val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
@@ -80,7 +77,7 @@ class LoginActivity : AppCompatActivity() {
                 Log.d("DEBUG", response.toString())
                 Log.d("DEBUG", response.body().toString())
 
-                loginWithServerHandler(response.body()!!);
+                loginWithServerHandler(response.body());
             }
 
             override fun onFailure(call: Call<LoginResponseDto>, t: Throwable) {
@@ -90,22 +87,20 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun loginWithServerHandler(responseDto: LoginResponseDto){
-        if(responseDto == null){
-            throw Error("login body가 null입니다.");
+    private fun loginWithServerHandler(responseDto: LoginResponseDto?){
+        val viewHandler = ViewHandler(this);
+
+        if(viewHandler.goLoginActivityIfNull(responseDto)){
+            return;
         }
 
-        if(!responseDto.status) {
-            val intent = Intent(this, CharacterInitActivity::class.java);
-            startActivity(intent);
-            finish();
+        if(!responseDto!!.status) {
+            viewHandler.goCharacterInitActivity();
             return;
         }
 
         this.tokenManager.setJWT(responseDto.token);
-        val intent = Intent(this, MainActivity::class.java);
-        startActivity(intent);
-        finish();
+        viewHandler.goMainActivity();
     }
 
 }

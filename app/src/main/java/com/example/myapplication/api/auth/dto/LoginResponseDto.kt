@@ -1,10 +1,10 @@
-package com.example.myapplication.api.dto
+package com.example.myapplication.api.auth.dto
 
 import com.google.gson.annotations.SerializedName
 
 data class LoginResponseDto (
     @SerializedName("status")
-    val status: Boolean,
+    val status: Boolean?,
     @SerializedName("token")
-    val token: String,
+    val token: String?,
 )
