@@ -1,27 +1,36 @@
 package com.example.myapplication
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.databinding.UserCharacterBinding
-import com.example.myapplication.service.api.BasicApiService
-import com.example.myapplication.service.api.dto.LoginRequestDto
-import com.example.myapplication.service.api.dto.UserResponseDto
 import android.util.Log
+import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myapplication.api.dto.DiaryDto
 import com.example.myapplication.api.user.UserApiProvider
 import com.example.myapplication.api.user.UserApiService
 import com.example.myapplication.api.dto.GetMeResponseDto
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalDate
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var diaryCoverAdapter: DiaryCoverAdapter
+    var diaryList = mutableListOf<DiaryDto>()
+
     private var tokenManager: TokenManager? = null;
     private var userApiProvider: UserApiProvider? = null;
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         tokenManager = TokenManager(applicationContext);
@@ -32,6 +41,41 @@ class MainActivity : AppCompatActivity() {
         var icon = binding.userCharacterIcon
 
         settingUserIcon(icon)
+
+        diaryCoverAdapter = DiaryCoverAdapter(this)
+        binding.diaryList.adapter=diaryCoverAdapter
+
+        diaryList.add(
+            DiaryDto(
+                "누구보다 빠르게 남들과는 다르게 색다르게 리듬을 타는 비트 위의 나그네"
+                , LocalDate.now()
+                , GetMeResponseDto(12345, "예그리나", 2, 1, 1, 1, 2)
+                , null
+            )
+        )
+        for (i in 1..5) {
+            diaryList.add(
+                DiaryDto(
+                    "다부숴!${i}"
+                    , LocalDate.now()
+                    , GetMeResponseDto(12345, "예그리나", 2, 1, 1, 1, 2)
+                    , null
+                )
+            )
+        }
+        diaryList.add(
+            DiaryDto(
+                "내가그린기린그림은잘그린기린그림"
+                , LocalDate.now()
+                , GetMeResponseDto(12345, "예그리나", 2, 1, 1, 1, 2)
+                , null
+            )
+        )
+
+        diaryCoverAdapter.diaryList = diaryList
+
+        // 수정해야 할 것 : api를 통해 유저의 정보를 받아올텐데 그 안에 있는 user nickname 변수로 text를 수정해주어야 한다.
+        binding.userNickname.text = "예그리나"
 
         userApiProvider!!.getMe().enqueue(object : Callback<GetMeResponseDto> {
             override fun onResponse(

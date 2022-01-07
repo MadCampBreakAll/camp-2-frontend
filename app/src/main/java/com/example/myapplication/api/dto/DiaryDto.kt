@@ -1,10 +1,15 @@
 package com.example.myapplication.api.dto
 
+import com.google.gson.annotations.SerializedName
 import java.time.LocalDate
 
 data class DiaryDto (
+    @SerializedName("title")
     var title: String,
-    var createdDate: LocalDate,
-    var nextWriter: String,
-    var pageItem: String,
+    @SerializedName("createdAt")
+    var createdAt: LocalDate,
+//    @SerializedName("nextWriter")
+    var nextWriter: GetMeResponseDto,
+//    @SerializedName("page")
+    var page: PageDto?,
 )
