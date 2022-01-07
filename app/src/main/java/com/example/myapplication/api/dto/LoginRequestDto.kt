@@ -1,4 +1,4 @@
-package com.example.myapplication.service.api.dto
+package com.example.myapplication.api.dto
 
 data class LoginRequestDto(
     val accessToken: String
