@@ -46,6 +46,7 @@ class PageLetterViewPageAdapter(private val context: Context): RecyclerView.Adap
         private var nextUser = binding.innerPageNextUserCharacter
         private var body = binding.innerPageText
         private var writer = binding.innerPageWriteUserCharacter
+        private var title = binding.pageTitle
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(page: PageDto) {
@@ -58,7 +59,8 @@ class PageLetterViewPageAdapter(private val context: Context): RecyclerView.Adap
 //            settingOthersIcon(nextUser, user의 정보들을 뒤의 인자로 추가)
 //            settingOthersIcon(writer, writer의 정보를 뒤의 인자로 추가)
 //            background.setBackgroundColor(Color.parseColor(page.배경 색상 정보가 있어야 할 듯 하다))
-            body.text = page.body.toString()
+            body.text = page.body
+            title.text = page.title
 
         }
         fun getShape(shape: Int): Int {

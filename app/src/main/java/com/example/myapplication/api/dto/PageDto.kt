@@ -16,7 +16,7 @@ data class PageDto (
     @SerializedName("title")
     var title: String,
     @SerializedName("body")
-    var body: Text,
+    var body: String,
     @SerializedName("createdDate")
     var createdDate: LocalDate,
     @SerializedName("color")
