@@ -4,6 +4,8 @@ import com.google.gson.annotations.SerializedName
 import java.time.LocalDate
 
 data class DiaryDto (
+    @SerializedName("id")
+    var id: String,
     @SerializedName("title")
     var title: String,
     @SerializedName("createdAt")

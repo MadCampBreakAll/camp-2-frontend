@@ -47,7 +47,8 @@ class MainActivity : AppCompatActivity() {
 
         diaryList.add(
             DiaryDto(
-                "누구보다 빠르게 남들과는 다르게 색다르게 리듬을 타는 비트 위의 나그네"
+                "12345"
+                ,"누구보다 빠르게 남들과는 다르게 색다르게 리듬을 타는 비트 위의 나그네"
                 , LocalDate.now()
                 , GetMeResponseDto(12345, "예그리나", 2, 1, 1, 1, 2)
                 , null
@@ -56,7 +57,8 @@ class MainActivity : AppCompatActivity() {
         for (i in 1..5) {
             diaryList.add(
                 DiaryDto(
-                    "다부숴!${i}"
+                    "12345"
+                    ,"다부숴!${i}"
                     , LocalDate.now()
                     , GetMeResponseDto(12345, "예그리나", 2, 1, 1, 1, 2)
                     , null
@@ -65,7 +67,8 @@ class MainActivity : AppCompatActivity() {
         }
         diaryList.add(
             DiaryDto(
-                "내가그린기린그림은잘그린기린그림"
+                "12345"
+                ,"내가그린기린그림은잘그린기린그림"
                 , LocalDate.now()
                 , GetMeResponseDto(12345, "예그리나", 2, 1, 1, 1, 2)
                 , null
@@ -73,6 +76,7 @@ class MainActivity : AppCompatActivity() {
         )
 
         diaryCoverAdapter.diaryList = diaryList
+        binding.diaryList.setLayoutManager(GridLayoutManager(this, 2))
 
         // 수정해야 할 것 : api를 통해 유저의 정보를 받아올텐데 그 안에 있는 user nickname 변수로 text를 수정해주어야 한다.
         binding.userNickname.text = "예그리나"

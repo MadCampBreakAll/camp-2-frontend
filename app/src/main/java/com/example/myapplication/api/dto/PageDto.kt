@@ -6,11 +6,11 @@ import java.time.LocalDate
 
 data class PageDto (
     @SerializedName("id")
-    var id: Long,
+    var id: String,
     @SerializedName("userId")
-    var userId: Long,
+    var userId: String,
     @SerializedName("nextUserId")
-    var nextUserId: Long,
+    var nextUserId: String,
     @SerializedName("diaryId")
     var diaryId: Long,
     @SerializedName("title")
