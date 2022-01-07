@@ -26,7 +26,7 @@ class CharacterBlushFragment : Fragment() {
 
         var character_init_binding = CharacterInitActivity.character_init_binding
         character_init_binding.userCharacterInitType.text="Blush"
-        character_init_binding.userCharacterInitFirstBar.setImageResource(R.drawable.init_rest_steps)
+       character_init_binding.userCharacterInitFirstBar.setImageResource(R.drawable.init_rest_steps)
         character_init_binding.userCharacterInitSecondBar.setImageResource(R.drawable.init_rest_steps)
         character_init_binding.userCharacterInitThirdBar.setImageResource(R.drawable.init_current_step)
         character_init_binding.userCharacterInitForthBar.setImageResource(R.drawable.init_rest_steps)
