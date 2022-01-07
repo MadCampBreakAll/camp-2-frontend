@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -32,6 +33,10 @@ class CharacterItemSelectFragment : Fragment() {
         var next = character_init_binding.userCharacterInitNextBtn
         next.setImageResource(R.drawable.start)
         next.setColorFilter(resources.getColor(R.color.body_red))
+        next.setOnClickListener {
+            val intent = Intent(activity, MainActivity::class.java)
+            startActivity(intent)
+        }
 
         var prev = character_init_binding.userCharacterInitPrevBtn
         prev.setOnClickListener {
