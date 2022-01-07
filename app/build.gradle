@@ -27,6 +27,9 @@ android {
 
         resValue("string", "BASE_URI", (project.findProperty('BASE_URI') ?: ""))
         buildConfigField("String", "BASE_URI", "\"${apiKeyProperties.getProperty('BASE_URI')}\"")
+
+        resValue("string", "TEST_BASE_URI", (project.findProperty('TEST_BASE_URI') ?: ""))
+        buildConfigField("String", "TEST_BASE_URI", "\"${apiKeyProperties.getProperty('TEST_BASE_URI')}\"")
     }
 
     buildTypes {
@@ -62,7 +65,10 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0'
     implementation "com.kakao.sdk:v2-user:2.8.4" // 카카오 로그인
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation "org.mockito.kotlin:mockito-kotlin:4.0.0"
     testImplementation 'junit:junit:4.+'
+    testImplementation "org.mockito:mockito-core:3.+"
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.1.0"
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 }
