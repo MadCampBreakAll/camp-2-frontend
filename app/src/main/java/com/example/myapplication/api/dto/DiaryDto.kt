@@ -1,8 +1,8 @@
-package com.example.myapplication
+package com.example.myapplication.api.dto
 
 import java.time.LocalDate
 
-data class DiaryItem (
+data class DiaryDto (
     var title: String,
     var createdDate: LocalDate,
     var nextWriter: String,
