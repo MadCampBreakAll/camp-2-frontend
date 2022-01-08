@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.diary
+package com.example.myapplication.ui.page
 
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -33,20 +33,20 @@ public class DiaryInnerActivity : AppCompatActivity() {
         pageLetterViewPageAdapter = PageLetterViewPageAdapter(this)
         binding.pagesLetterViewPager.adapter = pageLetterViewPageAdapter
 
-        for (i in 1..3){
-            pageList.add(
-                PageDto("12345"
-                    ,"12827"
-                    ,"18374"
-                    , 12
-                    , "기분 최고!"
-                    , "오늘은 많은 일을 했다. \n기분 최고! \n근데 졸리다!"
-                    , LocalDate.now()
-                    , "#a5a58d"
-                    , null
-                )
-            )
-        }
+//        for (i in 1..3){
+//            pageList.add(
+//                PageDto("12345"
+//                    ,"12827"
+//                    ,"18374"
+//                    , 12
+//                    , "기분 최고!"
+//                    , "오늘은 많은 일을 했다. \n기분 최고! \n근데 졸리다!"
+//                    , LocalDate.now()
+//                    , "#a5a58d"
+//                    , null
+//                )
+//            )
+//        }
 
         pageLetterViewPageAdapter.pageList = pageList
     }

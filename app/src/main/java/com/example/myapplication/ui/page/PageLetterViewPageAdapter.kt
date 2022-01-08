@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.diary
+package com.example.myapplication.ui.page
 
 import android.content.Context
 import android.graphics.Color
@@ -60,7 +60,7 @@ class PageLetterViewPageAdapter(private val context: Context): RecyclerView.Adap
 //            settingOthersIcon(nextUser, user의 정보들을 뒤의 인자로 추가)
 //            settingOthersIcon(writer, writer의 정보를 뒤의 인자로 추가)
 //            background.setBackgroundColor(Color.parseColor(page.배경 색상 정보가 있어야 할 듯 하다))
-            body.text = page.body
+//            body.text = page.body
             title.text = page.title
 
         }

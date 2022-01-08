@@ -2,7 +2,7 @@ package com.example.myapplication.util
 
 import android.app.Activity
 import android.content.Intent
-import com.example.myapplication.ui.diary.create.CreateDiary
+import com.example.myapplication.ui.diary.create.CreateDiaryActivity
 import com.example.myapplication.ui.friend.FriendActivity
 import com.example.myapplication.ui.join.CharacterInitActivity
 import com.example.myapplication.ui.login.LoginActivity
@@ -51,14 +51,14 @@ class ViewHandler {
     }
 
     fun goCreateDiaryActivity() : Boolean {
-        val intent = Intent(activity, CreateDiary::class.java)
+        val intent = Intent(activity, CreateDiaryActivity::class.java)
         activity.startActivity(intent)
         activity.finish()
         return true;
     }
 
     fun goCreateDiaryAndFinish() : Boolean {
-        val intent = Intent(activity, CreateDiary::class.java)
+        val intent = Intent(activity, CreateDiaryActivity::class.java)
         activity.startActivity(intent)
         return true;
     }

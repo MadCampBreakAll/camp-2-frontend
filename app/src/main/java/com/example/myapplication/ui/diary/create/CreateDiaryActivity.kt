@@ -10,7 +10,7 @@ import com.example.myapplication.databinding.ActivityCreateDiaryBinding
 import com.example.myapplication.util.TokenManager
 import com.example.myapplication.util.ViewHandler
 
-class CreateDiary : AppCompatActivity() {
+class CreateDiaryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreateDiaryBinding
     private lateinit var diaryApiService: DiaryApiService
