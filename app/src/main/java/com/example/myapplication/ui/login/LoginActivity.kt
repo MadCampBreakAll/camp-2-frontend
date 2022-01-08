@@ -22,6 +22,7 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var authApiService: AuthApiService
     private lateinit var tokenManager: TokenManager
+    private lateinit var viewHandler: ViewHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         tokenManager = TokenManager(this)
         authApiService = AuthApiService(tokenManager)
+        viewHandler = ViewHandler(this)
     }
 
     private fun bind(){
@@ -42,7 +44,6 @@ class LoginActivity : AppCompatActivity() {
                     this,
                     callback = loginWithKaKaoHandler
             )) {
-                val viewHandler = ViewHandler(this);
                 viewHandler.goMainActivity();
             }
         }
@@ -67,8 +68,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private val loginWithServerHandler : (LoginResponseDto?) -> Unit = handler@{ response ->
-        val viewHandler = ViewHandler(this);
-
         try {
             if(response?.register != null && response.register == false){
                 viewHandler.goCharacterInitActivity()
