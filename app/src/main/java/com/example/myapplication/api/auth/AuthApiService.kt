@@ -1,14 +1,11 @@
 package com.example.myapplication.api.auth
 
 import com.example.myapplication.BuildConfig
-import com.example.myapplication.TokenManager
+import com.example.myapplication.util.TokenManager
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.io.IOException
 
 class AuthApiService {
 

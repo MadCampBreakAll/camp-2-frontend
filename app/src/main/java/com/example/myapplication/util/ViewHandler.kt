@@ -1,7 +1,10 @@
-package com.example.myapplication
+package com.example.myapplication.util
 
 import android.app.Activity
 import android.content.Intent
+import com.example.myapplication.ui.join.CharacterInitActivity
+import com.example.myapplication.ui.login.LoginActivity
+import com.example.myapplication.ui.main.MainActivity
 
 class ViewHandler {
     var activity: Activity;

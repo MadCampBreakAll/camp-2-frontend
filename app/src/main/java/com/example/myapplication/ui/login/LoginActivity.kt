@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.ui.login
 
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +8,8 @@ import com.example.myapplication.api.auth.AuthApiProvider
 import com.example.myapplication.api.auth.AuthApiService
 import com.example.myapplication.api.auth.dto.LoginRequestDto
 import com.example.myapplication.api.auth.dto.LoginResponseDto
+import com.example.myapplication.util.TokenManager
+import com.example.myapplication.util.ViewHandler
 import com.kakao.sdk.auth.model.OAuthToken
 
 

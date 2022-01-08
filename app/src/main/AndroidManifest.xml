@@ -17,10 +17,10 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".DiaryInnerActivity"
+            android:name="com.example.myapplication.ui.diary.DiaryInnerActivity"
             android:exported="false" />
         <activity
-            android:name=".LoadingActivity"
+            android:name="com.example.myapplication.ui.loading.LoadingActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -29,11 +29,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".CharacterInitActivity"
+            android:name=".ui.join.CharacterInitActivity"
             android:exported="true">
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name="com.example.myapplication.ui.main.MainActivity"
             android:exported="true" />
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
@@ -51,7 +51,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name="com.example.myapplication.ui.login.LoginActivity"
             android:exported="true"
             android:label="@string/title_activity_login" />
     </application>

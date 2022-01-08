@@ -1,17 +1,18 @@
-package com.example.myapplication
+package com.example.myapplication.ui.join
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentCharacterBlushShapeBinding
 
 class CharacterBlushFragment : Fragment() {
     private var _binding: FragmentCharacterBlushShapeBinding? = null
     private val binding get() = _binding!!
-    private val bodyselectfragment by lazy {CharacterBodySelectFragment()}
-    private val itemselectfragment by lazy {CharacterItemSelectFragment()}
+    private val bodyselectfragment by lazy { CharacterBodySelectFragment() }
+    private val itemselectfragment by lazy { CharacterItemSelectFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +61,9 @@ class CharacterBlushFragment : Fragment() {
             1 -> {
                 CharacterInitActivity.character_init_blush = 1
                 binding.bodyColorOneBtn.setOnClickListener {
-                    character_body_binding.userCharacterInit.blush.setColorFilter(resources.getColor(R.color.blush_pink))
+                    character_body_binding.userCharacterInit.blush.setColorFilter(resources.getColor(
+                        R.color.blush_pink
+                    ))
                     clickButton(button)
                 }
 
@@ -68,7 +71,9 @@ class CharacterBlushFragment : Fragment() {
             2 -> {
                 CharacterInitActivity.character_init_blush = 2
                 binding.bodyColorTwoBtn.setOnClickListener {
-                    character_body_binding.userCharacterInit.blush.setColorFilter(resources.getColor(R.color.blush_orange))
+                    character_body_binding.userCharacterInit.blush.setColorFilter(resources.getColor(
+                        R.color.blush_orange
+                    ))
                     clickButton(button)
                 }
             }

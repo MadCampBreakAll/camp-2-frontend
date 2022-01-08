@@ -1,7 +1,7 @@
 package com.example.myapplication.api.user
 
 import com.example.myapplication.BuildConfig
-import com.example.myapplication.TokenManager
+import com.example.myapplication.util.TokenManager
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

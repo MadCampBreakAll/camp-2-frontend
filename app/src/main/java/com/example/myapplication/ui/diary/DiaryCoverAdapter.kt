@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.ui.diary
 
 import android.content.Context
 import android.content.Intent
@@ -11,7 +11,9 @@ import android.widget.TextView
 import com.example.myapplication.api.entity.Diary
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.R
 import com.example.myapplication.databinding.*
+import com.example.myapplication.ui.join.CharacterInitActivity
 
 class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<DiaryCoverAdapter.ViewHolder>() {
     private lateinit var diaryBinding : DiaryBinding
@@ -33,7 +35,7 @@ class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<Diar
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): DiaryCoverAdapter.ViewHolder {
+    ): ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.diary, parent, false)
 
         diaryBinding = DiaryBinding.inflate(LayoutInflater.from(context), parent, false)
@@ -43,7 +45,7 @@ class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<Diar
 
     override fun getItemCount(): Int = diaryList.size
 
-    override fun onBindViewHolder(holder: DiaryCoverAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
         holder.title.setSelected(true)
         holder.title.ellipsize= TextUtils.TruncateAt.MARQUEE

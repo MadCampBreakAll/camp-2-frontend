@@ -1,17 +1,18 @@
-package com.example.myapplication
+package com.example.myapplication.ui.join
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.myapplication.R
 import com.example.myapplication.databinding.FragmentCharacterBodySelectBinding
 
 class CharacterBodySelectFragment : Fragment() {
     private var _binding:FragmentCharacterBodySelectBinding? = null
     private val binding get() = _binding!!
-    private val bodyshapeselectfragment by lazy {CharacterBodyShapeSelectFragment()}
-    private val bodyblushselectfragment by lazy {CharacterBlushFragment()}
+    private val bodyshapeselectfragment by lazy { CharacterBodyShapeSelectFragment() }
+    private val bodyblushselectfragment by lazy { CharacterBlushFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +62,9 @@ class CharacterBodySelectFragment : Fragment() {
                 1 -> {
                     binding.bodyColorOneBtn.setOnClickListener {
                         CharacterInitActivity.character_init_body_color = 1
-                        character_body_binding.userCharacterInit.body.setColorFilter(resources.getColor(R.color.body_blue))
+                        character_body_binding.userCharacterInit.body.setColorFilter(resources.getColor(
+                            R.color.body_blue
+                        ))
                         clickButton(button)
                     }
 
@@ -69,7 +72,9 @@ class CharacterBodySelectFragment : Fragment() {
                 2 -> {
                     binding.bodyColorTwoBtn.setOnClickListener {
                         CharacterInitActivity.character_init_body_color = 2
-                        character_body_binding.userCharacterInit.body.setColorFilter(resources.getColor(R.color.body_dark_navy))
+                        character_body_binding.userCharacterInit.body.setColorFilter(resources.getColor(
+                            R.color.body_dark_navy
+                        ))
                         clickButton(button)
                         }
                 }

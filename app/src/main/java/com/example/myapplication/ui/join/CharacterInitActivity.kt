@@ -1,19 +1,18 @@
-package com.example.myapplication
+package com.example.myapplication.ui.join
 
 
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityCharacterInitBinding
-import com.example.myapplication.databinding.FragmentCharacterBodyShapeSelectBinding
 import com.example.myapplication.databinding.UserCharacterBinding
-import java.util.*
 
 
 class CharacterInitActivity : AppCompatActivity() {
     private var _binding: ActivityCharacterInitBinding? = null
     private val binding get() = _binding!!
-    private val bodyshapeselectfragment by lazy {CharacterBodyShapeSelectFragment()}
+    private val bodyshapeselectfragment by lazy { CharacterBodyShapeSelectFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -149,7 +148,7 @@ class CharacterInitActivity : AppCompatActivity() {
     }
 
     fun item_kind(item: Int): Int {
-        var shape = CharacterInitActivity.character_init_body_shape
+        var shape = character_init_body_shape
         var result_item = 0
         when (shape) {
             1 -> {

@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.ui.diary
 
 import android.content.Context
 import android.graphics.Color
@@ -8,10 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.R
 import com.example.myapplication.api.dto.PageDto
-import com.example.myapplication.databinding.ActivityDiaryInnerBinding
 import com.example.myapplication.databinding.PageLetterItemBinding
 import com.example.myapplication.databinding.UserCharacterBinding
+import com.example.myapplication.ui.join.CharacterInitActivity
 import java.time.LocalDate
 
 // 이 어뎁터는 diary의 letter pages를 담는 fragment_page_letter의 viewpager이 각각의 page들에 값을 binding하여 view를 만들어준다.
@@ -26,7 +27,7 @@ class PageLetterViewPageAdapter(private val context: Context): RecyclerView.Adap
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): PageLetterViewPageAdapter.ViewHolder {
+    ): ViewHolder {
         innerpagerBinding = PageLetterItemBinding.inflate(LayoutInflater.from(context), parent, false)
 
         return(ViewHolder(innerpagerBinding))
@@ -35,7 +36,7 @@ class PageLetterViewPageAdapter(private val context: Context): RecyclerView.Adap
     override fun getItemCount(): Int = pageList.size
 
     @RequiresApi(Build.VERSION_CODES.O)
-    override fun onBindViewHolder(holder: PageLetterViewPageAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(pageList[position])
     }
 

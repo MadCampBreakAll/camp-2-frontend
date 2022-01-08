@@ -1,8 +1,9 @@
-package com.example.myapplication
+package com.example.myapplication.util
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.content.SharedPreferences.Editor
+import com.example.myapplication.R
 
 class TokenManager{
 
@@ -21,7 +22,9 @@ class TokenManager{
     }
 
     fun getAccessToken(): String{
-        return getSharedPreferences(this.context).getString(getString(R.string.kakao_access_token), TokenManager.STATUS.EMPTY_ACCESS_TOKEN)!!;
+        return getSharedPreferences(this.context).getString(getString(R.string.kakao_access_token),
+            STATUS.EMPTY_ACCESS_TOKEN
+        )!!;
     }
 
     fun setAccessToken(token: String) {
@@ -32,18 +35,20 @@ class TokenManager{
 
     fun removeAccessToken() {
         val editor : Editor = getSharedPreferences(this.context).edit();
-        editor.putString(getString(R.string.kakao_access_token),TokenManager.STATUS.EMPTY_ACCESS_TOKEN);
+        editor.putString(getString(R.string.kakao_access_token), STATUS.EMPTY_ACCESS_TOKEN);
         editor.apply();
     }
 
     fun removeJWT(){
         val editor : Editor = getSharedPreferences(this.context).edit();
-        editor.putString(getString(R.string.json_web_token),TokenManager.STATUS.EMPTY_JWT);
+        editor.putString(getString(R.string.json_web_token), STATUS.EMPTY_JWT);
         editor.apply();
     }
 
     fun getJWT(): String {
-        return getSharedPreferences(this.context).getString(getString(R.string.json_web_token), TokenManager.STATUS.EMPTY_JWT)!!;
+        return getSharedPreferences(this.context).getString(getString(R.string.json_web_token),
+            STATUS.EMPTY_JWT
+        )!!;
     }
 
     fun setJWT(token: String) {

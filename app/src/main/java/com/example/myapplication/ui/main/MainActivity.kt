@@ -1,6 +1,5 @@
-package com.example.myapplication
+package com.example.myapplication.ui.main
 
-import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,12 +10,17 @@ import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.databinding.UserCharacterBinding
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.myapplication.ui.join.CharacterInitActivity
+import com.example.myapplication.ui.diary.DiaryCoverAdapter
+import com.example.myapplication.R
 import com.example.myapplication.api.entity.Diary
 import com.example.myapplication.api.user.UserApiProvider
 import com.example.myapplication.api.user.UserApiService
 import com.example.myapplication.api.auth.DiaryApiService
 import com.example.myapplication.api.diary.DiaryApiProvider
 import com.example.myapplication.api.diary.dto.GetMyDiariesResponseDto
+import com.example.myapplication.util.TokenManager
+import com.example.myapplication.util.ViewHandler
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -50,7 +54,6 @@ class MainActivity : AppCompatActivity() {
 
     fun bindLayouts(){
         binding.diaryAddBtn.setOnClickListener {
-            val intent = Intent(this, CharacterInitActivity::class.java)
             startActivity(intent)
         }
         diaryCoverAdapter = DiaryCoverAdapter(this)

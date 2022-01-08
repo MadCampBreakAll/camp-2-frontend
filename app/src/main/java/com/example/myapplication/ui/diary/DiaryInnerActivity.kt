@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.ui.diary
 
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -6,7 +6,6 @@ import android.os.Bundle
 import androidx.annotation.RequiresApi
 import com.example.myapplication.api.dto.PageDto
 import com.example.myapplication.databinding.ActivityDiaryInnerBinding
-import org.w3c.dom.Text
 import java.time.LocalDate
 
 // Diary의 속지(페이지들을 볼 수 있는 곳)를 보는 화면 -> 속지들은 viewpager로 표현된다
