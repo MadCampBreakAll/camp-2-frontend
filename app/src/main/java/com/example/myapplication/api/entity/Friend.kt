@@ -2,19 +2,17 @@ package com.example.myapplication.api.entity
 
 import com.google.gson.annotations.SerializedName
 
-data class User(
+data class Friend (
     @SerializedName("id")
-    val id: String?,
+    val id: Int,
     @SerializedName("nickname")
-    val nickname: String?,
+    val nickname: String,
     @SerializedName("body")
-    val body: Int?,
+    val body: Int,
     @SerializedName("bodyColor")
-    val bodyColor: Int?,
+    val bodyColor: String,
     @SerializedName("blushColor")
-    val blush_color: Int?,
+    val blushColor: String,
     @SerializedName("item")
-    val item: Int?,
-    @SerializedName("font")
-    val font: String?,
+    val item: Int
 )

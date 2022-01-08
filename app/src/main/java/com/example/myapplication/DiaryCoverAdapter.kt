@@ -4,24 +4,19 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.text.TextUtils
-import android.view.View
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
-import android.widget.ImageView
+import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.example.myapplication.api.dto.DiaryDto
-import com.example.myapplication.api.dto.GetMeResponseDto
+import com.example.myapplication.api.entity.Diary
 import com.example.myapplication.databinding.*
-import java.time.LocalDate
 
 class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<DiaryCoverAdapter.ViewHolder>() {
     private lateinit var diaryBinding : DiaryBinding
 
-    var diaryList = mutableListOf<DiaryDto>()
+    var diaryList = mutableListOf<Diary>()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateViewHolder(
@@ -29,6 +24,7 @@ class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<Diar
         viewType: Int
     ): DiaryCoverAdapter.ViewHolder {
         val view = LayoutInflater.from(context).inflate(R.layout.diary, parent, false)
+
         diaryBinding = DiaryBinding.inflate(LayoutInflater.from(context), parent, false)
 
         return ViewHolder(diaryBinding)
@@ -54,7 +50,7 @@ class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<Diar
 
         var title: TextView = binding.diaryTitle
 
-        fun bind(item: DiaryDto) {
+        fun bind(item: Diary) {
             // 이 부분에 다음 작성자가 나인 diary의 경우에는 alarm imageView가 visible하도록 설정
             title.text = item.title
 

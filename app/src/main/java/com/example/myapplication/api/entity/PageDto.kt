@@ -23,4 +23,4 @@ data class PageDto (
     var color: String,
     @SerializedName("image")
     var image: String?
-    )
+)

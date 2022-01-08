@@ -1,14 +1,13 @@
 package com.example.myapplication
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityLoginBinding
 import com.example.myapplication.api.auth.AuthApiProvider
 import com.example.myapplication.api.auth.AuthApiService
-import com.example.myapplication.api.dto.LoginRequestDto
-import com.example.myapplication.api.dto.LoginResponseDto
+import com.example.myapplication.api.auth.dto.LoginRequestDto
+import com.example.myapplication.api.auth.dto.LoginResponseDto
 import com.kakao.sdk.auth.model.OAuthToken
 
 
@@ -29,59 +28,79 @@ class LoginActivity : AppCompatActivity() {
         authApiProvider = AuthApiService(tokenManager).getProvider();
         setContentView(binding.root)
 
-        if(tokenManager.getJWT().equals(TokenManager.STATUS.EMPTY_JWT)){
-            binding.kakaoLoginButton.setOnClickListener {
-                if(UserApiClient.instance.isKakaoTalkLoginAvailable(this)){
-                    UserApiClient.instance.loginWithKakaoTalk(this, callback = callback);
-                } else {
-                    UserApiClient.instance.loginWithKakaoAccount(this, callback = callback);
-                }
-            };
-        } else {
-            var intent = Intent(this, MainActivity::class.java);
-            finish();
-            startActivity(intent);
-        }
-
+        binding.kakaoLoginButton.setOnClickListener {
+            loginWithKaKao();
+        };
     }
 
-    // 로그인 공통 callback 구성
+    private fun loginWithKaKao(){
+        if(tokenManager.getJWT() == TokenManager.STATUS.EMPTY_JWT){
+            if(UserApiClient.instance.isKakaoTalkLoginAvailable(this)){
+                UserApiClient.instance.loginWithKakaoTalk(this, callback = callback);
+                return;
+            }
+
+            UserApiClient.instance.loginWithKakaoAccount(this, callback = callback);
+            return;
+        }
+
+        val viewHandler = ViewHandler(this);
+        viewHandler.goMainActivity();
+    }
+
     val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
+
         if (error != null) {
-            Log.e("KAKAO", "로그인 실패", error)
+            Log.e("DEBUG", "로그인 실패", error);
         }
-        else if (token != null) {
-            Log.d("KAKAO", "로그인 성공 ${token.accessToken}")
 
+        if (token != null) {
+            Log.d("DEBUG", "로그인 성공 ${token.accessToken}")
 
-            tokenManager.setAccessToken(token.accessToken);
-
-            val loginRequestDto = LoginRequestDto(token.accessToken);
-            authApiProvider.login(loginRequestDto).enqueue(object :
-                retrofit2.Callback<LoginResponseDto> {
-                override fun onResponse(
-                    call: Call<LoginResponseDto>,
-                    response: Response<LoginResponseDto>
-                ) {
-                    successLoginCallback(response);
-                }
-                override fun onFailure(call: Call<LoginResponseDto>, t: Throwable) {
-                    Log.d("DEBUG", "login 실패")
-                }
-            })
-
+            loginWithServer(token.accessToken);
         }
     }
 
-    fun successLoginCallback(responseDto: Response<LoginResponseDto>){
-        if(responseDto.body()!!.status){
-            this.tokenManager.setJWT(responseDto.body()!!.token);
-            val intent = Intent(this, MainActivity::class.java);
-            startActivity(intent);
-            finish();
-        } else {
-            Log.d("DEBUG", responseDto.toString());
+    private fun loginWithServer(accessToken: String){
+
+        tokenManager.setAccessToken(accessToken);
+        val loginRequestDto = LoginRequestDto(accessToken);
+
+        authApiProvider.login(loginRequestDto).enqueue(object :
+            retrofit2.Callback<LoginResponseDto> {
+
+            override fun onResponse(
+                call: Call<LoginResponseDto>,
+                response: Response<LoginResponseDto>
+            ) {
+                Log.d("DEBUG", "SERVER LOGIN 성공")
+                Log.d("DEBUG", response.toString())
+                Log.d("DEBUG", response.body().toString())
+
+                loginWithServerHandler(response.body());
+            }
+
+            override fun onFailure(call: Call<LoginResponseDto>, t: Throwable) {
+                Log.d("DEBUG", "login 실패")
+            }
+        })
+
+    }
+
+    private fun loginWithServerHandler(responseDto: LoginResponseDto?){
+        val viewHandler = ViewHandler(this);
+
+        if(viewHandler.goLoginActivityIfNull(responseDto)){
+            return;
         }
+
+        if(!responseDto!!.status!!) {
+            viewHandler.goCharacterInitActivity();
+            return;
+        }
+
+        this.tokenManager.setJWT(responseDto!!.token!!);
+        viewHandler.goMainActivity();
     }
 
 }

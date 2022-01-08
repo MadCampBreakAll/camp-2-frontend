@@ -4,32 +4,30 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import com.example.myapplication.api.user.dto.GetMeResponseDto
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.databinding.UserCharacterBinding
-import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myapplication.api.dto.DiaryDto
+import com.example.myapplication.api.entity.Diary
 import com.example.myapplication.api.user.UserApiProvider
 import com.example.myapplication.api.user.UserApiService
-import com.example.myapplication.api.dto.GetMeResponseDto
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.time.LocalDate
 
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var diaryCoverAdapter: DiaryCoverAdapter
-    var diaryList = mutableListOf<DiaryDto>()
+    var diaryList = mutableListOf<Diary>()
 
     private var tokenManager: TokenManager? = null;
     private var userApiProvider: UserApiProvider? = null;
+    private var icon: UserCharacterBinding?= null;
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,59 +36,42 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        var icon = binding.userCharacterIcon
+        icon = binding.userCharacterIcon
 
-        settingUserIcon(icon)
+        getUser();
+        bindLayouts();
 
         diaryCoverAdapter = DiaryCoverAdapter(this)
         binding.diaryList.adapter=diaryCoverAdapter
 
-        diaryList.add(
-            DiaryDto(
-                "누구보다 빠르게 남들과는 다르게 색다르게 리듬을 타는 비트 위의 나그네"
-                , LocalDate.now()
-                , GetMeResponseDto(12345, "예그리나", 2, 1, 1, 1, 2)
-                , null
-            )
-        )
-        for (i in 1..5) {
-            diaryList.add(
-                DiaryDto(
-                    "다부숴!${i}"
-                    , LocalDate.now()
-                    , GetMeResponseDto(12345, "예그리나", 2, 1, 1, 1, 2)
-                    , null
-                )
-            )
-        }
-        diaryList.add(
-            DiaryDto(
-                "내가그린기린그림은잘그린기린그림"
-                , LocalDate.now()
-                , GetMeResponseDto(12345, "예그리나", 2, 1, 1, 1, 2)
-                , null
-            )
-        )
+//        diaryList.add(
+//            DiaryDto(
+//                "누구보다 빠르게 남들과는 다르게 색다르게 리듬을 타는 비트 위의 나그네"
+//                , LocalDate.now()
+//                , GetMeResponseDto(true, user = (0, ))
+//                , null
+//            )
+//        )
+//        for (i in 1..5) {
+//            diaryList.add(
+//                DiaryDto(
+//                    "다부숴!${i}"
+//                    , LocalDate.now()
+//                    , GetMeResponseDto(12345, "예그리나", 2, 1, 1, 1, 2)
+//                    , null
+//                )
+//            )
+//        }
+//        diaryList.add(
+//            DiaryDto(
+//                "내가그린기린그림은잘그린기린그림"
+//                , LocalDate.now()
+//                , GetMeResponseDto(12345, "예그리나", 2, 1, 1, 1, 2)
+//                , null
+//            )
+//        )
 
         diaryCoverAdapter.diaryList = diaryList
-
-        // 수정해야 할 것 : api를 통해 유저의 정보를 받아올텐데 그 안에 있는 user nickname 변수로 text를 수정해주어야 한다.
-        binding.userNickname.text = "예그리나"
-
-        userApiProvider!!.getMe().enqueue(object : Callback<GetMeResponseDto> {
-            override fun onResponse(
-                call: Call<GetMeResponseDto>,
-                response: Response<GetMeResponseDto>
-            ) {
-                println(response.body());
-            }
-
-            override fun onFailure(call: Call<GetMeResponseDto>, t: Throwable) {
-                println(t);
-            }
-        })
-
-        bindLayouts();
     }
 
     fun bindLayouts(){
@@ -260,23 +241,70 @@ class MainActivity : AppCompatActivity() {
         return face_draw
     }
 
-    fun settingUserIcon(icon: UserCharacterBinding) {
+    private fun getUser(){
+        userApiProvider!!.getMe().enqueue(object : Callback<GetMeResponseDto> {
+            override fun onResponse(
+                call: Call<GetMeResponseDto>,
+                response: Response<GetMeResponseDto>
+            ) {
+                Log.d("DEBUG", "GET_USER 성공");
+                Log.d("DEBUG", response.body().toString())
+                Log.d("DEBUG", response.toString())
+                Log.d("DEBUG", response.headers().toString())
+
+
+                getUserHandler(response.body())
+            }
+
+            override fun onFailure(call: Call<GetMeResponseDto>, t: Throwable) {
+                Log.d("DEBUG", "GET_USER 실패")
+            }
+        })
+    }
+
+    fun getUserHandler(response: GetMeResponseDto?){
+        val viewHandler = ViewHandler(this)
+
+        if(
+                viewHandler.goLoginActivityIfNull(response) ||
+                viewHandler.goLoginActivityIfNull(response?.status) ||
+                viewHandler.goLoginActivityIfNull(response?.user)
+        ){
+            return;
+        }
+
+        val dto = response!!
+
+
+        if(dto.status == false){
+            viewHandler.goLoginActivityAndRemoveTokens()
+            return;
+        }
+
         var body_shape = CharacterInitActivity.character_init_body_shape
         var body_color = CharacterInitActivity.character_init_body_color
         var blush = CharacterInitActivity.character_init_blush
         var item = CharacterInitActivity.character_init_item
 
-        icon.body.setImageResource(getShape(body_shape))
-        icon.body.setColorFilter(resources.getColor(getBodyColor(body_color)))
-        icon.blush.setColorFilter(resources.getColor(getBlush(blush, body_shape).first))
-        icon.blush.setImageResource(getBlush(blush, body_shape).second)
+        var (_, user) = dto
+
+        icon!!.body.setImageResource(getShape(user?.body?:1))
+        icon!!.body.setColorFilter(resources.getColor(getBodyColor(user?.bodyColor?:1)))
+        icon!!.blush.setColorFilter(resources.getColor(getBlush(1, body_shape).first))
+        icon!!.blush.setImageResource(getBlush(blush, body_shape).second)
         if (item == 1) {
-            icon.item.visibility= View.INVISIBLE
+            icon!!.item.visibility= View.INVISIBLE
         }
         else {
-            icon.item.visibility=View.VISIBLE
-            icon.item.setImageResource(item_kind(item))
+            icon!!.item.visibility=View.VISIBLE
+            icon!!.item.setImageResource(item_kind(user?.item?:1))
         }
-        icon.face.setImageResource(getFace(body_shape))
+        icon!!.face.setImageResource(getFace(user?.body?:1))
+        setUserNickname(nickname = user?.nickname?:"unknown")
     }
+
+    fun setUserNickname(nickname: String){
+        this.binding.userNickname.text = nickname
+    }
+
 }
