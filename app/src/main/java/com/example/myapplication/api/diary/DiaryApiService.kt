@@ -2,6 +2,7 @@ package com.example.myapplication.api.auth
 
 import android.util.Log
 import com.example.myapplication.BuildConfig
+import com.example.myapplication.api.BasicApiService
 import com.example.myapplication.util.TokenManager
 import com.example.myapplication.api.diary.DiaryApiProvider
 import com.example.myapplication.api.diary.dto.CreateDiaryRequestDto
@@ -16,7 +17,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class DiaryApiService{
+class DiaryApiService : BasicApiService{
 
     private val apiProvider: DiaryApiProvider;
 
@@ -25,27 +26,15 @@ class DiaryApiService{
     }
 
     private fun getProvider(tokenManager: TokenManager): DiaryApiProvider{
-        val apiInterceptor = Interceptor {
-            val originalRequest = it.request()
-            val newHttp = originalRequest.newBuilder()
-                .header("Authorization", "Bearer " + tokenManager.getJWT())
-                .build()
-            it.proceed(newHttp)
-        }
-
-        val httpClient = OkHttpClient.Builder()
-            .addInterceptor(apiInterceptor)
-            .build();
-
-        val gson = GsonBuilder()
-            .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-            .create()
+        val httpClient = getBasicHttpClientBuilder().addInterceptor(
+            getApiInterceptorWithJWT(tokenManager.getJWT())
+        ).build()
 
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URI)
             .client(httpClient)
             .addConverterFactory(GsonConverterFactory
-                .create(gson))
+                .create(getBasicGson()))
             .build()
             .create(DiaryApiProvider::class.java);
     }

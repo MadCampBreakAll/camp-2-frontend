@@ -21,7 +21,6 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var authApiService: AuthApiService
     private lateinit var tokenManager: TokenManager
-    private lateinit var userApiService: UserApiService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -87,22 +86,22 @@ class LoginActivity : AppCompatActivity() {
         val viewHandler = ViewHandler(this);
 
         try {
-            if(response?.register != null && !response?.register!!){
+            if(response?.register != null && response.register == false){
                 viewHandler.goCharacterInitActivity()
                 return@handler
             }
 
-            if(!response?.status!!){
+            if(response!!.status!! == false){
                 viewHandler.goLoginActivityAndRemoveTokens()
                 return@handler
             }
 
-            if(response.status){
+            if(response!!.status!! == true){
                 this.tokenManager.setJWT(response.token!!);
                 viewHandler.goMainActivity();
-                viewHandler.goMainActivity()
+                return@handler
             }
-
+            throw Throwable()
         } catch (e: Throwable) {
             viewHandler.goLoginActivityAndRemoveTokens()
             return@handler

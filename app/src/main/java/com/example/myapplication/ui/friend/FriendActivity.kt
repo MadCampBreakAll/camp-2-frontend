@@ -36,7 +36,7 @@ class FriendActivity : AppCompatActivity() {
         binding.goPendingFriendActivity.setOnClickListener{
             viewHandler.goPendingFriendActivity()
         }
-        binding.friends.layoutManager = LinearLayoutManager(this)
+        binding.friends.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.friends.adapter = friendsAdapter
     }
 
@@ -46,10 +46,10 @@ class FriendActivity : AppCompatActivity() {
 
     private val getFriendsHandler : (GetMyFriendsResponseDto?) -> Unit = handler@{ response ->
         try {
-            println(response?.friends!!)
             friendsAdapter.clear()
-            friendsAdapter.addFriends(response.friends)
+            friendsAdapter.addFriends(response?.friends!!)
             friendsAdapter.notifyDataSetChanged()
+            return@handler
         } catch (e : Throwable) {
             viewHandler.goLoginActivityAndRemoveTokens()
             return@handler

@@ -23,8 +23,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var diaryCoverAdapter: DiaryCoverAdapter
     private lateinit var userApiService: UserApiService
     private lateinit var diaryApiService: DiaryApiService
-    private lateinit var viewHandler: ViewHandler;
-    private var icon: UserCharacterBinding?= null
+    private lateinit var viewHandler: ViewHandler
+    private lateinit var icon: UserCharacterBinding
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {

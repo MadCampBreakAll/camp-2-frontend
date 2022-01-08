@@ -22,7 +22,7 @@ class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<Diar
     var diaryList = mutableListOf<DiaryDto>()
 
     fun addDiary(diary: DiaryDto){
-        diaryList.add(diary);
+        diaryList.add(diary)
     }
 
     fun addAllDiary(diary: List<DiaryDto>) {
@@ -30,7 +30,7 @@ class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<Diar
     }
 
     fun clearDiary(){
-        diaryList.clear();
+        diaryList.clear()
     }
 
     override fun onCreateViewHolder(

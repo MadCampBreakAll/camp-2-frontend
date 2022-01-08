@@ -26,7 +26,6 @@ class FriendsAdapter(private val context: Context) : RecyclerView.Adapter<Friend
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = FriendBinding.inflate(LayoutInflater.from(context), parent, false)
-        println(binding)
         return ViewHolder(binding)
     }
 
@@ -35,6 +34,7 @@ class FriendsAdapter(private val context: Context) : RecyclerView.Adapter<Friend
     }
 
     override fun getItemCount(): Int {
+        println(friends.size)
         return friends.size
     }
 

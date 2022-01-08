@@ -2,6 +2,7 @@ package com.example.myapplication.api.page
 
 import android.util.Log
 import com.example.myapplication.BuildConfig
+import com.example.myapplication.api.BasicApiService
 import com.example.myapplication.api.page.dto.CreatePageRequestDto
 import com.example.myapplication.api.page.dto.CreatePageResponseDto
 import com.example.myapplication.api.page.dto.GetDiaryInnerPagesResponse
@@ -15,7 +16,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class PageApiService {
+class PageApiService : BasicApiService{
 
     private val apiProvider: PageApiProvider;
 
@@ -24,26 +25,17 @@ class PageApiService {
     }
 
     private fun getProvider(tokenManager: TokenManager): PageApiProvider {
-        val apiInterceptor = Interceptor {
-            val originalRequest = it.request()
-            val newHttp = originalRequest.newBuilder()
-                .header("Authorization", "Bearer " + tokenManager.getJWT())
-                .build()
-            it.proceed(newHttp)
-        }
 
-        val gson = GsonBuilder()
-            .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-            .create()
-
-        val httpClient = OkHttpClient.Builder()
-            .addInterceptor(apiInterceptor)
-            .build()
+        val httpClient = getBasicHttpClientBuilder().addInterceptor(
+            getApiInterceptorWithJWT(tokenManager.getJWT())
+        ).build()
 
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.TEST_BASE_URI)
+            .baseUrl(BuildConfig.BASE_URI)
             .client(httpClient)
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create(
+                getBasicGson()
+            ))
             .build()
             .create(PageApiProvider::class.java)
     }

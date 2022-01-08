@@ -2,6 +2,7 @@ package com.example.myapplication.api.friend
 
 import android.util.Log
 import com.example.myapplication.BuildConfig
+import com.example.myapplication.api.BasicApiService
 import com.example.myapplication.api.friend.dto.SearchUserFriendWithNicknameRequestDto
 import com.example.myapplication.api.friend.dto.SearchUserFriendWithNicknameResponseDto
 import com.example.myapplication.api.user.dto.*
@@ -14,7 +15,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-class FriendApiService {
+class FriendApiService : BasicApiService{
 
     private var friendApiProvider: FriendApiProvider
 
@@ -23,22 +24,16 @@ class FriendApiService {
     }
 
     private fun getProvider(tokenManager: TokenManager) : FriendApiProvider{
-        val apiInterceptor = Interceptor {
-            val originalRequest = it.request()
-            val newHttp = originalRequest.newBuilder()
-                .header("Authorization", "Bearer " + tokenManager.getJWT())
-                .build()
-            it.proceed(newHttp)
-        }
-
-        val httpClient = OkHttpClient.Builder()
-            .addInterceptor(apiInterceptor)
-            .build()
+        val httpClient = getBasicHttpClientBuilder().addInterceptor(
+            getApiInterceptorWithJWT(tokenManager.getJWT())
+        ).build()
 
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URI)
             .client(httpClient)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(
+                getBasicGson()
+            ))
             .build()
             .create(FriendApiProvider::class.java)
     }

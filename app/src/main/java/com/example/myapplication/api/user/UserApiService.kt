@@ -2,6 +2,7 @@ package com.example.myapplication.api.user
 
 import android.util.Log
 import com.example.myapplication.BuildConfig
+import com.example.myapplication.api.BasicApiService
 import com.example.myapplication.api.user.dto.*
 import com.example.myapplication.util.TokenManager
 import com.google.gson.GsonBuilder
@@ -14,7 +15,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 
-class UserApiService {
+class UserApiService : BasicApiService{
     private val userApiProvider: UserApiProvider;
 
     constructor(tokenManager: TokenManager){
@@ -22,27 +23,16 @@ class UserApiService {
     }
 
     private fun getProvider(tokenManager: TokenManager): UserApiProvider {
-
-        val apiInterceptor = Interceptor {
-            val originalRequest = it.request()
-            val newHttp = originalRequest.newBuilder()
-                .header("Authorization", "Bearer " + tokenManager.getJWT())
-                .build()
-            it.proceed(newHttp)
-        }
-
-        val httpClient = OkHttpClient.Builder()
-            .addInterceptor(apiInterceptor)
-            .build()
-
-        val gson = GsonBuilder()
-            .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
-            .create()
+        val httpClient = getBasicHttpClientBuilder().addInterceptor(
+            getApiInterceptorWithJWT(tokenManager.getJWT())
+        ).build()
 
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URI)
             .client(httpClient)
-            .addConverterFactory(GsonConverterFactory.create(gson))
+            .addConverterFactory(GsonConverterFactory.create(
+                getBasicGson()
+            ))
             .build()
             .create(UserApiProvider::class.java);
     }
