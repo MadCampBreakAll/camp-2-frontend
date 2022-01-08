@@ -14,6 +14,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myapplication.api.entity.Diary
 import com.example.myapplication.api.user.UserApiProvider
 import com.example.myapplication.api.user.UserApiService
+import com.example.myapplication.DiaryCoverAdapter
+import com.example.myapplication.api.auth.DiaryApiService
+import com.example.myapplication.api.diary.DiaryApiProvider
+import com.example.myapplication.api.diary.dto.GetMyDiariesResponseDto
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -27,6 +31,7 @@ class MainActivity : AppCompatActivity() {
 
     private var tokenManager: TokenManager? = null;
     private var userApiProvider: UserApiProvider? = null;
+    private var diaryApiProvider: DiaryApiProvider? = null;
     private var icon: UserCharacterBinding?= null;
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -34,65 +39,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         tokenManager = TokenManager(applicationContext);
         userApiProvider = UserApiService(tokenManager!!).getProvider();
+        diaryApiProvider = DiaryApiService(tokenManager!!).getProvider();
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         icon = binding.userCharacterIcon
 
-        getUser();
-        bindLayouts();
-
-        diaryCoverAdapter = DiaryCoverAdapter(this)
-        binding.diaryList.adapter=diaryCoverAdapter
-
-//        diaryList.add(
-//            DiaryDto(
-//                "누구보다 빠르게 남들과는 다르게 색다르게 리듬을 타는 비트 위의 나그네"
-//                , LocalDate.now()
-//                , GetMeResponseDto(true, user = (0, ))
-//                , null
-//            )
-//        )
-//        for (i in 1..5) {
-//            diaryList.add(
-//                DiaryDto(
-//                    "다부숴!${i}"
-//                    , LocalDate.now()
-//                    , GetMeResponseDto(12345, "예그리나", 2, 1, 1, 1, 2)
-//                    , null
-//                )
-//            )
-//        }
-//        diaryList.add(
-//            DiaryDto(
-//                "내가그린기린그림은잘그린기린그림"
-//                , LocalDate.now()
-//                , GetMeResponseDto(12345, "예그리나", 2, 1, 1, 1, 2)
-//                , null
-//            )
-//        )
-
-        diaryCoverAdapter.diaryList = diaryList
-        diaryCoverAdapter.diaryList = diaryList
-        binding.diaryList.setLayoutManager(GridLayoutManager(this, 2))
-
-        // 수정해야 할 것 : api를 통해 유저의 정보를 받아올텐데 그 안에 있는 user nickname 변수로 text를 수정해주어야 한다.
-        binding.userNickname.text = "예그리나"
-
-        userApiProvider!!.getMe().enqueue(object : Callback<GetMeResponseDto> {
-            override fun onResponse(
-                call: Call<GetMeResponseDto>,
-                response: Response<GetMeResponseDto>
-            ) {
-                println(response.body());
-            }
-
-            override fun onFailure(call: Call<GetMeResponseDto>, t: Throwable) {
-                println(t);
-            }
-        })
-
-        bindLayouts();
+        getUser()
+        getMyDiaries()
+        bindLayouts()
     }
 
     fun bindLayouts(){
@@ -100,6 +55,9 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, CharacterInitActivity::class.java)
             startActivity(intent)
         }
+        diaryCoverAdapter = DiaryCoverAdapter(this)
+        diaryCoverAdapter.diaryList = diaryList
+        binding.diaryList.setLayoutManager(GridLayoutManager(this, 2))
     }
 
     fun getShape(shape: Int): Int {
@@ -296,7 +254,6 @@ class MainActivity : AppCompatActivity() {
 
         val dto = response!!
 
-
         if(dto.status == false){
             viewHandler.goLoginActivityAndRemoveTokens()
             return;
@@ -324,8 +281,40 @@ class MainActivity : AppCompatActivity() {
         setUserNickname(nickname = user?.nickname?:"unknown")
     }
 
-    fun setUserNickname(nickname: String){
+    private fun setUserNickname(nickname: String){
         this.binding.userNickname.text = nickname
     }
 
+    private fun getMyDiaries(){
+        diaryApiProvider!!.getDiaries().enqueue(object: Callback<GetMyDiariesResponseDto> {
+            override fun onResponse(
+                call: Call<GetMyDiariesResponseDto>,
+                response: Response<GetMyDiariesResponseDto>
+            ) {
+                Log.d("DEBUG", "GET MY DIARIES 성공")
+                Log.d("DEBUG", response.body().toString())
+                Log.d("DEBUG", response.toString());
+
+                getMyDiariesHandler(response.body());
+            }
+
+            override fun onFailure(call: Call<GetMyDiariesResponseDto>, t: Throwable) {
+                Log.d("DEBUG", "GET MY DIARIES 실패")
+            }
+        })
+    }
+
+    fun getMyDiariesHandler(dto: GetMyDiariesResponseDto?){
+        val viewHandler = ViewHandler(this);
+        if(
+            viewHandler.goLoginActivityIfNull(dto) ||
+            viewHandler.goLoginActivityIfNull(dto?.diaries) ||
+            viewHandler.goLoginActivityIfNull(dto?.status)
+        ) {
+            return;
+        }
+
+
+
+    }
 }

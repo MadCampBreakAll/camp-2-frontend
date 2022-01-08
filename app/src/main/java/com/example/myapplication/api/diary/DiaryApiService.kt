@@ -2,6 +2,7 @@ package com.example.myapplication.api.auth
 
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.TokenManager
+import com.example.myapplication.api.diary.DiaryApiProvider
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -18,7 +19,7 @@ class DiaryApiService {
         this.tokenManager = tokenManager;
     }
 
-    fun getProvider(): DiaryApiService {
+    fun getProvider(): DiaryApiProvider{
         val api_interceptor = Interceptor {
             val originalRequest = it.request()
             val newHttp = originalRequest.newBuilder()
@@ -36,7 +37,7 @@ class DiaryApiService {
             .client(httpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(DiaryApiService::class.java);
+            .create(DiaryApiProvider::class.java);
     }
 
 }

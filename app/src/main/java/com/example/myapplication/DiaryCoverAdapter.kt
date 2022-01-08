@@ -3,13 +3,11 @@ package com.example.myapplication
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.os.Build
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.annotation.RequiresApi
 import com.example.myapplication.api.entity.Diary
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +18,14 @@ class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<Diar
 
     var diaryList = mutableListOf<Diary>()
 
-    @RequiresApi(Build.VERSION_CODES.O)
+    fun addDiary(diary: Diary){
+        diaryList.add(diary);
+    }
+
+    fun clearDiary(){
+        diaryList.clear();
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

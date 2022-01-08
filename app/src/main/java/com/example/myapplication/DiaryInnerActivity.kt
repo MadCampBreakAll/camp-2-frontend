@@ -4,10 +4,8 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.annotation.RequiresApi
-import com.example.myapplication.api.dto.DiaryDto
 import com.example.myapplication.api.dto.PageDto
 import com.example.myapplication.databinding.ActivityDiaryInnerBinding
-import com.example.myapplication.databinding.ActivityMainBinding
 import org.w3c.dom.Text
 import java.time.LocalDate
 
@@ -16,7 +14,7 @@ import java.time.LocalDate
 // putExtra을 통해서 diary의 id를 알 수 있도록 한다. -> 이 정보로 원하는 것들을 activity에서 얻어내자
 // 이 activity에서는 diary_id를 통해 page들의 정보를 알 수 있어야 한다.
 
-class DiaryInnerActivity : AppCompatActivity() {
+public class DiaryInnerActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityDiaryInnerBinding
     private val binding get() = _binding!!
     private lateinit var pageLetterViewPageAdapter: PageLetterViewPageAdapter
