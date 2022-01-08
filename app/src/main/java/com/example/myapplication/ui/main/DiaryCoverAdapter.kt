@@ -37,8 +37,6 @@ class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<Diar
         parent: ViewGroup,
         viewType: Int
     ): ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.diary, parent, false)
-
         diaryBinding = DiaryBinding.inflate(LayoutInflater.from(context), parent, false)
 
         return ViewHolder(diaryBinding)

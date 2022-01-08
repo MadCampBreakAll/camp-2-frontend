@@ -10,13 +10,15 @@ import com.example.myapplication.ui.login.LoginActivity
 import com.example.myapplication.ui.main.MainActivity
 
 class ViewHandler {
-    var activity: Activity;
+    private var activity: Activity
+    private var tokenManager: TokenManager
+
     constructor(activity: Activity){
         this.activity = activity;
+        this.tokenManager = TokenManager(this.activity)
     }
 
     fun goLoginActivityAndRemoveTokens(): Boolean {
-        val tokenManager = TokenManager(this.activity) ;
         tokenManager.removeJWT();
         tokenManager.removeAccessToken()
 
@@ -28,9 +30,13 @@ class ViewHandler {
 
     fun goLoginActivityIfNull(test: Any?): Boolean{
         if(test == null){
+            tokenManager.removeJWT();
+            tokenManager.removeAccessToken()
+
             val intent = Intent(activity, LoginActivity::class.java)
             activity.startActivity(intent)
             activity.finish()
+
             return true
         }
 
