@@ -1,65 +1,69 @@
-package com.example.myapplication
+package com.example.myapplication.ui.diary
 
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
-import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import android.widget.TextView
 import androidx.annotation.RequiresApi
-import com.example.myapplication.api.entity.Diary
-import com.example.myapplication.databinding.*
+import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.R
+import com.example.myapplication.api.dto.PageDto
+import com.example.myapplication.databinding.PageLetterItemBinding
+import com.example.myapplication.databinding.UserCharacterBinding
+import com.example.myapplication.ui.join.CharacterInitActivity
+import java.time.LocalDate
 
-class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<DiaryCoverAdapter.ViewHolder>() {
-    private lateinit var diaryBinding : DiaryBinding
+// 이 어뎁터는 diary의 letter pages를 담는 fragment_page_letter의 viewpager이 각각의 page들에 값을 binding하여 view를 만들어준다.
+// page_letter에 적절한 값을 바인딩할 수 있어야 한다.
+// DiaryInnerActivity 안에 있는 viewpager에 page view를 바인딩
+// viewpager은 diaryinneractivity에 있다.
 
-    var diaryList = mutableListOf<Diary>()
+class PageLetterViewPageAdapter(private val context: Context): RecyclerView.Adapter<PageLetterViewPageAdapter.ViewHolder>() {
+    private lateinit var innerpagerBinding: PageLetterItemBinding
+    var pageList = mutableListOf<PageDto>()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): DiaryCoverAdapter.ViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.diary, parent, false)
+    ): ViewHolder {
+        innerpagerBinding = PageLetterItemBinding.inflate(LayoutInflater.from(context), parent, false)
 
-        diaryBinding = DiaryBinding.inflate(LayoutInflater.from(context), parent, false)
-
-        return ViewHolder(diaryBinding)
+        return(ViewHolder(innerpagerBinding))
     }
 
-    override fun getItemCount(): Int = diaryList.size
+    override fun getItemCount(): Int = pageList.size
 
-    override fun onBindViewHolder(holder: DiaryCoverAdapter.ViewHolder, position: Int) {
-
-        holder.title.setSelected(true)
-        holder.title.ellipsize= TextUtils.TruncateAt.MARQUEE
-        holder.title.marqueeRepeatLimit = -1
-
-        val layoutParams = holder.itemView.layoutParams
-        layoutParams.height=1000
-        holder.itemView.requestLayout()
-
-        holder.bind(diaryList[position])
+    @RequiresApi(Build.VERSION_CODES.O)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(pageList[position])
     }
 
-    inner class ViewHolder(binding: DiaryBinding) : RecyclerView.ViewHolder(binding.root){
-        var icon = binding.diaryCoverNextWriterIcon
+    inner class ViewHolder(binding: PageLetterItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        private var writenDate = binding.innerPageWrittenDate
+        private var background = binding.pageBackgroundLayout
+        private var dailyColor = binding.innerPageDailyColor
+        private var nextUser = binding.innerPageNextUserCharacter
+        private var body = binding.innerPageText
+        private var writer = binding.innerPageWriteUserCharacter
+        private var title = binding.pageTitle
 
-        var title: TextView = binding.diaryTitle
+        @RequiresApi(Build.VERSION_CODES.O)
+        fun bind(page: PageDto) {
+            writenDate.text = LocalDate.now().toString()
 
-        fun bind(item: Diary) {
-            // 이 부분에 다음 작성자가 나인 diary의 경우에는 alarm imageView가 visible하도록 설정
-            title.text = item.title
+            // background는 설정을 변경하는 화면의 activity 혹은 fragment에서 저장된 companion object 값에 따라서 setting 하는 것으로 하자.
 
-            // 수정해야 할 점 : api를 통해 diary 안에 있는 사람 정보 작성 순서대로 정렬된 list를 받을텐데
-            // 그 list에 담긴 정보를 통해 diaryCovoerFirstOrder~Four까지 icon binding을 받아서 설정해줘야 한다.
-            // 이 때는 settingUserIcon이 아니라 settingOthersIcon 함수를 통해 아이콘 정보를 인자로 넘겨주어야 한다.
-            settingUserIcon(icon)
+            dailyColor.setColorFilter(Color.parseColor(page.color))
+
+//            settingOthersIcon(nextUser, user의 정보들을 뒤의 인자로 추가)
+//            settingOthersIcon(writer, writer의 정보를 뒤의 인자로 추가)
+//            background.setBackgroundColor(Color.parseColor(page.배경 색상 정보가 있어야 할 듯 하다))
+            body.text = page.body
+            title.text = page.title
+
         }
-
         fun getShape(shape: Int): Int {
             var shape_draw = 0
             when(shape){
@@ -239,7 +243,7 @@ class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<Diar
                 icon.item.visibility= View.INVISIBLE
             }
             else {
-                icon.item.visibility=View.VISIBLE
+                icon.item.visibility= View.VISIBLE
                 icon.item.setImageResource(item_kind(item))
             }
             icon.face.setImageResource(getFace(body_shape))

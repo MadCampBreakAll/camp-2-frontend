@@ -1,84 +1,38 @@
-package com.example.myapplication
+package com.example.myapplication.ui.join
 
-import android.content.Intent
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
+
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import com.example.myapplication.api.user.dto.GetMeResponseDto
-import com.example.myapplication.databinding.ActivityMainBinding
+import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.R
+import com.example.myapplication.databinding.ActivityCharacterInitBinding
 import com.example.myapplication.databinding.UserCharacterBinding
-import androidx.annotation.RequiresApi
-import com.example.myapplication.api.entity.Diary
-import com.example.myapplication.api.user.UserApiProvider
-import com.example.myapplication.api.user.UserApiService
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
-class MainActivity : AppCompatActivity() {
-    private var _binding: ActivityMainBinding? = null
+
+class CharacterInitActivity : AppCompatActivity() {
+    private var _binding: ActivityCharacterInitBinding? = null
     private val binding get() = _binding!!
+    private val bodyshapeselectfragment by lazy { CharacterBodyShapeSelectFragment() }
 
-    private lateinit var diaryCoverAdapter: DiaryCoverAdapter
-    var diaryList = mutableListOf<Diary>()
-
-    private var tokenManager: TokenManager? = null;
-    private var userApiProvider: UserApiProvider? = null;
-    private var icon: UserCharacterBinding?= null;
-
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        tokenManager = TokenManager(applicationContext);
-        userApiProvider = UserApiService(tokenManager!!).getProvider();
-        _binding = ActivityMainBinding.inflate(layoutInflater)
+        _binding = ActivityCharacterInitBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        icon = binding.userCharacterIcon
+        var icon = binding.userCharacterInit
+        settingUserIcon(icon)
 
-        getUser();
-        bindLayouts();
+        character_init_binding = binding
+        var next = binding.userCharacterInitNextBtn
+        next.setColorFilter(resources.getColor(R.color.body_red))
 
-        diaryCoverAdapter = DiaryCoverAdapter(this)
-        binding.diaryList.adapter=diaryCoverAdapter
+        var prev = binding.userCharacterInitPrevBtn
+        prev.setColorFilter(resources.getColor(R.color.body_red))
+        prev.scaleX=-1f
 
-//        diaryList.add(
-//            DiaryDto(
-//                "누구보다 빠르게 남들과는 다르게 색다르게 리듬을 타는 비트 위의 나그네"
-//                , LocalDate.now()
-//                , GetMeResponseDto(true, user = (0, ))
-//                , null
-//            )
-//        )
-//        for (i in 1..5) {
-//            diaryList.add(
-//                DiaryDto(
-//                    "다부숴!${i}"
-//                    , LocalDate.now()
-//                    , GetMeResponseDto(12345, "예그리나", 2, 1, 1, 1, 2)
-//                    , null
-//                )
-//            )
-//        }
-//        diaryList.add(
-//            DiaryDto(
-//                "내가그린기린그림은잘그린기린그림"
-//                , LocalDate.now()
-//                , GetMeResponseDto(12345, "예그리나", 2, 1, 1, 1, 2)
-//                , null
-//            )
-//        )
-
-        diaryCoverAdapter.diaryList = diaryList
-    }
-
-    fun bindLayouts(){
-        binding.diaryAddBtn.setOnClickListener {
-            val intent = Intent(this, CharacterInitActivity::class.java)
-            startActivity(intent)
-        }
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.selecting_fragment, bodyshapeselectfragment)
+            .commit()
     }
 
     fun getShape(shape: Int): Int {
@@ -194,7 +148,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun item_kind(item: Int): Int {
-        var shape = CharacterInitActivity.character_init_body_shape
+        var shape = character_init_body_shape
         var result_item = 0
         when (shape) {
             1 -> {
@@ -241,70 +195,31 @@ class MainActivity : AppCompatActivity() {
         return face_draw
     }
 
-    private fun getUser(){
-        userApiProvider!!.getMe().enqueue(object : Callback<GetMeResponseDto> {
-            override fun onResponse(
-                call: Call<GetMeResponseDto>,
-                response: Response<GetMeResponseDto>
-            ) {
-                Log.d("DEBUG", "GET_USER 성공");
-                Log.d("DEBUG", response.body().toString())
-                Log.d("DEBUG", response.toString())
-                Log.d("DEBUG", response.headers().toString())
+    fun settingUserIcon(icon: UserCharacterBinding) {
+        var body_shape = character_init_body_shape
+        var body_color = character_init_body_color
+        var blush = character_init_blush
+        var item = character_init_item
 
-
-                getUserHandler(response.body())
-            }
-
-            override fun onFailure(call: Call<GetMeResponseDto>, t: Throwable) {
-                Log.d("DEBUG", "GET_USER 실패")
-            }
-        })
-    }
-
-    fun getUserHandler(response: GetMeResponseDto?){
-        val viewHandler = ViewHandler(this)
-
-        if(
-                viewHandler.goLoginActivityIfNull(response) ||
-                viewHandler.goLoginActivityIfNull(response?.status) ||
-                viewHandler.goLoginActivityIfNull(response?.user)
-        ){
-            return;
-        }
-
-        val dto = response!!
-
-
-        if(dto.status == false){
-            viewHandler.goLoginActivityAndRemoveTokens()
-            return;
-        }
-
-        var body_shape = CharacterInitActivity.character_init_body_shape
-        var body_color = CharacterInitActivity.character_init_body_color
-        var blush = CharacterInitActivity.character_init_blush
-        var item = CharacterInitActivity.character_init_item
-
-        var (_, user) = dto
-
-        icon!!.body.setImageResource(getShape(user?.body?:1))
-        icon!!.body.setColorFilter(resources.getColor(getBodyColor(user?.bodyColor?:1)))
-        icon!!.blush.setColorFilter(resources.getColor(getBlush(1, body_shape).first))
-        icon!!.blush.setImageResource(getBlush(blush, body_shape).second)
+        icon.body.setImageResource(getShape(body_shape))
+        icon.body.setColorFilter(resources.getColor(getBodyColor(body_color)))
+        icon.blush.setColorFilter(resources.getColor(getBlush(blush, body_shape).first))
+        icon.blush.setImageResource(getBlush(blush, body_shape).second)
         if (item == 1) {
-            icon!!.item.visibility= View.INVISIBLE
+            icon.item.visibility= View.INVISIBLE
         }
         else {
-            icon!!.item.visibility=View.VISIBLE
-            icon!!.item.setImageResource(item_kind(user?.item?:1))
+            icon.item.visibility=View.VISIBLE
+            icon.item.setImageResource(item_kind(item))
         }
-        icon!!.face.setImageResource(getFace(user?.body?:1))
-        setUserNickname(nickname = user?.nickname?:"unknown")
+        icon.face.setImageResource(getFace(body_shape))
     }
 
-    fun setUserNickname(nickname: String){
-        this.binding.userNickname.text = nickname
+    companion object {
+        lateinit var character_init_binding : ActivityCharacterInitBinding
+        var character_init_body_color = 1
+        var character_init_body_shape = 1
+        var character_init_blush = 1
+        var character_init_item = 1
     }
-
 }

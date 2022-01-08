@@ -1,112 +1,119 @@
-package com.example.myapplication
+package com.example.myapplication.ui.join
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.myapplication.databinding.FragmentCharacterBodyShapeSelectBinding
+import com.example.myapplication.R
+import com.example.myapplication.api.auth.AuthApiService
+import com.example.myapplication.api.auth.dto.RegisterRequestDto
+import com.example.myapplication.api.auth.dto.RegisterResponseDto
+import com.example.myapplication.databinding.FragmentCharacterItemBinding
+import com.example.myapplication.util.TokenManager
+import com.example.myapplication.util.ViewHandler
 
-class CharacterBodyShapeSelectFragment : Fragment() {
-    private var _binding: FragmentCharacterBodyShapeSelectBinding? = null
+class CharacterItemSelectFragment : Fragment() {
+    private var _binding: FragmentCharacterItemBinding? = null
     private val binding get() = _binding!!
-    private val bodyselectfragment by lazy {CharacterBodySelectFragment()}
+    private val blushselectfragment by lazy { CharacterBlushFragment() }
+    private lateinit var authApiService: AuthApiService
+    private lateinit var tokenManager: TokenManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        this.tokenManager = TokenManager(requireContext().applicationContext);
+        this.authApiService = AuthApiService(tokenManager)
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentCharacterBodyShapeSelectBinding.inflate(inflater, container, false)
-
+        _binding = FragmentCharacterItemBinding.inflate(inflater, container, false)
         var character_init_binding = CharacterInitActivity.character_init_binding
-        character_init_binding.userCharacterInitType.text="Body Shape"
-        character_init_binding.userCharacterInitPrevBtn.visibility=View.INVISIBLE
-        character_init_binding.userCharacterInitFirstBar.setImageResource(R.drawable.init_current_step)
+        character_init_binding.userCharacterInitType.text = "Item"
+        character_init_binding.userCharacterInitFirstBar.setImageResource(R.drawable.init_rest_steps)
         character_init_binding.userCharacterInitSecondBar.setImageResource(R.drawable.init_rest_steps)
         character_init_binding.userCharacterInitThirdBar.setImageResource(R.drawable.init_rest_steps)
-        character_init_binding.userCharacterInitForthBar.setImageResource(R.drawable.init_rest_steps)
+        character_init_binding.userCharacterInitForthBar.setImageResource(R.drawable.init_current_step)
 
         var next = character_init_binding.userCharacterInitNextBtn
-        next.setImageResource(R.drawable.character_init_next_btn)
-        next.setOnClickListener{
+        next.setImageResource(R.drawable.start)
+        next.setColorFilter(resources.getColor(R.color.body_red))
+        next.setOnClickListener {
+            val registerRequestDto = RegisterRequestDto(
+                tokenManager.getAccessToken(),
+                nickname = "TEST",
+                body = CharacterInitActivity.character_init_body_shape,
+                bodyColor = CharacterInitActivity.character_init_body_color,
+                font = 0,
+                item = CharacterInitActivity.character_init_item,
+                blushColor = CharacterInitActivity.character_init_blush,
+            );
+            authApiService.register(
+                registerRequestDto,
+                success = registerHandler,
+                fail = null
+            );
+        }
 
+        var prev = character_init_binding.userCharacterInitPrevBtn
+        prev.setOnClickListener {
             requireActivity().supportFragmentManager.beginTransaction()
-                .replace(R.id.selecting_fragment, bodyselectfragment)
+                .replace(R.id.selecting_fragment, blushselectfragment)
                 .commit()
         }
 
-        setShape(1)
-        setShape(2)
-        setShape(3)
-        setShape(4)
-        setShape(5)
+        setItem(1)
+        setItem(2)
+        setItem(3)
+        setItem(4)
+        setItem(5)
 
         return binding.root
     }
 
-    fun setShape(button: Int) {
-        //        binding.userCharacterInit.body.setImageResource(R.drawable.five_btn_nonclick)
-        var character_body_binding = CharacterInitActivity.character_init_binding.userCharacterInit
-
-        when(button){
+    fun setItem(button: Int) {
+        var character_body_binding = CharacterInitActivity.character_init_binding
+        when (button) {
             1 -> {
                 binding.bodyColorOneBtn.setOnClickListener {
-                    CharacterInitActivity.character_init_body_shape = 1
-                    character_body_binding.body.setImageResource(R.drawable.body_shape_triangle)
-                    character_body_binding.face.setImageResource(R.drawable.face_traingle)
-                    character_body_binding.blush.setImageResource(R.drawable.blush_triangle)
-
-                    item_changed_following_shape()
+                    character_body_binding.userCharacterInit.item.visibility = View.INVISIBLE
+                    CharacterInitActivity.character_init_item = 1
                     clickButton(button)
                 }
 
             }
             2 -> {
                 binding.bodyColorTwoBtn.setOnClickListener {
-                    CharacterInitActivity.character_init_body_shape = 2
-                    character_body_binding.body.setImageResource(R.drawable.body_shape_cloud)
-                    character_body_binding.face.setImageResource(R.drawable.face_cloud)
-                    character_body_binding.blush.setImageResource(R.drawable.blush_cloud)
-
-                    item_changed_following_shape()
+                    character_body_binding.userCharacterInit.item.visibility = View.VISIBLE
+                    character_body_binding.userCharacterInit.item.setImageResource(item_kind("ribbon"))
+                    CharacterInitActivity.character_init_item = 2
                     clickButton(button)
                 }
             }
             3 -> {
                 binding.bodyColorThreeBtn.setOnClickListener {
-                    CharacterInitActivity.character_init_body_shape = 3
-                    character_body_binding.body.setImageResource(R.drawable.body_shape_bean)
-                    character_body_binding.face.setImageResource(R.drawable.face_bean_bread_square)
-                    character_body_binding.blush.setImageResource(R.drawable.blush_bean_bread_square)
-
-                    item_changed_following_shape()
+                    character_body_binding.userCharacterInit.item.visibility = View.VISIBLE
+                    character_body_binding.userCharacterInit.item.setImageResource(item_kind("crown"))
+                    CharacterInitActivity.character_init_item = 3
                     clickButton(button)
                 }
             }
             4 -> {
                 binding.bodyColorFourBtn.setOnClickListener {
-                    CharacterInitActivity.character_init_body_shape = 4
-                    character_body_binding.body.setImageResource(R.drawable.body_shape_square)
-                    character_body_binding.face.setImageResource(R.drawable.face_bean_bread_square)
-                    character_body_binding.blush.setImageResource(R.drawable.blush_bean_bread_square)
-
-                    item_changed_following_shape()
+                    character_body_binding.userCharacterInit.item.visibility = View.VISIBLE
+                    character_body_binding.userCharacterInit.item.setImageResource(item_kind("merong"))
+                    CharacterInitActivity.character_init_item = 4
                     clickButton(button)
                 }
             }
             5 -> {
                 binding.bodyColorFiveBtn.setOnClickListener {
-                    CharacterInitActivity.character_init_body_shape = 5
-                    character_body_binding.body.setImageResource(R.drawable.body_shape_bread)
-                    character_body_binding.face.setImageResource(R.drawable.face_bean_bread_square)
-                    character_body_binding.blush.setImageResource(R.drawable.blush_bean_bread_square)
-
-                    item_changed_following_shape()
+                    character_body_binding.userCharacterInit.item.visibility = View.VISIBLE
+                    character_body_binding.userCharacterInit.item.setImageResource(item_kind("glasses"))
+                    CharacterInitActivity.character_init_item = 5
                     clickButton(button)
                 }
             }
@@ -116,7 +123,7 @@ class CharacterBodyShapeSelectFragment : Fragment() {
 
     fun clickButton(button: Int) {
         var i = 0
-        when(button) {
+        when (button) {
             1 -> {
                 binding.bodyColorOneBtn.setImageResource(R.drawable.one_btn_click)
                 binding.bodyColorTwoBtn.setImageResource(R.drawable.two_btn_nonclick)
@@ -187,26 +194,25 @@ class CharacterBodyShapeSelectFragment : Fragment() {
         return result_item
     }
 
-    fun item_string(item_num: Int): String{
-        var item_str = ""
-        when(item_num){
-            2 -> item_str = "ribbon"
-            3 -> item_str = "crown"
-            4 -> item_str = "merong"
-            5 -> item_str = "glasses"
-        }
-        return item_str
-    }
+    var registerHandler : ( RegisterResponseDto?) -> Unit = handler@{ response ->
+        val viewHandler = ViewHandler(requireActivity());
 
-    fun item_changed_following_shape(){
-        var character_body_binding = CharacterInitActivity.character_init_binding.userCharacterInit
-        var item_num = CharacterInitActivity.character_init_item
-        if (item_num == 1) {
-            character_body_binding.item.visibility=View.INVISIBLE
+        if(
+            viewHandler.goLoginActivityIfNull(response) ||
+            viewHandler.goLoginActivityIfNull(response?.status) ||
+            viewHandler.goLoginActivityIfNull(response?.token)
+        ){
+            return@handler
         }
-        else {
-            character_body_binding.item.visibility=View.VISIBLE
-            character_body_binding.item.setImageResource(item_kind(item_string(item_num)))
+
+        val dto = response!!;
+
+        if(!dto.status!!){
+            viewHandler.goLoginActivityAndRemoveTokens();
+            return@handler
         }
+
+        this.tokenManager.setJWT(response.token!!);
+        viewHandler.goMainActivity();
     }
 }

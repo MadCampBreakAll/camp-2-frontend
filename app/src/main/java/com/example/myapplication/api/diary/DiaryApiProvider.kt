@@ -8,12 +8,12 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 
-interface DiaryApiProvider {
+interface DiaryApiProvider{
     @GET("/diaries/me")
     fun getDiaries() : Call<GetMyDiariesResponseDto>;
 
     @POST("/diaries")
     fun createDiary(
-        @Body dto: CreateDiaryRequestDto
+        @Body dto: CreateDiaryRequestDto,
     ) : Call<CreateDiaryResponseDto>;
 }

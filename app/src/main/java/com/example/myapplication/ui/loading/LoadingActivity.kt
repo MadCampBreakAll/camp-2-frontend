@@ -1,10 +1,12 @@
-package com.example.myapplication
+package com.example.myapplication.ui.loading
 
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.annotation.RequiresApi
+import com.example.myapplication.R
+import com.example.myapplication.ui.login.LoginActivity
 import com.example.myapplication.permission.Permission
 
 class LoadingActivity : AppCompatActivity() {

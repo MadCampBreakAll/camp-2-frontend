@@ -4,92 +4,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DiaryInnerActivity">
+    tools:context=".ui.diary.DiaryInnerActivity">
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/innerPageBackgroundLayout"
+        android:id="@+id/innerMainPageFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/inner_page_one_background">
+        android:layout_height="match_parent"/>
 
-        <FrameLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintWidth_percent="0.3"
-            app:layout_constraintDimensionRatio="1"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintVertical_bias="0.05">
-            <include
-                android:id="@+id/innerPageWriteUser"
-                layout="@layout/user_character"/>
-        </FrameLayout>
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintWidth_percent="0.5"
-            app:layout_constraintDimensionRatio="1.5"
-            android:scaleType="fitCenter"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            android:src="@drawable/inner_page_title_highlight"
-            android:backgroundTint="@color/transparent"
-            app:layout_constraintVertical_bias="0.18"/>
-        <ImageView
-            android:id="@+id/innerPagePostIt"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.1"
-            app:layout_constraintDimensionRatio="1"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintVertical_bias="0.31"/>
-
-        <ImageView
-            android:id="@+id/innerPageDailyColor"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintHeight_percent="0.08"
-            app:layout_constraintDimensionRatio="1"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintVertical_bias="0.33"
-            android:src="@drawable/inner_page_daily_color"/>
-
-        <ScrollView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintWidth_percent="0.8"
-            app:layout_constraintHeight_percent="0.48"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintVertical_bias="0.74">
-            <TextView
-                android:id="@+id/innerPageText"
-                android:layout_height="match_parent"
-                android:layout_width="match_parent"
-                android:layout_gravity="center"
-                android:text="오늘은 하루종일 코딩을 했다. 정말 죽는 줄 알았다. \n 근데 세상에 똑똑한 사람이 너무 많다. \n 다들 어디서 이걸 다 배운걸까 \n 오늘도 잠 자긴 글렀겠지 \n 그래도 재밌군!"
-                android:lineSpacingExtra="20dp"
-                android:gravity="center"
-
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintVertical_bias="0.75"/>
-        </ScrollView>
+    <ImageButton
+        android:id="@+id/diaryAddBtn"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:background="@color/transparent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintVertical_bias="0.95"
+        android:backgroundTint="@color/transparent"
+        android:src="@drawable/add"/>
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/pagesLetterViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
