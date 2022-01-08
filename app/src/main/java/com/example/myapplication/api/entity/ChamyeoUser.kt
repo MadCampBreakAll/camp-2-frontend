@@ -4,12 +4,10 @@ import com.google.gson.annotations.SerializedName
 
 data class ChamyeoUser (
     @SerializedName("id")
-    val id: String?,
+    val id: Long,
     @SerializedName("nickname")
     val nickname: String?,
     @SerializedName("body")
-    val body: Int?,
-    @SerializedName("bodyColor")
     val bodyColor: Int?,
     @SerializedName("blushColor")
     val blushColor: Int?,

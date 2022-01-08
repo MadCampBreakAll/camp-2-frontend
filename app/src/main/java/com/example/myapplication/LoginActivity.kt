@@ -94,12 +94,12 @@ class LoginActivity : AppCompatActivity() {
             return;
         }
 
-        if(!responseDto!!.status) {
+        if(!responseDto!!.status!!) {
             viewHandler.goCharacterInitActivity();
             return;
         }
 
-        this.tokenManager.setJWT(responseDto.token);
+        this.tokenManager.setJWT(responseDto!!.token!!);
         viewHandler.goMainActivity();
     }
 

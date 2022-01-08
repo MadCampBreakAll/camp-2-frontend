@@ -215,12 +215,12 @@ class CharacterItemSelectFragment : Fragment() {
             return;
         }
 
-        if(!registerResponseDto!!.status){
+        if(!registerResponseDto?.status!!){
             viewHandler.goLoginActivityAndRemoveTokens();
             return;
         }
 
-        this.tokenManager!!.setJWT(registerResponseDto!!.token);
+        this.tokenManager!!.setJWT(registerResponseDto?.token!!);
         viewHandler.goMainActivity();
     }
 }

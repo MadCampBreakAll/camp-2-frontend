@@ -1,15 +1,16 @@
 package com.example.myapplication
 
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import com.example.myapplication.api.user.dto.GetMeResponseDto
-import com.example.myapplication.api.user.dto.GetMyFriendsResponseDto
-import com.example.myapplication.api.user.dto.GetPendingFriendResponseDto
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.databinding.UserCharacterBinding
+import androidx.annotation.RequiresApi
+import com.example.myapplication.api.entity.Diary
 import com.example.myapplication.api.user.UserApiProvider
 import com.example.myapplication.api.user.UserApiService
 import retrofit2.Call
@@ -19,10 +20,15 @@ import retrofit2.Response
 class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
+
+    private lateinit var diaryCoverAdapter: DiaryCoverAdapter
+    var diaryList = mutableListOf<Diary>()
+
     private var tokenManager: TokenManager? = null;
     private var userApiProvider: UserApiProvider? = null;
     private var icon: UserCharacterBinding?= null;
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         tokenManager = TokenManager(applicationContext);
@@ -35,37 +41,37 @@ class MainActivity : AppCompatActivity() {
         getUser();
         bindLayouts();
 
-        userApiProvider!!.getFriends().enqueue(object: Callback<GetMyFriendsResponseDto>{
-            override fun onResponse(
-                call: Call<GetMyFriendsResponseDto>,
-                response: Response<GetMyFriendsResponseDto>
-            ) {
-                Log.d("DEBUG", "getFriends 성공")
-                Log.d("DEBUG", response.body().toString())
-                println(response.body().toString())
-            }
+        diaryCoverAdapter = DiaryCoverAdapter(this)
+        binding.diaryList.adapter=diaryCoverAdapter
 
-            override fun onFailure(call: Call<GetMyFriendsResponseDto>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-        })
+//        diaryList.add(
+//            DiaryDto(
+//                "누구보다 빠르게 남들과는 다르게 색다르게 리듬을 타는 비트 위의 나그네"
+//                , LocalDate.now()
+//                , GetMeResponseDto(true, user = (0, ))
+//                , null
+//            )
+//        )
+//        for (i in 1..5) {
+//            diaryList.add(
+//                DiaryDto(
+//                    "다부숴!${i}"
+//                    , LocalDate.now()
+//                    , GetMeResponseDto(12345, "예그리나", 2, 1, 1, 1, 2)
+//                    , null
+//                )
+//            )
+//        }
+//        diaryList.add(
+//            DiaryDto(
+//                "내가그린기린그림은잘그린기린그림"
+//                , LocalDate.now()
+//                , GetMeResponseDto(12345, "예그리나", 2, 1, 1, 1, 2)
+//                , null
+//            )
+//        )
 
-        userApiProvider!!.getFendingFriends().enqueue(object: Callback<GetPendingFriendResponseDto>{
-            override fun onResponse(
-                call: Call<GetPendingFriendResponseDto>,
-                response: Response<GetPendingFriendResponseDto>
-            ) {
-                Log.d("DEBUG", "getPendingFriends 성공")
-                Log.d("DEBUG", response.body().toString())
-            }
-
-            override fun onFailure(call: Call<GetPendingFriendResponseDto>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-        })
-
-        userApiProvider!!.
-
+        diaryCoverAdapter.diaryList = diaryList
     }
 
     fun bindLayouts(){
@@ -258,13 +264,19 @@ class MainActivity : AppCompatActivity() {
 
     fun getUserHandler(response: GetMeResponseDto?){
         val viewHandler = ViewHandler(this)
-        val dto = response!!
 
-        if(viewHandler.goLoginActivityIfNull(response)){
+        if(
+                viewHandler.goLoginActivityIfNull(response) ||
+                viewHandler.goLoginActivityIfNull(response?.status) ||
+                viewHandler.goLoginActivityIfNull(response?.user)
+        ){
             return;
         }
 
-        if(dto!!.status == false){
+        val dto = response!!
+
+
+        if(dto.status == false){
             viewHandler.goLoginActivityAndRemoveTokens()
             return;
         }
@@ -274,7 +286,7 @@ class MainActivity : AppCompatActivity() {
         var blush = CharacterInitActivity.character_init_blush
         var item = CharacterInitActivity.character_init_item
 
-        var (_, user) = dto!!;
+        var (_, user) = dto
 
         icon!!.body.setImageResource(getShape(user?.body?:1))
         icon!!.body.setColorFilter(resources.getColor(getBodyColor(user?.bodyColor?:1)))

@@ -32,7 +32,7 @@ class DiaryApiService {
             .build();
 
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URI)
+            .baseUrl(BuildConfig.TEST_BASE_URI)
             .client(httpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

@@ -12,10 +12,10 @@ import java.io.IOException
 
 class AuthApiService {
 
-    val tokenManager: TokenManager;
+    val tokenManager: TokenManager
 
     constructor(tokenManager: TokenManager){
-        this.tokenManager = tokenManager;
+        this.tokenManager = tokenManager
     }
 
     fun getProvider(): AuthApiProvider {
@@ -29,14 +29,14 @@ class AuthApiService {
 
         val httpClient = OkHttpClient.Builder()
             .addInterceptor(api_interceptor)
-            .build();
+            .build()
 
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URI)
+            .baseUrl(BuildConfig.TEST_BASE_URI)
             .client(httpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(AuthApiProvider::class.java);
+            .create(AuthApiProvider::class.java)
     }
 
 }
