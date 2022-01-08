@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.diary
+package com.example.myapplication.ui.main
 
 import android.content.Context
 import android.content.Intent
@@ -13,6 +13,7 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.databinding.*
+import com.example.myapplication.ui.diary.DiaryInnerActivity
 import com.example.myapplication.ui.join.CharacterInitActivity
 
 class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<DiaryCoverAdapter.ViewHolder>() {

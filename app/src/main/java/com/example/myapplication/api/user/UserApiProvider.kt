@@ -15,7 +15,7 @@ interface UserApiProvider {
     fun getFriends() : Call<GetMyFriendsResponseDto>;
 
     @GET("/friends/requests")
-    fun getFendingFriends() : Call<GetPendingFriendResponseDto>;
+    fun getPendingFriends() : Call<GetPendingFriendResponseDto>;
 
     @POST("/friends/requests")
     fun makeFriend(

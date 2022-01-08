@@ -6,28 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.myapplication.R
-import com.example.myapplication.api.auth.AuthApiProvider
 import com.example.myapplication.api.auth.AuthApiService
 import com.example.myapplication.api.auth.dto.RegisterRequestDto
 import com.example.myapplication.api.auth.dto.RegisterResponseDto
 import com.example.myapplication.databinding.FragmentCharacterItemBinding
 import com.example.myapplication.util.TokenManager
 import com.example.myapplication.util.ViewHandler
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class CharacterItemSelectFragment : Fragment() {
     private var _binding: FragmentCharacterItemBinding? = null
     private val binding get() = _binding!!
     private val blushselectfragment by lazy { CharacterBlushFragment() }
-    private var authApiProvider: AuthApiProvider? = null;
-    private var tokenManager: TokenManager? = null;
+    private lateinit var authApiService: AuthApiService
+    private lateinit var tokenManager: TokenManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        tokenManager = TokenManager(requireContext().applicationContext);
-        authApiProvider = AuthApiService(tokenManager!!).getProvider();
+        this.tokenManager = TokenManager(requireContext().applicationContext);
+        this.authApiService = AuthApiService(tokenManager)
     }
 
     override fun onCreateView(
@@ -47,7 +43,7 @@ class CharacterItemSelectFragment : Fragment() {
         next.setColorFilter(resources.getColor(R.color.body_red))
         next.setOnClickListener {
             val registerRequestDto = RegisterRequestDto(
-                tokenManager!!.getAccessToken(),
+                tokenManager.getAccessToken(),
                 nickname = "TEST",
                 body = CharacterInitActivity.character_init_body_shape,
                 bodyColor = CharacterInitActivity.character_init_body_color,
@@ -55,7 +51,11 @@ class CharacterItemSelectFragment : Fragment() {
                 item = CharacterInitActivity.character_init_item,
                 blushColor = CharacterInitActivity.character_init_blush,
             );
-            register(registerRequestDto);
+            authApiService.register(
+                registerRequestDto,
+                success = registerHandler,
+                fail = null
+            );
         }
 
         var prev = character_init_binding.userCharacterInitPrevBtn
@@ -194,36 +194,25 @@ class CharacterItemSelectFragment : Fragment() {
         return result_item
     }
 
-    fun register(registerRequestDto: RegisterRequestDto){
-        authApiProvider!!.register(registerRequestDto).enqueue(object :
-            Callback<RegisterResponseDto> {
-            override fun onResponse(
-                call: Call<RegisterResponseDto>,
-                response: Response<RegisterResponseDto>
-            ) {
-                registerHandler(response.body());
-            }
-
-            override fun onFailure(call: Call<RegisterResponseDto>, t: Throwable) {
-                TODO("Not yet implemented")
-            }
-
-        });
-    }
-
-    fun registerHandler(registerResponseDto: RegisterResponseDto?) {
+    var registerHandler : ( RegisterResponseDto?) -> Unit = handler@{ response ->
         val viewHandler = ViewHandler(requireActivity());
 
-        if(viewHandler.goLoginActivityIfNull(registerResponseDto)){
-            return;
+        if(
+            viewHandler.goLoginActivityIfNull(response) ||
+            viewHandler.goLoginActivityIfNull(response?.status) ||
+            viewHandler.goLoginActivityIfNull(response?.token)
+        ){
+            return@handler
         }
 
-        if(!registerResponseDto?.status!!){
+        val dto = response!!;
+
+        if(!dto.status!!){
             viewHandler.goLoginActivityAndRemoveTokens();
-            return;
+            return@handler
         }
 
-        this.tokenManager!!.setJWT(registerResponseDto?.token!!);
+        this.tokenManager.setJWT(response.token!!);
         viewHandler.goMainActivity();
     }
 }

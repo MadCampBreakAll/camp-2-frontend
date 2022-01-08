@@ -3,7 +3,6 @@ package com.example.myapplication.ui.main
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.example.myapplication.api.user.dto.GetMeResponseDto
 import com.example.myapplication.databinding.ActivityMainBinding
@@ -11,50 +10,49 @@ import com.example.myapplication.databinding.UserCharacterBinding
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myapplication.ui.join.CharacterInitActivity
-import com.example.myapplication.ui.diary.DiaryCoverAdapter
 import com.example.myapplication.R
 import com.example.myapplication.api.entity.Diary
-import com.example.myapplication.api.user.UserApiProvider
 import com.example.myapplication.api.user.UserApiService
 import com.example.myapplication.api.auth.DiaryApiService
-import com.example.myapplication.api.diary.DiaryApiProvider
 import com.example.myapplication.api.diary.dto.GetMyDiariesResponseDto
 import com.example.myapplication.util.TokenManager
 import com.example.myapplication.util.ViewHandler
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
-    private var _binding: ActivityMainBinding? = null
-    private val binding get() = _binding!!
-
+    private lateinit var binding : ActivityMainBinding
     private lateinit var diaryCoverAdapter: DiaryCoverAdapter
-
-    private var tokenManager: TokenManager? = null
-    private var userApiProvider: UserApiProvider? = null
-    private var diaryApiProvider: DiaryApiProvider? = null
+    private lateinit var userApiService: UserApiService
+    private lateinit var diaryApiService: DiaryApiService
     private var icon: UserCharacterBinding?= null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        tokenManager = TokenManager(applicationContext)
-        userApiProvider = UserApiService(tokenManager!!).getProvider()
-        diaryApiProvider = DiaryApiService(tokenManager!!).getProvider()
-        _binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        icon = binding.userCharacterIcon
-
-        bindLayouts()
-        getUser()
-        getMyDiaries()
+        init()
+        bind()
+        userApiService.getMe(
+            success = getUserHandler,
+            fail = null
+        )
+        diaryApiService.getDiaries(
+            success = getMyDiariesHandler,
+            fail = null
+        )
     }
 
-    fun bindLayouts(){
+    private fun init(){
+        val tokenManager = TokenManager(applicationContext)
+        userApiService = UserApiService(tokenManager)
+        diaryApiService = DiaryApiService(tokenManager)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        icon = binding.userCharacterIcon
+    }
+
+    private fun bind(){
         binding.diaryAddBtn.setOnClickListener {
-            startActivity(intent)
+            val viewHandler = ViewHandler(this);
+            viewHandler.goCreateDiary();
         }
         diaryCoverAdapter = DiaryCoverAdapter(this)
         diaryCoverAdapter.diaryList = mutableListOf<Diary>();
@@ -222,27 +220,7 @@ class MainActivity : AppCompatActivity() {
         return face_draw
     }
 
-    private fun getUser(){
-        userApiProvider!!.getMe().enqueue(object : Callback<GetMeResponseDto> {
-            override fun onResponse(
-                call: Call<GetMeResponseDto>,
-                response: Response<GetMeResponseDto>
-            ) {
-                Log.d("DEBUG", "GET_USER 성공");
-                Log.d("DEBUG", response.body().toString())
-                Log.d("DEBUG", response.toString())
-                Log.d("DEBUG", response.headers().toString())
-
-                getUserHandler(response.body())
-            }
-
-            override fun onFailure(call: Call<GetMeResponseDto>, t: Throwable) {
-                Log.d("DEBUG", "GET_USER 실패")
-            }
-        })
-    }
-
-    fun getUserHandler(response: GetMeResponseDto?){
+    private val getUserHandler : (GetMeResponseDto?) -> Unit = handler@{ response ->
         val viewHandler = ViewHandler(this)
 
         if(
@@ -250,14 +228,14 @@ class MainActivity : AppCompatActivity() {
                 viewHandler.goLoginActivityIfNull(response?.status) ||
                 viewHandler.goLoginActivityIfNull(response?.user)
         ){
-            return;
+            return@handler;
         }
 
         val dto = response!!
 
         if(dto.status == false){
             viewHandler.goLoginActivityAndRemoveTokens()
-            return;
+            return@handler;
         }
 
         var body_shape = CharacterInitActivity.character_init_body_shape
@@ -286,26 +264,7 @@ class MainActivity : AppCompatActivity() {
         this.binding.userNickname.text = nickname
     }
 
-    private fun getMyDiaries(){
-        diaryApiProvider!!.getDiaries().enqueue(object: Callback<GetMyDiariesResponseDto> {
-            override fun onResponse(
-                call: Call<GetMyDiariesResponseDto>,
-                response: Response<GetMyDiariesResponseDto>
-            ) {
-                Log.d("DEBUG", "GET MY DIARIES 성공")
-                Log.d("DEBUG", response.body().toString())
-                Log.d("DEBUG", response.toString());
-
-                getMyDiariesHandler(response.body());
-            }
-
-            override fun onFailure(call: Call<GetMyDiariesResponseDto>, t: Throwable) {
-                Log.d("DEBUG", "GET MY DIARIES 실패")
-            }
-        })
-    }
-
-    fun getMyDiariesHandler(response: GetMyDiariesResponseDto?){
+     private val getMyDiariesHandler: (GetMyDiariesResponseDto?) -> Unit = handler@{ response ->
         val viewHandler = ViewHandler(this);
 
         if(
@@ -313,10 +272,10 @@ class MainActivity : AppCompatActivity() {
             viewHandler.goLoginActivityIfNull(response?.diaries) ||
             viewHandler.goLoginActivityIfNull(response?.status)
         ) {
-            return;
+            return@handler
         }
 
-        val dto = response!!;
+        val dto = response!!
 
         diaryCoverAdapter.run {
             clearDiary();
