@@ -10,6 +10,7 @@ import com.example.myapplication.api.user.dto.GetMeResponseDto
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.databinding.UserCharacterBinding
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myapplication.api.entity.Diary
 import com.example.myapplication.api.user.UserApiProvider
 import com.example.myapplication.api.user.UserApiService
@@ -72,6 +73,26 @@ class MainActivity : AppCompatActivity() {
 //        )
 
         diaryCoverAdapter.diaryList = diaryList
+        diaryCoverAdapter.diaryList = diaryList
+        binding.diaryList.setLayoutManager(GridLayoutManager(this, 2))
+
+        // 수정해야 할 것 : api를 통해 유저의 정보를 받아올텐데 그 안에 있는 user nickname 변수로 text를 수정해주어야 한다.
+        binding.userNickname.text = "예그리나"
+
+        userApiProvider!!.getMe().enqueue(object : Callback<GetMeResponseDto> {
+            override fun onResponse(
+                call: Call<GetMeResponseDto>,
+                response: Response<GetMeResponseDto>
+            ) {
+                println(response.body());
+            }
+
+            override fun onFailure(call: Call<GetMeResponseDto>, t: Throwable) {
+                println(t);
+            }
+        })
+
+        bindLayouts();
     }
 
     fun bindLayouts(){
