@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.page
 
+import android.annotation.SuppressLint
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -30,40 +31,26 @@ public class DiaryInnerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityDiaryInnerBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        diaryApiService = DiaryApiService(TokenManager(this));
-        pageApiService = PageApiService(TokenManager(this));
-        pageApiService.getDiaryInnerPages(2,
+        diaryApiService = DiaryApiService(TokenManager(this))
+        pageApiService = PageApiService(TokenManager(this))
+
+        var diaryId = intent.getStringExtra("diaryId")!!;
+
+        pageApiService.getDiaryInnerPages(
+            diaryId.toInt(),
             success = {
-                dto -> {
-                    pageList.addAll(dto!!.pages);
-            }
+                    dto ->
+                run {
+                    pageLetterViewPageAdapter.addAllPage(dto!!.pages)
+                    pageLetterViewPageAdapter.notifyDataSetChanged()
+                }
             },
             fail = null
         )
 
-
-
-        var diaryId = intent.getStringExtra("diaryId")
-
         // 이 diaryId를 이용해서 page들의 정보들을 얻어내야 한다.
         pageLetterViewPageAdapter = PageLetterViewPageAdapter(this)
         binding.pagesLetterViewPager.adapter = pageLetterViewPageAdapter
-
-//        for (i in 1..3){
-//            pageList.add(
-//                PageDto("12345"
-//                    ,"12827"
-//                    ,"18374"
-//                    , 12
-//                    , "기분 최고!"
-//                    , "오늘은 많은 일을 했다. \n기분 최고! \n근데 졸리다!"
-//                    , LocalDate.now()
-//                    , "#a5a58d"
-//                    , null
-//                )
-//            )
-//        }
-
         pageLetterViewPageAdapter.pageList = pageList
     }
 }

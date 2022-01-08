@@ -24,6 +24,10 @@ class PageLetterViewPageAdapter(private val context: Context): RecyclerView.Adap
     private lateinit var innerpagerBinding: PageLetterItemBinding
     var pageList = mutableListOf<PageDto>()
 
+    fun addAllPage(pages: List<PageDto>){
+        this.pageList.addAll(pages);
+    }
+
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int

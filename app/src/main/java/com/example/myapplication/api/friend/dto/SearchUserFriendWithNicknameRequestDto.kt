@@ -2,7 +2,7 @@ package com.example.myapplication.api.friend.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class SearchUserFriendWithNicknameRequestDto (
+data class SearchUserFriendWithNicknameRequestDto(
     @SerializedName("nickname")
-    val nickname:String,
+    val nickname: String,
 )
