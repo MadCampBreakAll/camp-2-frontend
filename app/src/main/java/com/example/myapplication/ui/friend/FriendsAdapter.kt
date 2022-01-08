@@ -34,7 +34,6 @@ class FriendsAdapter(private val context: Context) : RecyclerView.Adapter<Friend
     }
 
     override fun getItemCount(): Int {
-        println(friends.size)
         return friends.size
     }
 

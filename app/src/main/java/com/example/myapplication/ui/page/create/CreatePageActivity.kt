@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.page
+package com.example.myapplication.ui.page.create
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

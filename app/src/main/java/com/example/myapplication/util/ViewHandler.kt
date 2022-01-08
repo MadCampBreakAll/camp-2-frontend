@@ -66,6 +66,7 @@ class ViewHandler {
     fun goCreateDiaryAndFinish() : Boolean {
         val intent = Intent(activity, CreateDiaryActivity::class.java)
         activity.startActivity(intent)
+        activity.finish()
         return true;
     }
 

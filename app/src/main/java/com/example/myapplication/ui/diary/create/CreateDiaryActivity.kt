@@ -14,19 +14,23 @@ class CreateDiaryActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreateDiaryBinding
     private lateinit var diaryApiService: DiaryApiService
+    private lateinit var viewHandler: ViewHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        init()
         bind()
+    }
 
+    private fun init(){
+        binding = ActivityCreateDiaryBinding.inflate(layoutInflater);
+        viewHandler = ViewHandler(this)
         diaryApiService = DiaryApiService(
             TokenManager(this)
-        );
+        )
     }
 
     private fun bind(){
-        binding = ActivityCreateDiaryBinding.inflate(layoutInflater);
         setContentView(binding.root);
         binding.createDiaryButton.setOnClickListener {
             val dto = CreateDiaryRequestDto(
@@ -35,33 +39,20 @@ class CreateDiaryActivity : AppCompatActivity() {
                     binding.friendId1.text.toString(),
                     binding.friendId1.text.toString(),
                 ),
-            );
-
+            )
             diaryApiService.createDiary(dto, success = createDiaryHandler, fail = null);
         }
     }
 
     private val createDiaryHandler : (CreateDiaryResponseDto?) -> Unit = createDiaryHandler@{ response ->
-        val handler = ViewHandler(this);
+        try {
+            if(!response!!.status!!){
+                throw Error()
+            }
 
-        if(
-            handler.goLoginActivityIfNull(response) ||
-            handler.goLoginActivityIfNull(response?.diary) ||
-            handler.goLoginActivityIfNull(response?.status)
-                ) {
-                    return@createDiaryHandler
+            viewHandler.goMainActivity()
+        } catch (e: Error) {
+            viewHandler.goLoginActivityAndRemoveTokens()
         }
-
-        val dto = response!!;
-
-        val status = dto.status!!
-        val diary = dto.diary!!
-
-        if(status){
-            handler.goMainActivity();
-            return@createDiaryHandler
-        }
-
-        Log.d("DEBUG", "DIARY 생성에 실패했습니다.");
     }
 }

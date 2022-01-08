@@ -18,7 +18,7 @@ class PendingFriendsAdapter(private val context: Context) : RecyclerView.Adapter
         pendingFriends.add(pendingFriend)
     }
 
-    fun addFriends(friend: List<PendingFriendDto>) {
+    fun addPendingFriends(friend: List<PendingFriendDto>) {
         pendingFriends.addAll(friend)
     }
 

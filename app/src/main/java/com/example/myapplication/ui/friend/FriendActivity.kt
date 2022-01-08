@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.api.friend.FriendApiService
 import com.example.myapplication.api.user.dto.GetMyFriendsResponseDto
+import com.example.myapplication.api.user.dto.GetPendingFriendResponseDto
 import com.example.myapplication.databinding.ActivityFriendBinding
 import com.example.myapplication.util.TokenManager
 import com.example.myapplication.util.ViewHandler
@@ -21,7 +22,7 @@ class FriendActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         init()
         bind()
-        updateFriend()
+        update()
     }
 
     private fun init(){
@@ -40,8 +41,17 @@ class FriendActivity : AppCompatActivity() {
         binding.friends.adapter = friendsAdapter
     }
 
-    fun updateFriend(){
+    private fun update(){
+        updateFriends()
+        updatePendingFriends()
+    }
+
+    private fun updateFriends(){
         friendApiService.getFriends(success = getFriendsHandler, fail = null)
+    }
+
+    private fun updatePendingFriends(){
+        friendApiService.getPendingFriend(success = getPendingFriendsHandler, fail = null)
     }
 
     private val getFriendsHandler : (GetMyFriendsResponseDto?) -> Unit = handler@{ response ->
@@ -54,6 +64,15 @@ class FriendActivity : AppCompatActivity() {
             viewHandler.goLoginActivityAndRemoveTokens()
             return@handler
         }
+    }
 
+    private val getPendingFriendsHandler : (GetPendingFriendResponseDto?) -> Unit = handler@{ response ->
+        try {
+
+            return@handler
+        } catch (e: Throwable) {
+            viewHandler.goLoginActivityAndRemoveTokens()
+            return@handler
+        }
     }
 }
