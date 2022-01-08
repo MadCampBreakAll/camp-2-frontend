@@ -7,6 +7,8 @@ import com.example.myapplication.databinding.ActivityLoginBinding
 import com.example.myapplication.api.auth.AuthApiService
 import com.example.myapplication.api.auth.dto.LoginRequestDto
 import com.example.myapplication.api.auth.dto.LoginResponseDto
+import com.example.myapplication.api.user.UserApiProvider
+import com.example.myapplication.api.user.UserApiService
 import com.example.myapplication.util.TokenManager
 import com.example.myapplication.util.ViewHandler
 import com.kakao.sdk.auth.model.OAuthToken
@@ -18,19 +20,20 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     private lateinit var authApiService: AuthApiService
-    private lateinit var tokenManager: TokenManager;
+    private lateinit var tokenManager: TokenManager
+    private lateinit var userApiService: UserApiService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        init();
-        bind();
+        init()
+        bind()
     }
 
     private fun init(){
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        tokenManager = TokenManager(this);
-        authApiService = AuthApiService(tokenManager);
+        tokenManager = TokenManager(this)
+        authApiService = AuthApiService(tokenManager)
     }
 
     private fun bind(){
@@ -93,7 +96,7 @@ class LoginActivity : AppCompatActivity() {
 
         val dto = response!!
 
-        if(dto.status!!) {
+        if(!dto.status!!) {
             viewHandler.goCharacterInitActivity();
             return@handler
         }

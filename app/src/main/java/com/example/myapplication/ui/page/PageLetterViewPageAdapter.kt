@@ -66,7 +66,6 @@ class PageLetterViewPageAdapter(private val context: Context): RecyclerView.Adap
             background.setBackgroundColor(Color.parseColor(page.color))
             body.text = page.body
             title.text = page.title
-
         }
         fun getShape(shape: Int): Int {
             var shape_draw = 0

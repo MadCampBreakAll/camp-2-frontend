@@ -6,6 +6,7 @@ import com.example.myapplication.api.page.dto.CreatePageRequestDto
 import com.example.myapplication.api.page.dto.CreatePageResponseDto
 import com.example.myapplication.api.page.dto.GetDiaryInnerPagesResponse
 import com.example.myapplication.util.TokenManager
+import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -31,6 +32,10 @@ class PageApiService {
             it.proceed(newHttp)
         }
 
+        val gson = GsonBuilder()
+            .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+            .create()
+
         val httpClient = OkHttpClient.Builder()
             .addInterceptor(apiInterceptor)
             .build()
@@ -38,7 +43,7 @@ class PageApiService {
         return Retrofit.Builder()
             .baseUrl(BuildConfig.TEST_BASE_URI)
             .client(httpClient)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(PageApiProvider::class.java)
     }

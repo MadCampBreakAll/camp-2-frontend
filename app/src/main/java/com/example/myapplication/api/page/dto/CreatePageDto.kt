@@ -1,7 +1,7 @@
 package com.example.myapplication.api.page.dto
 
 import com.google.gson.annotations.SerializedName
-import java.time.LocalDateTime
+import java.util.*
 
 data class CreatePageDto (
     @SerializedName("id")
@@ -15,7 +15,7 @@ data class CreatePageDto (
     @SerializedName("body")
     val body: String?,
     @SerializedName("createdAt")
-    val createdAt: LocalDateTime?,
+    val createdAt: Date?,
     @SerializedName("color")
     val color: String?,
     @SerializedName("img")

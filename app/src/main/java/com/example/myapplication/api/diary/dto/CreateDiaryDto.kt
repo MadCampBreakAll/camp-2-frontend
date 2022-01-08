@@ -1,7 +1,7 @@
 package com.example.myapplication.api.diary.dto
 
 import com.google.gson.annotations.SerializedName
-import java.time.LocalDateTime
+import java.util.*
 
 data class CreateDiaryDto(
     @SerializedName("id")
@@ -9,7 +9,7 @@ data class CreateDiaryDto(
     @SerializedName("title")
     val title: String?,
     @SerializedName("createdAt")
-    val createdAt: LocalDateTime?,
+    val createdAt: Date?,
     @SerializedName("nextUserId")
     val nextUserId: String?,
     @SerializedName("ownerId")

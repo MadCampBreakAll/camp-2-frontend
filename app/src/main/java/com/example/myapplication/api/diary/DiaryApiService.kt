@@ -7,6 +7,7 @@ import com.example.myapplication.api.diary.DiaryApiProvider
 import com.example.myapplication.api.diary.dto.CreateDiaryRequestDto
 import com.example.myapplication.api.diary.dto.CreateDiaryResponseDto
 import com.example.myapplication.api.diary.dto.GetMyDiariesResponseDto
+import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -36,10 +37,15 @@ class DiaryApiService{
             .addInterceptor(apiInterceptor)
             .build();
 
+        val gson = GsonBuilder()
+            .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+            .create()
+
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URI)
             .client(httpClient)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory
+                .create(gson))
             .build()
             .create(DiaryApiProvider::class.java);
     }

@@ -7,6 +7,7 @@ import com.example.myapplication.api.auth.dto.LoginResponseDto
 import com.example.myapplication.api.auth.dto.RegisterRequestDto
 import com.example.myapplication.api.auth.dto.RegisterResponseDto
 import com.example.myapplication.util.TokenManager
+import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -37,10 +38,14 @@ class AuthApiService {
             .addInterceptor(apiInterceptor)
             .build()
 
+        val gson = GsonBuilder()
+            .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+            .create()
+
         return Retrofit.Builder()
             .baseUrl(BuildConfig.BASE_URI)
             .client(httpClient)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(AuthApiProvider::class.java)
     }
