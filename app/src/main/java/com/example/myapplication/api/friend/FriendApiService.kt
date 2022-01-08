@@ -2,7 +2,8 @@ package com.example.myapplication.api.friend
 
 import android.util.Log
 import com.example.myapplication.BuildConfig
-import com.example.myapplication.api.auth.AuthApiProvider
+import com.example.myapplication.api.friend.dto.SearchUserFriendWithNicknameRequestDto
+import com.example.myapplication.api.friend.dto.SearchUserFriendWithNicknameResponseDto
 import com.example.myapplication.api.user.dto.*
 import com.example.myapplication.util.TokenManager
 import okhttp3.Interceptor
@@ -15,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class FriendApiService {
 
-    private lateinit var friendApiProvider: FriendApiProvider
+    private var friendApiProvider: FriendApiProvider
 
     constructor(tokenManager: TokenManager){
         friendApiProvider = getProvider(tokenManager)
@@ -39,7 +40,7 @@ class FriendApiService {
             .client(httpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(friendApiProvider::class.java)
+            .create(FriendApiProvider::class.java)
     }
 
 
@@ -138,7 +139,36 @@ class FriendApiService {
             }
 
             override fun onFailure(call: Call<AcceptFriendResponseDto>, t: Throwable) {
-                Log.d("DEBUG", "MAKE PENDING FRIEND FAIL")
+                Log.d("DEBUG", "ACCEPT FRIEND FAIL")
+                Log.d("DEBUG", t.toString())
+
+                fail?.invoke(t);
+            }
+        })
+    }
+
+    fun searchUserFriendWithNickname(
+        dto: SearchUserFriendWithNicknameRequestDto,
+        success: (SearchUserFriendWithNicknameResponseDto?) -> Unit,
+        fail: ((Throwable) -> Unit)?
+    ) {
+        this.friendApiProvider.searchFriendWithNickname(dto).enqueue(object: Callback<SearchUserFriendWithNicknameResponseDto> {
+            override fun onResponse(
+                call: Call<SearchUserFriendWithNicknameResponseDto>,
+                response: Response<SearchUserFriendWithNicknameResponseDto>
+            ) {
+                Log.d("DEBUG", "SEARCH USER SUCCESS")
+                Log.d("DEBUG", response.toString())
+                Log.d("DEBUG", response.body().toString())
+
+                success(response.body());
+            }
+
+            override fun onFailure(
+                call: Call<SearchUserFriendWithNicknameResponseDto>,
+                t: Throwable
+            ) {
+                Log.d("DEBUG", "SEARCH USER FAIL")
                 Log.d("DEBUG", t.toString())
 
                 fail?.invoke(t);

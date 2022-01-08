@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var diaryCoverAdapter: DiaryCoverAdapter
     private lateinit var userApiService: UserApiService
     private lateinit var diaryApiService: DiaryApiService
+    private lateinit var viewHandler: ViewHandler;
     private var icon: UserCharacterBinding?= null
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         init()
         bind()
+
         userApiService.getMe(
             success = getUserHandler,
             fail = null
@@ -45,14 +47,17 @@ class MainActivity : AppCompatActivity() {
         userApiService = UserApiService(tokenManager)
         diaryApiService = DiaryApiService(tokenManager)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         icon = binding.userCharacterIcon
     }
 
-    private fun bind(){
+    private fun bind() {
+        setContentView(binding.root)
+        viewHandler = ViewHandler(this);
         binding.diaryAddBtn.setOnClickListener {
-            val viewHandler = ViewHandler(this);
-            viewHandler.goCreateDiary();
+            viewHandler.goCreateDiaryActivity();
+        }
+        binding.goFriendActivity.setOnClickListener {
+            viewHandler.goFriendActivity();
         }
         diaryCoverAdapter = DiaryCoverAdapter(this)
         diaryCoverAdapter.diaryList = mutableListOf<Diary>();
@@ -221,8 +226,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val getUserHandler : (GetMeResponseDto?) -> Unit = handler@{ response ->
-        val viewHandler = ViewHandler(this)
-
         if(
                 viewHandler.goLoginActivityIfNull(response) ||
                 viewHandler.goLoginActivityIfNull(response?.status) ||
@@ -265,7 +268,6 @@ class MainActivity : AppCompatActivity() {
     }
 
      private val getMyDiariesHandler: (GetMyDiariesResponseDto?) -> Unit = handler@{ response ->
-        val viewHandler = ViewHandler(this);
 
         if(
             viewHandler.goLoginActivityIfNull(response) ||

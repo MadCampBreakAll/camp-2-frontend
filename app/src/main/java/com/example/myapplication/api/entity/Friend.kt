@@ -4,15 +4,15 @@ import com.google.gson.annotations.SerializedName
 
 data class Friend (
     @SerializedName("id")
-    val id: Int,
+    val id: String,
     @SerializedName("nickname")
     val nickname: String,
     @SerializedName("body")
     val body: Int,
     @SerializedName("bodyColor")
-    val bodyColor: String,
+    val bodyColor: Int,
     @SerializedName("blushColor")
-    val blushColor: String,
+    val blushColor: Int,
     @SerializedName("item")
     val item: Int
 )

@@ -12,24 +12,21 @@ import com.example.myapplication.util.ViewHandler
 
 class CreateDiary : AppCompatActivity() {
 
-    private var _binding: ActivityCreateDiaryBinding? = null
-    private val binding get() = _binding!!
-
-    private var _diaryApiService: DiaryApiService? = null;
-    private val diaryApiService get() = _diaryApiService!!;
+    private lateinit var binding: ActivityCreateDiaryBinding
+    private lateinit var diaryApiService: DiaryApiService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityCreateDiaryBinding.inflate(layoutInflater);
-        _diaryApiService = DiaryApiService(
-            TokenManager(this)
-        );
 
         bind()
 
+        diaryApiService = DiaryApiService(
+            TokenManager(this)
+        );
     }
 
     private fun bind(){
+        binding = ActivityCreateDiaryBinding.inflate(layoutInflater);
         setContentView(binding.root);
         binding.createDiaryButton.setOnClickListener {
             val dto = CreateDiaryRequestDto(
