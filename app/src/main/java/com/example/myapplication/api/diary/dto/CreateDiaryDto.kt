@@ -1,9 +1,9 @@
-package com.example.myapplication.api.entity
+package com.example.myapplication.api.diary.dto
 
 import com.google.gson.annotations.SerializedName
 import java.time.LocalDateTime
 
-data class CreateDiary(
+data class CreateDiaryDto(
     @SerializedName("id")
     val id: Int?,
     @SerializedName("title")

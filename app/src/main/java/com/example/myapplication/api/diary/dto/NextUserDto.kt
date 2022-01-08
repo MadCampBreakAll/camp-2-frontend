@@ -1,18 +1,18 @@
-package com.example.myapplication.api.entity
+package com.example.myapplication.api.diary.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class Friend (
+data class NextUserDto (
     @SerializedName("id")
-    val id: String,
+    val id: String?,
     @SerializedName("nickname")
-    val nickname: String,
+    val nickname: String?,
     @SerializedName("body")
-    val body: Int,
+    val body: Int?,
     @SerializedName("bodyColor")
-    val bodyColor: Int,
+    val bodyColor: Int?,
     @SerializedName("blushColor")
-    val blushColor: Int,
+    val blushColor: Int?,
     @SerializedName("item")
-    val item: Int
+    val item: Int?
 )

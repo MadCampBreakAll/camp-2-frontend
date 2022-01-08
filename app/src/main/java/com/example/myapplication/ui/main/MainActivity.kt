@@ -11,9 +11,9 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myapplication.ui.join.CharacterInitActivity
 import com.example.myapplication.R
-import com.example.myapplication.api.entity.Diary
 import com.example.myapplication.api.user.UserApiService
 import com.example.myapplication.api.auth.DiaryApiService
+import com.example.myapplication.api.diary.dto.DiaryDto
 import com.example.myapplication.api.diary.dto.GetMyDiariesResponseDto
 import com.example.myapplication.util.TokenManager
 import com.example.myapplication.util.ViewHandler
@@ -60,7 +60,7 @@ class MainActivity : AppCompatActivity() {
             viewHandler.goFriendActivity();
         }
         diaryCoverAdapter = DiaryCoverAdapter(this)
-        diaryCoverAdapter.diaryList = mutableListOf<Diary>();
+        diaryCoverAdapter.diaryList = mutableListOf<DiaryDto>();
         binding.diaryList.adapter = diaryCoverAdapter;
         binding.diaryList.setLayoutManager(GridLayoutManager(this, 2))
     }

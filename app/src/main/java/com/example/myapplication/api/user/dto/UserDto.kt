@@ -1,10 +1,10 @@
-package com.example.myapplication.api.entity
+package com.example.myapplication.api.user.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class ChamyeoUser(
+data class UserDto(
     @SerializedName("id")
-    val id: Long,
+    val id: String?,
     @SerializedName("nickname")
     val nickname: String?,
     @SerializedName("body")
@@ -12,7 +12,9 @@ data class ChamyeoUser(
     @SerializedName("bodyColor")
     val bodyColor: Int?,
     @SerializedName("blushColor")
-    val blushColor: Int?,
+    val blush_color: Int?,
     @SerializedName("item")
     val item: Int?,
+    @SerializedName("font")
+    val font: String?,
 )

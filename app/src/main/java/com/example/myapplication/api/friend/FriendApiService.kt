@@ -36,7 +36,7 @@ class FriendApiService {
             .build()
 
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.TEST_BASE_URI)
+            .baseUrl(BuildConfig.BASE_URI)
             .client(httpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()

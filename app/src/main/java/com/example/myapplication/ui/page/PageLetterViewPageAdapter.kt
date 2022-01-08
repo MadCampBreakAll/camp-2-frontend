@@ -55,16 +55,16 @@ class PageLetterViewPageAdapter(private val context: Context): RecyclerView.Adap
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(page: PageDto) {
-            writenDate.text = LocalDate.now().toString()
+            writenDate.text = page!!.createdAt!!.toString()
 
             // background는 설정을 변경하는 화면의 activity 혹은 fragment에서 저장된 companion object 값에 따라서 setting 하는 것으로 하자.
 
             dailyColor.setColorFilter(Color.parseColor(page.color))
 
-//            settingOthersIcon(nextUser, user의 정보들을 뒤의 인자로 추가)
+//            settingOthersIcon(nextUser, page.b)
 //            settingOthersIcon(writer, writer의 정보를 뒤의 인자로 추가)
-//            background.setBackgroundColor(Color.parseColor(page.배경 색상 정보가 있어야 할 듯 하다))
-//            body.text = page.body
+            background.setBackgroundColor(Color.parseColor(page.color))
+            body.text = page.body
             title.text = page.title
 
         }
