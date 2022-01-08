@@ -32,6 +32,7 @@
         <entry key="app/src/main/res/layout/friend.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/page_letter.xml" value="0.375" />
         <entry key="app/src/main/res/layout/page_letter_item.xml" value="0.17453703703703705" />
+        <entry key="app/src/main/res/layout/pending_friend.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/user_character.xml" value="0.15833333333333333" />
       </map>
     </option>

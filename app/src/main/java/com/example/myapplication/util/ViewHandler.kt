@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import com.example.myapplication.ui.diary.create.CreateDiaryActivity
 import com.example.myapplication.ui.friend.FriendActivity
-import com.example.myapplication.ui.friend.InvitedFriendActivity
+import com.example.myapplication.ui.friend.PendingFriendActivity
 import com.example.myapplication.ui.join.CharacterInitActivity
 import com.example.myapplication.ui.login.LoginActivity
 import com.example.myapplication.ui.main.MainActivity
@@ -76,7 +76,7 @@ class ViewHandler {
     }
 
     fun goPendingFriendActivity(): Boolean{
-        val intent = Intent(activity, InvitedFriendActivity::class.java)
+        val intent = Intent(activity, PendingFriendActivity::class.java)
         activity.startActivity(intent)
         return true;
     }

@@ -7,7 +7,7 @@ import com.example.myapplication.api.friend.dto.SearchUserFriendWithNicknameRequ
 import com.example.myapplication.databinding.ActivityInvitedFriendBinding
 import com.example.myapplication.util.TokenManager
 
-class InvitedFriendActivity : AppCompatActivity() {
+class PendingFriendActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityInvitedFriendBinding
     private lateinit var friendApiService: FriendApiService

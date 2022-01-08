@@ -86,23 +86,28 @@ class LoginActivity : AppCompatActivity() {
     private val loginWithServerHandler : (LoginResponseDto?) -> Unit = handler@{ response ->
         val viewHandler = ViewHandler(this);
 
-        if(
-            viewHandler.goLoginActivityIfNull(response) ||
-            viewHandler.goLoginActivityIfNull(response?.status) ||
-            viewHandler.goLoginActivityIfNull(response?.token)
-        ){
+        try {
+            if(response?.register != null && !response?.register!!){
+                viewHandler.goCharacterInitActivity()
+                return@handler
+            }
+
+            if(!response?.status!!){
+                viewHandler.goLoginActivityAndRemoveTokens()
+                return@handler
+            }
+
+            if(response.status){
+                this.tokenManager.setJWT(response.token!!);
+                viewHandler.goMainActivity();
+                viewHandler.goMainActivity()
+            }
+
+        } catch (e: Throwable) {
+            viewHandler.goLoginActivityAndRemoveTokens()
             return@handler
         }
 
-        val dto = response!!
-
-        if(!dto.status!!) {
-            viewHandler.goCharacterInitActivity();
-            return@handler
-        }
-
-        this.tokenManager.setJWT(dto.token!!);
-        viewHandler.goMainActivity();
     }
 
 }
