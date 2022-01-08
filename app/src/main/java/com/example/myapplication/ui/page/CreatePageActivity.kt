@@ -11,7 +11,6 @@ class CreatePageActivity : AppCompatActivity() {
     }
 
     fun init(){
-        ActivityCreate
     }
 
     fun bind(){
