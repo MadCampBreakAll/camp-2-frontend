@@ -22,6 +22,10 @@ class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<Diar
         diaryList.add(diary);
     }
 
+    fun addAllDiary(diary: List<Diary>) {
+        diaryList.addAll(diary)
+    }
+
     fun clearDiary(){
         diaryList.clear();
     }

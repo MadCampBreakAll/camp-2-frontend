@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myapplication.api.entity.Diary
 import com.example.myapplication.api.user.UserApiProvider
 import com.example.myapplication.api.user.UserApiService
-import com.example.myapplication.DiaryCoverAdapter
 import com.example.myapplication.api.auth.DiaryApiService
 import com.example.myapplication.api.diary.DiaryApiProvider
 import com.example.myapplication.api.diary.dto.GetMyDiariesResponseDto
@@ -27,27 +26,26 @@ class MainActivity : AppCompatActivity() {
     private val binding get() = _binding!!
 
     private lateinit var diaryCoverAdapter: DiaryCoverAdapter
-    var diaryList = mutableListOf<Diary>()
 
-    private var tokenManager: TokenManager? = null;
-    private var userApiProvider: UserApiProvider? = null;
-    private var diaryApiProvider: DiaryApiProvider? = null;
-    private var icon: UserCharacterBinding?= null;
+    private var tokenManager: TokenManager? = null
+    private var userApiProvider: UserApiProvider? = null
+    private var diaryApiProvider: DiaryApiProvider? = null
+    private var icon: UserCharacterBinding?= null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        tokenManager = TokenManager(applicationContext);
-        userApiProvider = UserApiService(tokenManager!!).getProvider();
-        diaryApiProvider = DiaryApiService(tokenManager!!).getProvider();
+        tokenManager = TokenManager(applicationContext)
+        userApiProvider = UserApiService(tokenManager!!).getProvider()
+        diaryApiProvider = DiaryApiService(tokenManager!!).getProvider()
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         icon = binding.userCharacterIcon
 
+        bindLayouts()
         getUser()
         getMyDiaries()
-        bindLayouts()
     }
 
     fun bindLayouts(){
@@ -56,7 +54,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
         diaryCoverAdapter = DiaryCoverAdapter(this)
-        diaryCoverAdapter.diaryList = diaryList
+        diaryCoverAdapter.diaryList = mutableListOf<Diary>();
+        binding.diaryList.adapter = diaryCoverAdapter;
         binding.diaryList.setLayoutManager(GridLayoutManager(this, 2))
     }
 
@@ -72,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         return shape_draw
     }
 
-    fun getBodyColor(color: Int): Int {
+    private fun getBodyColor(color: Int): Int {
         var color_draw = 0
         when(color){
             1 -> color_draw = R.color.body_blue
@@ -84,7 +83,7 @@ class MainActivity : AppCompatActivity() {
         return color_draw
     }
 
-    fun getBlush(blush: Int, shape: Int): Pair<Int, Int> {
+    private fun getBlush(blush: Int, shape: Int): Pair<Int, Int> {
         var blush_draw = 0
         var blush_pos_draw = 0
         when(shape){
@@ -172,7 +171,7 @@ class MainActivity : AppCompatActivity() {
         return Pair(blush_draw, blush_pos_draw)
     }
 
-    fun item_kind(item: Int): Int {
+    private fun item_kind(item: Int): Int {
         var shape = CharacterInitActivity.character_init_body_shape
         var result_item = 0
         when (shape) {
@@ -230,7 +229,6 @@ class MainActivity : AppCompatActivity() {
                 Log.d("DEBUG", response.body().toString())
                 Log.d("DEBUG", response.toString())
                 Log.d("DEBUG", response.headers().toString())
-
 
                 getUserHandler(response.body())
             }
@@ -304,17 +302,23 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun getMyDiariesHandler(dto: GetMyDiariesResponseDto?){
+    fun getMyDiariesHandler(response: GetMyDiariesResponseDto?){
         val viewHandler = ViewHandler(this);
+
         if(
-            viewHandler.goLoginActivityIfNull(dto) ||
-            viewHandler.goLoginActivityIfNull(dto?.diaries) ||
-            viewHandler.goLoginActivityIfNull(dto?.status)
+            viewHandler.goLoginActivityIfNull(response) ||
+            viewHandler.goLoginActivityIfNull(response?.diaries) ||
+            viewHandler.goLoginActivityIfNull(response?.status)
         ) {
             return;
         }
 
+        val dto = response!!;
 
-
+        diaryCoverAdapter.run {
+            clearDiary();
+            addAllDiary(dto.diaries!!)
+            notifyDataSetChanged()
+        };
     }
 }
