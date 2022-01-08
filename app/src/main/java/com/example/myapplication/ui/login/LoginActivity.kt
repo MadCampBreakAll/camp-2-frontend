@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.login
 
 import android.os.Bundle
+import android.os.Debug
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.databinding.ActivityLoginBinding
@@ -37,43 +38,26 @@ class LoginActivity : AppCompatActivity() {
 
     private fun bind(){
         binding.kakaoLoginButton.setOnClickListener {
-            loginWithKaKao();
-        }
-    }
-
-    private fun loginWithKaKao(){
-        if(tokenManager.getJWT() == TokenManager.STATUS.EMPTY_JWT){
-            if(UserApiClient.instance.isKakaoTalkLoginAvailable(this)){
-                UserApiClient.instance.loginWithKakaoTalk(this, callback = callback);
-                return;
+            if(!this.authApiService.loginWithKaKao(
+                    this,
+                    callback = loginWithKaKaoHandler
+            )) {
+                val viewHandler = ViewHandler(this);
+                viewHandler.goMainActivity();
             }
-
-            UserApiClient.instance.loginWithKakaoAccount(this, callback = callback);
-            return;
-        }
-
-        val viewHandler = ViewHandler(this);
-        viewHandler.goMainActivity();
-    }
-
-    val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-
-        if (error != null) {
-            Log.e("DEBUG", "로그인 실패", error);
-        }
-
-        if (token != null) {
-            Log.d("DEBUG", "로그인 성공 ${token.accessToken}")
-
-            loginWithServer(token.accessToken);
         }
     }
 
-    private fun loginWithServer(accessToken: String){
+    private val loginWithKaKaoHandler : (OAuthToken?, Throwable?) -> Unit = handler@{ token, error ->
+
+        if(token == null){
+            return@handler
+        }
+
+        val accessToken = token.accessToken
 
         tokenManager.setAccessToken(accessToken)
         val loginRequestDto = LoginRequestDto(accessToken)
-
         authApiService.login(
             loginRequestDto,
             success = loginWithServerHandler,

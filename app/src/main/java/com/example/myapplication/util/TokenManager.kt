@@ -53,8 +53,22 @@ class TokenManager{
 
     fun setJWT(token: String) {
         val editor: Editor = getSharedPreferences(this.context).edit();
-        editor.putString(getString(R.string.json_web_token), token);
-        editor.apply();
+        editor.putString(getString(R.string.json_web_token), token)
+        editor.apply()
+    }
+
+    fun hasJWT(): Boolean {
+        if(getJWT() == TokenManager.STATUS.EMPTY_JWT){
+            return false
+        }
+        return true
+    }
+
+    fun hasAccessToken(): Boolean{
+        if(getAccessToken() == TokenManager.STATUS.EMPTY_ACCESS_TOKEN){
+            return false
+        }
+        return true
     }
 
     object STATUS {
