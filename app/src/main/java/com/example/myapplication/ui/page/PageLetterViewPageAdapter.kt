@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.api.dto.PageDto
+import com.example.myapplication.api.page.dto.PageDto
 import com.example.myapplication.databinding.PageLetterItemBinding
 import com.example.myapplication.databinding.UserCharacterBinding
 import com.example.myapplication.ui.join.CharacterInitActivity

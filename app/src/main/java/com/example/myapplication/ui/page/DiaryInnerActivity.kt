@@ -4,9 +4,11 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.annotation.RequiresApi
-import com.example.myapplication.api.dto.PageDto
+import com.example.myapplication.api.auth.DiaryApiService
+import com.example.myapplication.api.page.PageApiService
+import com.example.myapplication.api.page.dto.PageDto
 import com.example.myapplication.databinding.ActivityDiaryInnerBinding
-import java.time.LocalDate
+import com.example.myapplication.util.TokenManager
 
 // Diary의 속지(페이지들을 볼 수 있는 곳)를 보는 화면 -> 속지들은 viewpager로 표현된다
 // button의 setonclicklistner은 DiaryCoverAdapter 안에 있다. -> diaryList를 가지고 있어 diary 정보들을 모두 알고 있다.
@@ -17,6 +19,8 @@ public class DiaryInnerActivity : AppCompatActivity() {
     private lateinit var _binding: ActivityDiaryInnerBinding
     private val binding get() = _binding!!
     private lateinit var pageLetterViewPageAdapter: PageLetterViewPageAdapter
+    private lateinit var diaryApiService: DiaryApiService
+    private lateinit var pageApiService: PageApiService
 
     private lateinit var pageLetterAdapter: PageLetterViewPageAdapter
     var pageList = mutableListOf<PageDto>()
@@ -26,6 +30,18 @@ public class DiaryInnerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityDiaryInnerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        diaryApiService = DiaryApiService(TokenManager(this));
+        pageApiService = PageApiService(TokenManager(this));
+        pageApiService.getDiaryInnerPages(2,
+            success = {
+                dto -> {
+                    pageList.addAll(dto!!.pages);
+            }
+            },
+            fail = null
+        )
+
+
 
         var diaryId = intent.getStringExtra("diaryId")
 
