@@ -1,6 +1,10 @@
 package com.example.myapplication.api.page.dto
 
+
 import com.example.myapplication.api.diary.dto.NextUserDto
+
+import com.example.myapplication.api.friend.dto.FriendDto
+
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
