@@ -43,6 +43,11 @@ class CreateDiaryAddFriendPopupActivity(
         setContentView(binding.root)
         binding.createDiaryFriendListView.adapter = adapter
         binding.createDiaryFriendListView.layoutManager = GridLayoutManager(_context, 2)
+        binding.remove.setOnClickListener{
+            createDiary.remove(friendId)
+            callback()
+            dismiss()
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
