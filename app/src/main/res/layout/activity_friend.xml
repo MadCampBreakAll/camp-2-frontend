@@ -53,7 +53,9 @@
                 android:id="@+id/go_pending_friend_activity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="친구 요청 보내기"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:text="SEND"
                 />
         </LinearLayout>
     </ScrollView>
