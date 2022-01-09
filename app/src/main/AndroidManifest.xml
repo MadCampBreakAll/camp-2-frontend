@@ -17,10 +17,6 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".ui.diary.create.CreateDiaryAddFriendPopupActivity"
-            android:theme="@android:style/Theme.Dialog"
-            android:exported="false" />
-        <activity
             android:name=".ui.friend.PendingFriendActivity"
             android:exported="false" />
         <activity

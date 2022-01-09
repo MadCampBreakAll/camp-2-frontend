@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import androidx.core.content.ContextCompat
 import com.example.myapplication.ui.diary.create.CreateDiaryActivity
+import com.example.myapplication.ui.diary.create.CreateDiaryAddFriendPopupActivity
 import com.example.myapplication.ui.friend.FriendActivity
 import com.example.myapplication.ui.friend.PendingFriendActivity
 import com.example.myapplication.ui.join.CharacterInitActivity
@@ -87,6 +88,12 @@ class ViewHandler {
     fun goDiaryInnerActivityWithDiaryId(diaryId: Int) {
         val intent = Intent(activity, DiaryInnerActivity::class.java)
         intent.putExtra("diaryId", diaryId)
+        activity.startActivity(intent)
+    }
+
+    fun goAddFriendPopupActivity(friendSeq: Int){
+        val intent = Intent(activity, CreateDiaryAddFriendPopupActivity::class.java)
+        intent.putExtra("friendSeq", friendSeq)
         activity.startActivity(intent)
     }
 }
