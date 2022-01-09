@@ -49,9 +49,6 @@ class MainActivity : AppCompatActivity() {
         diaryCoverAdapter.diaryList = mutableListOf<DiaryDto>();
         binding.diaryList.adapter = diaryCoverAdapter;
         binding.diaryList.setLayoutManager(GridLayoutManager(this, 2))
-        initMenuButton()
-        initFriendButton()
-        initFriendButton()
     }
 
     private fun bind() {
@@ -59,9 +56,10 @@ class MainActivity : AppCompatActivity() {
         binding.diaryAddBtn.setOnClickListener {
             viewHandler.goCreateDiaryActivity();
         }
-        binding.goFriendActivity.setOnClickListener {
-            viewHandler.goFriendActivity();
-        }
+        initMenuButton()
+        initFriendButton()
+        initMySettingButton()
+        initIconFixingButton()
     }
 
     private fun update(){
@@ -139,6 +137,10 @@ class MainActivity : AppCompatActivity() {
         binding.goSetting
             .startAnimation(AnimationUtils.loadAnimation(this, R.anim.dropdown_from_top))
         binding.goSetting.visibility = FloatingActionButton.VISIBLE;
+
+        binding.goIconFixing
+            .startAnimation(AnimationUtils.loadAnimation(this, R.anim.dropdown_from_top))
+        binding.goIconFixing.visibility = FloatingActionButton.VISIBLE
     }
 
     fun closeDropDownMenu() {
@@ -152,6 +154,10 @@ class MainActivity : AppCompatActivity() {
         binding.goSetting
             .startAnimation(AnimationUtils.loadAnimation(this, R.anim.dropdown_to_top))
         binding.goSetting.visibility = FloatingActionButton.INVISIBLE;
+
+        binding.goIconFixing
+            .startAnimation(AnimationUtils.loadAnimation(this, R.anim.dropdown_to_top))
+        binding.goIconFixing.visibility = FloatingActionButton.INVISIBLE
     }
 
     fun initFriendButton() {
@@ -165,6 +171,13 @@ class MainActivity : AppCompatActivity() {
         binding.goSetting.setOnClickListener {
             closeDropDownMenu()
             //viewholder로 화면 전환
+        }
+    }
+
+    fun initIconFixingButton(){
+        binding.goIconFixing.setOnClickListener {
+            closeDropDownMenu()
+            viewHandler.goIconFixActivity()
         }
     }
 }

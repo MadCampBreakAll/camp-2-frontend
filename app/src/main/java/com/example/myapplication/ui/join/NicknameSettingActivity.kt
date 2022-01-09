@@ -6,8 +6,10 @@ import android.view.View
 import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.myapplication.R
 import com.example.myapplication.api.auth.AuthApiService
+import com.example.myapplication.api.auth.DiaryApiService
 import com.example.myapplication.api.auth.dto.RegisterRequestDto
 import com.example.myapplication.api.auth.dto.RegisterResponseDto
+import com.example.myapplication.api.user.UserApiService
 import com.example.myapplication.databinding.ActivityNicknameSettingBinding
 import com.example.myapplication.util.TokenManager
 import com.example.myapplication.util.ViewHandler
@@ -17,6 +19,7 @@ class NicknameSettingActivity : AppCompatActivity() {
     private lateinit var tokenManager: TokenManager
     private lateinit var viewHandler: ViewHandler
     private lateinit var binding: ActivityNicknameSettingBinding
+    private lateinit var userApiService: UserApiService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,6 +34,7 @@ class NicknameSettingActivity : AppCompatActivity() {
         this.tokenManager = TokenManager(this);
         this.authApiService = AuthApiService(tokenManager)
         this.viewHandler = ViewHandler(this)
+        userApiService = UserApiService(tokenManager)
     }
 
     fun bind() {
@@ -41,6 +45,21 @@ class NicknameSettingActivity : AppCompatActivity() {
                 binding.checkNicknameText.visibility= View.VISIBLE
                 return@handler
             }
+
+            userApiService.checkNickname(
+                nickname,
+                success = {dto ->
+                    try {
+                        if (!dto!!.status!!) {
+                            binding.checkNicknameText.text = "이미 존재하는 닉네임입니다."
+                            binding.checkNicknameText.visibility = View.VISIBLE
+                        }
+                    } catch (e: Throwable) {
+                        viewHandler.goLoginActivityAndRemoveTokens()
+                    }
+                },
+                fail = null
+            )
 
             val registerRequestDto = RegisterRequestDto(
                 tokenManager.getAccessToken(),

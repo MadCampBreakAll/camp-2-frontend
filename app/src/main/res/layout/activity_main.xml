@@ -46,10 +46,25 @@
             app:tint="@color/body_dark_navy"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/go_setting"
+            android:id="@+id/go_icon_fixing"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@id/go_friend_activity"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.96"
+            app:fabSize="mini"
+            android:elevation="10dp"
+            android:visibility="invisible"
+            android:src="@drawable/icon"
+            app:backgroundTint="@color/light_gray"
+            app:tint="@color/body_dark_navy"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/go_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/go_icon_fixing"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintHorizontal_bias="0.96"

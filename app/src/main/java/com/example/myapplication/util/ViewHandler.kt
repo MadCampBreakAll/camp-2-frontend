@@ -13,6 +13,7 @@ import com.example.myapplication.ui.join.NicknameSettingActivity
 import com.example.myapplication.ui.login.LoginActivity
 import com.example.myapplication.ui.main.MainActivity
 import com.example.myapplication.ui.page.DiaryInnerActivity
+import com.example.myapplication.ui.setting.icon.CharacterFixActivity
 
 class ViewHandler {
     private var activity: Activity
@@ -101,6 +102,11 @@ class ViewHandler {
 
     fun goNicknameActivity(){
         val intent = Intent(activity, NicknameSettingActivity::class.java)
+        activity.startActivity(intent)
+    }
+
+    fun goIconFixActivity(){
+        val intent = Intent(activity, CharacterFixActivity::class.java)
         activity.startActivity(intent)
     }
 }
