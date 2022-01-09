@@ -47,8 +47,13 @@ class CreateDiaryActivity : AppCompatActivity() {
     private fun bind(){
         setContentView(binding.root);
         binding.createDiaryButton.setOnClickListener {
-            val dto = createDiary!!.toCreateDiaryRequestDto()
-            diaryApiService.createDiary(dto, success = createDiaryHandler, fail = null);
+            try {
+                createDiary!!.setTitle(binding.title.text.toString())
+                val dto = createDiary!!.toCreateDiaryRequestDto()
+                diaryApiService.createDiary(dto, success = createDiaryHandler, fail = null);
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
         }
 
         binding.secondFriend.setOnClickListener {
