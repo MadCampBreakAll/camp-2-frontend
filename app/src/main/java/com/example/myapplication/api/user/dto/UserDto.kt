@@ -16,5 +16,7 @@ data class UserDto(
     @SerializedName("item")
     val item: Int?,
     @SerializedName("font")
-    val font: String?,
+    val font: Int?,
+    @SerializedName("backgroundColor")
+    val backgroundColor: Int?
 )

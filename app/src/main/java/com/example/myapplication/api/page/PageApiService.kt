@@ -18,10 +18,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class PageApiService : BasicApiService{
 
-    private val apiProvider: PageApiProvider;
+    private val apiProvider: PageApiProvider
 
     constructor(tokenManager: TokenManager){
-        this.apiProvider= getProvider(tokenManager);
+        this.apiProvider= getProvider(tokenManager)
     }
 
     private fun getProvider(tokenManager: TokenManager): PageApiProvider {
