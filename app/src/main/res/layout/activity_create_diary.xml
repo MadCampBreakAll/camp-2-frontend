@@ -30,9 +30,11 @@
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.323"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/imageView"
+        android:fontFamily="@font/custom_font_family"
+        android:gravity="center"
         app:layout_constraintVertical_bias="0.356" />
 
     <TableLayout
@@ -56,7 +58,7 @@
                 android:layout_height="100dp"
                 android:layout_gravity="center"
                 android:layout_marginRight="30dp"
-                android:background="@color/oatmeal"
+
                 app:cardCornerRadius="20dp">
                 <ImageView
                     android:layout_width="wrap_content"
@@ -87,8 +89,7 @@
             <FrameLayout
                 android:id="@+id/createDiarySecondFriendCardView"
                 android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@color/oatmeal">
+                android:layout_height="100dp">
 
                 <ImageButton
                     android:layout_width="match_parent"
@@ -132,8 +133,7 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
-                android:layout_marginRight="30dp"
-                android:background="@color/oatmeal">
+                android:layout_marginRight="30dp">
 
                 <ImageButton
                     android:layout_width="match_parent"
@@ -171,8 +171,7 @@
             <FrameLayout
                 android:id="@+id/createDiaryFourthFriendCardView"
                 android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:background="@color/oatmeal">
+                android:layout_height="100dp">
 
                 <ImageButton
                     android:layout_width="match_parent"
