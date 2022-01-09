@@ -1,4 +1,4 @@
-package com.example.myapplication.api.user.dto
+package com.example.myapplication.api.friend.dto
 
 import com.example.myapplication.api.friend.dto.FriendDto
 import com.google.gson.annotations.SerializedName

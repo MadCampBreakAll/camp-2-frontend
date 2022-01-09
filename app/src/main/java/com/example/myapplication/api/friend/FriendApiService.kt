@@ -3,12 +3,8 @@ package com.example.myapplication.api.friend
 import android.util.Log
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.api.BasicApiService
-import com.example.myapplication.api.friend.dto.SearchUserFriendWithNicknameRequestDto
-import com.example.myapplication.api.friend.dto.SearchUserFriendWithNicknameResponseDto
-import com.example.myapplication.api.user.dto.*
+import com.example.myapplication.api.friend.dto.*
 import com.example.myapplication.util.TokenManager
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

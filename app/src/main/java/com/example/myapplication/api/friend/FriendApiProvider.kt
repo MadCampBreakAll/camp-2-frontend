@@ -1,8 +1,6 @@
 package com.example.myapplication.api.friend
 
-import com.example.myapplication.api.friend.dto.SearchUserFriendWithNicknameRequestDto
-import com.example.myapplication.api.friend.dto.SearchUserFriendWithNicknameResponseDto
-import com.example.myapplication.api.user.dto.*
+import com.example.myapplication.api.friend.dto.*
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.GET

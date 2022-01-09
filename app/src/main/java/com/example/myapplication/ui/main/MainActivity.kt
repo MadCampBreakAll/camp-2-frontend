@@ -31,15 +31,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         init()
         bind()
-
-        userApiService.getMe(
-            success = getUserHandler,
-            fail = null
-        )
-        diaryApiService.getDiaries(
-            success = getMyDiariesHandler,
-            fail = null
-        )
+        update()
     }
 
     private fun init(){
@@ -48,21 +40,32 @@ class MainActivity : AppCompatActivity() {
         diaryApiService = DiaryApiService(tokenManager)
         binding = ActivityMainBinding.inflate(layoutInflater)
         icon = binding.userCharacterIcon
+        viewHandler = ViewHandler(this);
+        diaryCoverAdapter = DiaryCoverAdapter(this)
+        diaryCoverAdapter.diaryList = mutableListOf<DiaryDto>();
+        binding.diaryList.adapter = diaryCoverAdapter;
+        binding.diaryList.setLayoutManager(GridLayoutManager(this, 2))
     }
 
     private fun bind() {
         setContentView(binding.root)
-        viewHandler = ViewHandler(this);
         binding.diaryAddBtn.setOnClickListener {
             viewHandler.goCreateDiaryActivity();
         }
         binding.goFriendActivity.setOnClickListener {
             viewHandler.goFriendActivity();
         }
-        diaryCoverAdapter = DiaryCoverAdapter(this)
-        diaryCoverAdapter.diaryList = mutableListOf<DiaryDto>();
-        binding.diaryList.adapter = diaryCoverAdapter;
-        binding.diaryList.setLayoutManager(GridLayoutManager(this, 2))
+    }
+
+    private fun update(){
+        userApiService.getMe(
+            success = getUserHandler,
+            fail = null
+        )
+        diaryApiService.getDiaries(
+            success = getMyDiariesHandler,
+            fail = null
+        )
     }
 
     fun getShape(shape: Int): Int {
@@ -268,21 +271,19 @@ class MainActivity : AppCompatActivity() {
     }
 
      private val getMyDiariesHandler: (GetMyDiariesResponseDto?) -> Unit = handler@{ response ->
+        try {
+            if(!response?.status!!){
+                throw Error()
+            }
 
-        if(
-            viewHandler.goLoginActivityIfNull(response) ||
-            viewHandler.goLoginActivityIfNull(response?.diaries) ||
-            viewHandler.goLoginActivityIfNull(response?.status)
-        ) {
-            return@handler
+            diaryCoverAdapter.run {
+                clearDiary()
+                addAllDiary(response.diaries!!)
+                notifyDataSetChanged()
+            };
+
+        } catch (e: Throwable) {
+            viewHandler.goLoginActivityAndRemoveTokens()
         }
-
-        val dto = response!!
-
-        diaryCoverAdapter.run {
-            clearDiary();
-            addAllDiary(dto.diaries!!)
-            notifyDataSetChanged()
-        };
     }
 }
