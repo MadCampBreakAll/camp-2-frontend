@@ -9,6 +9,8 @@ import com.example.myapplication.api.diary.dto.CreateDiaryRequestDto
 import com.example.myapplication.api.diary.dto.CreateDiaryResponseDto
 import com.example.myapplication.api.friend.FriendApiService
 import com.example.myapplication.api.friend.dto.GetMyFriendsResponseDto
+import com.example.myapplication.api.user.UserApiService
+import com.example.myapplication.api.user.dto.GetMeResponseDto
 import com.example.myapplication.databinding.ActivityCreateDiaryBinding
 import com.example.myapplication.util.Character
 import com.example.myapplication.util.CharacterViewer
@@ -21,9 +23,10 @@ class CreateDiaryActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateDiaryBinding
     private lateinit var diaryApiService: DiaryApiService
     private lateinit var friendApiService: FriendApiService
+    private lateinit var userApiService: UserApiService
     private lateinit var tokenManager: TokenManager
     private lateinit var viewHandler: ViewHandler
-    private lateinit var createDiary: CreateDiary
+    private var createDiary: CreateDiary? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,36 +41,44 @@ class CreateDiaryActivity : AppCompatActivity() {
         viewHandler = ViewHandler(this)
         diaryApiService = DiaryApiService(tokenManager)
         friendApiService = FriendApiService(tokenManager)
+        userApiService = UserApiService(tokenManager)
     }
 
     private fun bind(){
         setContentView(binding.root);
         binding.createDiaryButton.setOnClickListener {
-            val dto = createDiary.toCreateDiaryRequestDto()
-            diaryApiService.createDiary(dto, success = createDiaryHandler, fail = null);
+            try {
+                createDiary!!.setTitle(binding.title.text.toString())
+                val dto = createDiary!!.toCreateDiaryRequestDto()
+                diaryApiService.createDiary(dto, success = createDiaryHandler, fail = null);
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
         }
 
         binding.secondFriend.setOnClickListener {
-            createAddFriendDialog(0, createDiary, updateSelectedFriendView)
+            createAddFriendDialog(1, createDiary!!, updateSelectedFriendView)
         }
 
         binding.thirdFriend.setOnClickListener {
-            createAddFriendDialog(1, createDiary, updateSelectedFriendView)
+            createAddFriendDialog(2, createDiary!!, updateSelectedFriendView)
         }
 
         binding.forthFriend.setOnClickListener {
-            createAddFriendDialog(2, createDiary, updateSelectedFriendView)
+            createAddFriendDialog(3, createDiary!!, updateSelectedFriendView)
         }
+
     }
 
     private val updateSelectedFriendView : () -> Unit = {
         val friendArrays = arrayListOf(
+            Pair(binding.createDiaryMe, binding.createDiaryMyName),
             Pair(binding.createDiarySecondFriend, binding.createDiarySecondFriendName),
             Pair(binding.createDiaryThirdFriend, binding.createDiaryThirdFriendName),
             Pair(binding.createDiaryFourthFriend, binding.createDiaryFourthFriendName)
         )
 
-        createDiary.getSelectedFriend().forEachIndexed handler@{ index,  friendDto ->
+        createDiary!!.getSelectedFriend().forEachIndexed handler@{ index,  friendDto ->
             if(friendDto == null){
                 friendArrays[index].first.root.visibility = View.INVISIBLE
                 friendArrays[index].second.visibility = View.INVISIBLE
@@ -95,14 +106,13 @@ class CreateDiaryActivity : AppCompatActivity() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        println("Hello")
-    }
-
     private fun update(){
         friendApiService.getFriends(
             success = getFriendHandler,
+            fail = null
+        )
+        userApiService.getMe(
+            success = getMeHandler,
             fail = null
         )
     }
@@ -129,9 +139,29 @@ class CreateDiaryActivity : AppCompatActivity() {
             if(!dto?.status!!){
                 throw Throwable()
             }
-            createDiary = CreateDiary(dto.friends!!.toMutableList())
+            setCreateDto()
+            createDiary!!.setFriends(dto.friends!!)
+            updateSelectedFriendView()
         } catch (e: Throwable) {
+            e.printStackTrace()
             viewHandler.goLoginActivityAndRemoveTokens()
+        }
+    }
+
+    private val getMeHandler: (GetMeResponseDto?) -> Unit = handler@{ dto ->
+        try {
+            setCreateDto()
+            createDiary!!.setMe(userDto = dto?.user!!)
+            updateSelectedFriendView()
+        } catch (e: Throwable) {
+            e.printStackTrace()
+            viewHandler.goLoginActivityAndRemoveTokens()
+        }
+    }
+
+    private fun setCreateDto(){
+        if(createDiary == null){
+            createDiary = CreateDiary()
         }
     }
 }
