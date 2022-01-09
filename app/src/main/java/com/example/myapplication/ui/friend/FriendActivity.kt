@@ -125,7 +125,7 @@ class FriendActivity : AppCompatActivity() {
                         if(!responseDto?.status!!){
                             throw Error()
                         }
-                        Toast.makeText(this, "${dto.nickname}님을 친구 거절 하셨습니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "${dto.nickname}님의 요청을 거절했습니다.", Toast.LENGTH_SHORT).show()
                     } catch (e: Throwable) {
                         viewHandler.goLoginActivityAndRemoveTokens()
                     }
@@ -145,7 +145,7 @@ class FriendActivity : AppCompatActivity() {
             }
 
             AlertDialog.Builder(this)
-                .setTitle("${dto!!.user!!.nickname}을 친구 추가 하시겠습니까?")
+                .setTitle("${dto!!.user!!.nickname}에게 친구 신청을 보내겠습니까?")
                 .setPositiveButton("수락") { dialog, i ->
                     val makeFriendRequestDto = MakeFriendRequestDto(
                         dto?.user?.id!!
@@ -158,10 +158,10 @@ class FriendActivity : AppCompatActivity() {
                                     throw Error()
                                 }
                                 if(!responseDto!!.status!!){
-                                    Toast.makeText(this, "이미 친구를 추가한 상태이거나", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(this, "이미 친구입니다.", Toast.LENGTH_SHORT).show()
                                     return@handler
                                 }
-                                Toast.makeText(this, "친구 추가에 성공하셨습니다", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, "친구 요청을 보냈습니다.", Toast.LENGTH_SHORT).show()
                             } catch (e: Throwable) {
                                 viewHandler.goLoginActivityAndRemoveTokens()
                             }
