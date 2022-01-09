@@ -2,6 +2,7 @@ package com.example.myapplication.ui.join
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.core.content.ContentProviderCompat.requireContext
 import com.example.myapplication.R
 import com.example.myapplication.api.auth.AuthApiService
@@ -19,25 +20,31 @@ class NicknameSettingActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_nickname_setting)
+        binding = ActivityNicknameSettingBinding.inflate(layoutInflater)
+
+        setContentView(binding.root)
         init()
         bind()
     }
 
     fun init() {
-        binding = ActivityNicknameSettingBinding.inflate(layoutInflater)
         this.tokenManager = TokenManager(this);
         this.authApiService = AuthApiService(tokenManager)
         this.viewHandler = ViewHandler(this)
     }
 
     fun bind() {
-        var nickname = binding.editTextNickname.text.toString()
+        binding.createNicknameBtn.setOnClickListener handler@{
+            var nickname = binding.editTextNickname.text.toString()
+            if (nickname.length <= 2) {
+                binding.checkNicknameText.text = "닉네임은 세 글자 이상으로 설정해 주십시오."
+                binding.checkNicknameText.visibility= View.VISIBLE
+                return@handler
+            }
 
-        binding.createNicknameBtn.setOnClickListener {
             val registerRequestDto = RegisterRequestDto(
                 tokenManager.getAccessToken(),
-                nickname = "TEST",
+                nickname = nickname,
                 body = CharacterInitActivity.character_init_body_shape,
                 bodyColor = CharacterInitActivity.character_init_body_color,
                 font = 0,
