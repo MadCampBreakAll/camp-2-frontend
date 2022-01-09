@@ -34,7 +34,6 @@
                 android:layout_height="45dp"
                 android:layout_gravity="center|bottom"
                 android:layout_marginBottom="10dp"
-                android:paddingBottom="10dp"
                 android:text="Delete"/>
 
         </androidx.cardview.widget.CardView>
