@@ -51,7 +51,8 @@ class MainActivity : AppCompatActivity() {
         binding.diaryList.setLayoutManager(GridLayoutManager(this, 2))
         initMenuButton()
         initFriendButton()
-        initFriendButton()
+        initMySettingButton()
+        initIconFixingButton()
     }
 
     private fun bind() {
@@ -139,6 +140,10 @@ class MainActivity : AppCompatActivity() {
         binding.goSetting
             .startAnimation(AnimationUtils.loadAnimation(this, R.anim.dropdown_from_top))
         binding.goSetting.visibility = FloatingActionButton.VISIBLE;
+
+        binding.goIconFixing
+            .startAnimation(AnimationUtils.loadAnimation(this, R.anim.dropdown_from_top))
+        binding.goIconFixing.visibility = FloatingActionButton.VISIBLE
     }
 
     fun closeDropDownMenu() {
@@ -152,12 +157,15 @@ class MainActivity : AppCompatActivity() {
         binding.goSetting
             .startAnimation(AnimationUtils.loadAnimation(this, R.anim.dropdown_to_top))
         binding.goSetting.visibility = FloatingActionButton.INVISIBLE;
+
+        binding.goIconFixing
+            .startAnimation(AnimationUtils.loadAnimation(this, R.anim.dropdown_to_top))
+        binding.goIconFixing.visibility = FloatingActionButton.INVISIBLE
     }
 
     fun initFriendButton() {
         binding.goFriendActivity.setOnClickListener {
             closeDropDownMenu()
-
         }
     }
 
@@ -165,6 +173,12 @@ class MainActivity : AppCompatActivity() {
         binding.goSetting.setOnClickListener {
             closeDropDownMenu()
             //viewholder로 화면 전환
+        }
+    }
+
+    fun initIconFixingButton(){
+        binding.goIconFixing.setOnClickListener {
+            closeDropDownMenu()
         }
     }
 }
