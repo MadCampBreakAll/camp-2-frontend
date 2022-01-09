@@ -18,7 +18,6 @@ import com.example.myapplication.util.Character
 import com.example.myapplication.util.CharacterViewer
 import com.example.myapplication.util.TokenManager
 import com.example.myapplication.util.ViewHandler
-import com.google.gson.annotations.SerializedName
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
