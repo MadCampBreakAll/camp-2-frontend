@@ -90,7 +90,8 @@
 
             <include
                 android:id="@+id/diaryCoverFirstOrderIcon"
-                layout="@layout/user_character" />
+                layout="@layout/user_character"
+                android:visibility="invisible"/>
         </FrameLayout>
 
         <FrameLayout
@@ -108,7 +109,8 @@
 
             <include
                 android:id="@+id/diaryCoverSecondOrderIcon"
-                layout="@layout/user_character" />
+                layout="@layout/user_character"
+                android:visibility="invisible"/>
         </FrameLayout>
 
         <FrameLayout
@@ -126,7 +128,8 @@
 
             <include
                 android:id="@+id/diaryCoverThirdOrderIcon"
-                layout="@layout/user_character" />
+                layout="@layout/user_character"
+                android:visibility="invisible"/>
         </FrameLayout>
 
         <FrameLayout
@@ -144,7 +147,8 @@
 
             <include
                 android:id="@+id/diaryCoverFourthOrderIcon"
-                layout="@layout/user_character" />
+                layout="@layout/user_character"
+                android:visibility="invisible"/>
         </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
