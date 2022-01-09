@@ -2,12 +2,14 @@ package com.example.myapplication.util
 
 import android.app.Activity
 import android.content.Intent
+import androidx.core.content.ContextCompat
 import com.example.myapplication.ui.diary.create.CreateDiaryActivity
 import com.example.myapplication.ui.friend.FriendActivity
 import com.example.myapplication.ui.friend.PendingFriendActivity
 import com.example.myapplication.ui.join.CharacterInitActivity
 import com.example.myapplication.ui.login.LoginActivity
 import com.example.myapplication.ui.main.MainActivity
+import com.example.myapplication.ui.page.DiaryInnerActivity
 
 class ViewHandler {
     private var activity: Activity
@@ -82,4 +84,9 @@ class ViewHandler {
         return true;
     }
 
+    fun goDiaryInnerActivityWithDiaryId(diaryId: Int) {
+        val intent = Intent(activity, DiaryInnerActivity::class.java)
+        intent.putExtra("diaryId", diaryId)
+        activity.startActivity(intent)
+    }
 }

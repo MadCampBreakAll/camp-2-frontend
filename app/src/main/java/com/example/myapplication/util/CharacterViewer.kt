@@ -1,74 +1,20 @@
-package com.example.myapplication.ui.main
+package com.example.myapplication.util
 
-import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
-import android.os.Bundle
+import android.content.Context
+import android.graphics.Color
+import android.util.Log
 import android.view.View
-import com.example.myapplication.api.user.dto.GetMeResponseDto
-import com.example.myapplication.databinding.ActivityMainBinding
-import com.example.myapplication.databinding.UserCharacterBinding
-import androidx.annotation.RequiresApi
-import androidx.recyclerview.widget.GridLayoutManager
-import com.example.myapplication.ui.join.CharacterInitActivity
 import com.example.myapplication.R
-import com.example.myapplication.api.user.UserApiService
-import com.example.myapplication.api.auth.DiaryApiService
-import com.example.myapplication.api.diary.dto.DiaryDto
-import com.example.myapplication.api.diary.dto.GetMyDiariesResponseDto
-import com.example.myapplication.util.TokenManager
-import com.example.myapplication.util.ViewHandler
+import com.example.myapplication.databinding.UserCharacterBinding
+import com.example.myapplication.ui.join.CharacterInitActivity
 
-class MainActivity : AppCompatActivity() {
-    private lateinit var binding : ActivityMainBinding
-    private lateinit var diaryCoverAdapter: DiaryCoverAdapter
-    private lateinit var userApiService: UserApiService
-    private lateinit var diaryApiService: DiaryApiService
-    private lateinit var viewHandler: ViewHandler
-    private lateinit var icon: UserCharacterBinding
+class CharacterViewer(
+    private val context: Context,
+    private val binding: UserCharacterBinding,
+    private val character: Character,
+) {
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        init()
-        bind()
-        update()
-    }
-
-    private fun init(){
-        val tokenManager = TokenManager(applicationContext)
-        userApiService = UserApiService(tokenManager)
-        diaryApiService = DiaryApiService(tokenManager)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        icon = binding.userCharacterIcon
-        viewHandler = ViewHandler(this);
-        diaryCoverAdapter = DiaryCoverAdapter(this)
-        diaryCoverAdapter.diaryList = mutableListOf<DiaryDto>();
-        binding.diaryList.adapter = diaryCoverAdapter;
-        binding.diaryList.setLayoutManager(GridLayoutManager(this, 2))
-    }
-
-    private fun bind() {
-        setContentView(binding.root)
-        binding.diaryAddBtn.setOnClickListener {
-            viewHandler.goCreateDiaryActivity();
-        }
-        binding.goFriendActivity.setOnClickListener {
-            viewHandler.goFriendActivity();
-        }
-    }
-
-    private fun update(){
-        userApiService.getMe(
-            success = getUserHandler,
-            fail = null
-        )
-        diaryApiService.getDiaries(
-            success = getMyDiariesHandler,
-            fail = null
-        )
-    }
-
-    fun getShape(shape: Int): Int {
+    private fun getShape(shape: Int): Int {
         var shape_draw = 0
         when(shape){
             1 -> shape_draw = R.drawable.body_shape_triangle
@@ -180,7 +126,8 @@ class MainActivity : AppCompatActivity() {
         return Pair(blush_draw, blush_pos_draw)
     }
 
-    private fun item_kind(item: Int, shape: Int): Int {
+    private fun getItemKind(item: Int): Int {
+        var shape = CharacterInitActivity.character_init_body_shape
         var result_item = 0
         when (shape) {
             1 -> {
@@ -211,7 +158,7 @@ class MainActivity : AppCompatActivity() {
         return result_item
     }
 
-    fun getFace(shape: Int): Int {
+    private fun getFace(shape: Int): Int {
         var face_draw = 0
         when(shape) {
             1 -> {
@@ -227,62 +174,36 @@ class MainActivity : AppCompatActivity() {
         return face_draw
     }
 
-    private val getUserHandler : (GetMeResponseDto?) -> Unit = handler@{ response ->
-        if(
-                viewHandler.goLoginActivityIfNull(response) ||
-                viewHandler.goLoginActivityIfNull(response?.status) ||
-                viewHandler.goLoginActivityIfNull(response?.user)
-        ){
-            return@handler;
-        }
-
-        val dto = response!!
-
-        if(dto.status == false){
-            viewHandler.goLoginActivityAndRemoveTokens()
-            return@handler;
-        }
-
-        var (_, user) = dto
-
-        var body_shape = user?.body?:1
-        var body_color = user?.bodyColor?:1
-        var blush = user?.blush_color?:1
-        var item = user?.item?:1
-
-        icon!!.body.setImageResource(getShape(body_shape))
-        icon!!.body.setColorFilter(resources.getColor(getBodyColor(body_color)))
-        icon!!.blush.setColorFilter(resources.getColor(getBlush(body_color, body_shape).first))
-        icon!!.blush.setImageResource(getBlush(blush, body_shape).second)
-        if (item == 1) {
-            icon!!.item.visibility= View.INVISIBLE
-        }
-        else {
-            icon!!.item.visibility=View.VISIBLE
-            icon!!.item.setImageResource(item_kind(item, body_shape))
-        }
-        icon!!.face.setImageResource(getFace(body_shape))
-        setUserNickname(nickname = user?.nickname?:"unknown")
-    }
-
-    private fun setUserNickname(nickname: String){
-        this.binding.userNickname.text = nickname
-    }
-
-     private val getMyDiariesHandler: (GetMyDiariesResponseDto?) -> Unit = handler@{ response ->
+     fun show(){
+        val (
+            bodyShape,
+            bodyColor,
+            blushColor,
+            item
+        ) = character
         try {
-            if(!response?.status!!){
-                throw Error()
+            binding.root.visibility = View.VISIBLE
+            binding.body.setImageResource(getShape(bodyShape))
+            binding.blush.setImageResource(getBlush(blushColor, bodyShape).second)
+            binding.body.setColorFilter(getColorByResource(getBodyColor(bodyColor)))
+            binding.blush.setColorFilter(getColorByResource(getBlush(blushColor, bodyShape).first))
+            if(item == 1) {
+                binding.item.visibility = View.INVISIBLE
+            } else {
+                binding.item.visibility = View.VISIBLE
+                binding.item.setImageResource(getItemKind(item))
             }
-
-            diaryCoverAdapter.run {
-                clearDiary()
-                addAllDiary(response.diaries!!)
-                notifyDataSetChanged()
-            };
-
-        } catch (e: Throwable) {
-            viewHandler.goLoginActivityAndRemoveTokens()
+            binding.face.setImageResource(getFace(bodyShape))
+        } catch (e : Throwable) {
+            Log.d("DEBUG", "" +
+                    "bodyShape = ${bodyShape}" +
+                    "bodyColor = ${bodyColor}" +
+                    "blushColor = ${blushColor}" +
+                    "item = ${item}")
         }
+    }
+
+    private fun getColorByResource(resourceId: Int): Int {
+        return Color.parseColor(context.getString(resourceId))
     }
 }

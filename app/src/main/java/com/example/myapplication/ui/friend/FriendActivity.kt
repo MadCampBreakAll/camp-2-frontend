@@ -3,10 +3,9 @@ package com.example.myapplication.ui.friend
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myapplication.R
 import com.example.myapplication.api.friend.FriendApiService
-import com.example.myapplication.api.user.dto.GetMyFriendsResponseDto
-import com.example.myapplication.api.user.dto.GetPendingFriendResponseDto
+import com.example.myapplication.api.friend.dto.GetMyFriendsResponseDto
+import com.example.myapplication.api.friend.dto.GetPendingFriendResponseDto
 import com.example.myapplication.databinding.ActivityFriendBinding
 import com.example.myapplication.util.TokenManager
 import com.example.myapplication.util.ViewHandler

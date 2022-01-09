@@ -58,7 +58,7 @@ class CreateDiaryActivity : AppCompatActivity() {
             }
 
             viewHandler.goMainActivity()
-        } catch (e: Error) {
+        } catch (e: Throwable) {
             viewHandler.goLoginActivityAndRemoveTokens()
         }
     }

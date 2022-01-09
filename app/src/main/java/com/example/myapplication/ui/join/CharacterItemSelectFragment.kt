@@ -19,11 +19,22 @@ class CharacterItemSelectFragment : Fragment() {
     private val blushselectfragment by lazy { CharacterBlushFragment() }
     private lateinit var authApiService: AuthApiService
     private lateinit var tokenManager: TokenManager
+    private lateinit var viewHandler: ViewHandler
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        init()
+        bind()
+    }
+
+    private fun init(){
         this.tokenManager = TokenManager(requireContext().applicationContext);
         this.authApiService = AuthApiService(tokenManager)
+        this.viewHandler = ViewHandler(requireActivity())
+    }
+
+    private fun bind(){
+
     }
 
     override fun onCreateView(
@@ -194,25 +205,16 @@ class CharacterItemSelectFragment : Fragment() {
         return result_item
     }
 
-    var registerHandler : ( RegisterResponseDto?) -> Unit = handler@{ response ->
-        val viewHandler = ViewHandler(requireActivity());
-
-        if(
-            viewHandler.goLoginActivityIfNull(response) ||
-            viewHandler.goLoginActivityIfNull(response?.status) ||
-            viewHandler.goLoginActivityIfNull(response?.token)
-        ){
-            return@handler
+    var registerHandler : ( RegisterResponseDto? ) -> Unit = handler@{ response ->
+        try {
+            if(!response!!.status!!){
+                throw Error()
+            }else {
+                this.tokenManager.setJWT(response!!.token!!);
+                viewHandler.goMainActivity();
+            }
+        } catch (e: Throwable) {
+            viewHandler.goLoginActivityAndRemoveTokens()
         }
-
-        val dto = response!!;
-
-        if(!dto.status!!){
-            viewHandler.goLoginActivityAndRemoveTokens();
-            return@handler
-        }
-
-        this.tokenManager.setJWT(response.token!!);
-        viewHandler.goMainActivity();
     }
 }
