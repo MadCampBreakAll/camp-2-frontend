@@ -17,26 +17,52 @@
             android:orientation="vertical">
             <TextView
                 android:id="@+id/textView"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
-                android:text="친구 화면"
-                android:paddingBottom="20dp"
+                android:text="친구 요청"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="20dp"
+                android:paddingBottom="5dp"
                 />
+            <TextView
+                android:id="@+id/none_friend_request_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="아직 친구 요청이 없습니다."
+                android:textSize="15dp"
+                android:gravity="center"
+                android:textColor="@color/gray"
+                android:visibility="invisible"/>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/pending_friends"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
                 tools:listitem="@layout/pending_friend"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
                 >
             </androidx.recyclerview.widget.RecyclerView>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingTop="20dp"
-                android:paddingBottom="20dp"
+                android:paddingBottom="5dp"
+                android:textSize="20dp"
+                android:layout_gravity="center"
+                android:gravity="center"
                 android:text="친구 목록"/>
+            <TextView
+                android:id="@+id/none_friend_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="아직 친구가 없습니다."
+                android:textColor="@color/gray"
+                android:textSize="15dp"
+                android:gravity="center"
+                android:visibility="invisible"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/friends"

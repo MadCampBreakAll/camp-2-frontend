@@ -2,6 +2,7 @@ package com.example.myapplication.ui.friend
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -47,9 +48,15 @@ class FriendActivity : AppCompatActivity() {
         }
         binding.friends.layoutManager = GridLayoutManager(this, 2)
         binding.friends.adapter = friendsAdapter
+        if(friendsAdapter.itemCount == 0){
+            binding.noneFriendText.visibility = View.VISIBLE
+        }
 
         binding.pendingFriends.layoutManager = LinearLayoutManager(this)
         binding.pendingFriends.adapter = pendingFriendAdapter
+        if(pendingFriendAdapter.itemCount == 0) {
+            binding.noneFriendRequestText.visibility = View.VISIBLE
+        }
     }
 
     private fun update(){

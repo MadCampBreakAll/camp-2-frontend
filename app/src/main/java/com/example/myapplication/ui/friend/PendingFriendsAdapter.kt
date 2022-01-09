@@ -14,7 +14,6 @@ class PendingFriendsAdapter(
     private val reject: (PendingFriendDto) -> Unit
 ) : RecyclerView.Adapter<PendingFriendsAdapter.ViewHolder>()
 {
-
     private var pendingFriends = mutableListOf<PendingFriendDto>()
     fun addPendingFriend(pendingFriend: PendingFriendDto){
         pendingFriends.add(pendingFriend)
