@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.View
 import com.example.myapplication.R
 import com.example.myapplication.databinding.UserCharacterBinding
-import com.example.myapplication.ui.join.CharacterInitActivity
 
 class CharacterViewer(
     private val context: Context,
@@ -14,7 +13,7 @@ class CharacterViewer(
     private val character: Character,
 ) {
 
-    private fun getShape(shape: Int): Int {
+    fun getShape(shape: Int): Int {
         var shape_draw = 0
         when(shape){
             1 -> shape_draw = R.drawable.body_shape_triangle
@@ -126,8 +125,7 @@ class CharacterViewer(
         return Pair(blush_draw, blush_pos_draw)
     }
 
-    private fun getItemKind(item: Int): Int {
-        var shape = CharacterInitActivity.character_init_body_shape
+    private fun getItemKind(item: Int, shape: Int): Int {
         var result_item = 0
         when (shape) {
             1 -> {
@@ -158,7 +156,7 @@ class CharacterViewer(
         return result_item
     }
 
-    private fun getFace(shape: Int): Int {
+    fun getFace(shape: Int): Int {
         var face_draw = 0
         when(shape) {
             1 -> {
@@ -174,7 +172,8 @@ class CharacterViewer(
         return face_draw
     }
 
-     fun show(){
+
+    fun show(){
         val (
             bodyShape,
             bodyColor,
@@ -191,7 +190,7 @@ class CharacterViewer(
                 binding.item.visibility = View.INVISIBLE
             } else {
                 binding.item.visibility = View.VISIBLE
-                binding.item.setImageResource(getItemKind(item))
+                binding.item.setImageResource(getItemKind(item, bodyShape))
             }
             binding.face.setImageResource(getFace(bodyShape))
         } catch (e : Throwable) {
