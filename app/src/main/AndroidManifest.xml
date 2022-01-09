@@ -17,6 +17,9 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.join.NicknameSettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.friend.PendingFriendActivity"
             android:exported="false" />
         <activity
@@ -30,7 +33,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.loading.LoadingActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".ui.join.CharacterInitActivity"
             android:exported="true" />

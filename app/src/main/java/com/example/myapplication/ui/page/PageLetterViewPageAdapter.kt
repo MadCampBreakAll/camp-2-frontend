@@ -63,14 +63,22 @@ class PageLetterViewPageAdapter(private val context: Context): RecyclerView.Adap
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(page: PageDto) {
             try {
-                val (_, _title, _body, color, img, user, createdAt) = page
+                val (_, _title, _body, color, img, user, createdAt, next) = page
                 writenDate.text = createdAt!!.time.toString()
                 dailyColor.setColorFilter(Color.parseColor(color))
                 body.text = _body
                 title.text = _title
+                CharacterViewer(
+                    context,
+                    nextUser,
+                    Character(
+                        next!!.body,
+                        next.bodyColor,
+                        next.blushColor,
+                        next.item
+                    )
+                ).show()
 
-                // background.setBackgroundColor(Color.parseColor(color))
-                //settingOthersIcon(nextUser, page.b)
                 bindWriter(user!!)
             } catch (e: Throwable) {
                 Log.d("DEBUG", "PAGE LETTER VIEW PAGE ADAPTER BIND")

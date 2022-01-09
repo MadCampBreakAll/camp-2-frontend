@@ -5,7 +5,10 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.widget.ViewPager2
 import com.example.myapplication.R
 import com.example.myapplication.api.auth.DiaryApiService
 import com.example.myapplication.api.page.PageApiService
@@ -13,6 +16,12 @@ import com.example.myapplication.api.page.dto.PageDto
 import com.example.myapplication.databinding.ActivityDiaryInnerBinding
 import com.example.myapplication.util.TokenManager
 import com.example.myapplication.util.ViewHandler
+import com.wajahatkarim3.easyflipviewpager.BookFlipPageTransformer2
+
+import android.R.string.no
+
+
+
 
 // Diary의 속지(페이지들을 볼 수 있는 곳)를 보는 화면 -> 속지들은 viewpager로 표현된다
 // button의 setonclicklistner은 DiaryCoverAdapter 안에 있다. -> diaryList를 가지고 있어 diary 정보들을 모두 알고 있다.
@@ -44,6 +53,13 @@ class DiaryInnerActivity : AppCompatActivity() {
         pageApiService = PageApiService(tokenManager)
         pageLetterViewPageAdapter = PageLetterViewPageAdapter(this)
         binding.pagesLetterViewPager.adapter = pageLetterViewPageAdapter
+
+        var bookFlipPageTransformer = BookFlipPageTransformer2()
+
+        bookFlipPageTransformer.setEnableScale(true)
+        bookFlipPageTransformer.setScaleAmountPercent(10f)
+
+        binding.pagesLetterViewPager.setPageTransformer(bookFlipPageTransformer)
 
         try {
             diaryId = intent.getStringExtra(resources.getString(R.string.diary_id))!!.toInt()
