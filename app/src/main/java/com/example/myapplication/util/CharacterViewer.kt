@@ -166,7 +166,7 @@ class CharacterViewer(
                 face_draw = R.drawable.face_cloud
             }
             else -> {
-                face_draw = R.drawable.face_bean_bread_square
+                face_draw = R.drawable.item_merong_bean_bread_square
             }
         }
         return face_draw

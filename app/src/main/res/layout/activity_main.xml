@@ -10,6 +10,56 @@
         android:layout_height="match_parent"
         android:background="@color/oatmeal">
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintVertical_bias="0.01"
+            app:layout_constraintHorizontal_bias="0.96"
+            app:fabSize="mini"
+            android:elevation="0dp"
+            android:backgroundTint="@color/body_dark_navy"
+            android:src="@drawable/menu"
+            app:tint="@color/white"/>
+
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/go_friend_activity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:background="@color/transparent"
+            app:layout_constraintTop_toBottomOf="@id/menu"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.96"
+            app:fabSize="mini"
+            android:elevation="10dp"
+            android:visibility="invisible"
+            android:src="@drawable/friends"
+            android:backgroundTint="@color/light_gray"
+            app:tint="@color/body_dark_navy"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/go_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/go_friend_activity"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintHorizontal_bias="0.96"
+            app:fabSize="mini"
+            android:elevation="10dp"
+            android:visibility="invisible"
+            android:src="@drawable/setting"
+            app:backgroundTint="@color/light_gray"
+            app:tint="@color/body_dark_navy"/>
+
         <FrameLayout
             android:id="@+id/user_character_icon_frame"
             android:layout_width="0dp"
@@ -68,18 +118,6 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintVertical_bias="0.95"
             android:src="@drawable/add"/>
-
-        <Button
-            android:id="@+id/go_friend_activity"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="친구 화면"
-            app:layout_constraintBottom_toTopOf="@+id/user_nickname"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.392"
-            app:layout_constraintStart_toEndOf="@+id/user_character_icon_frame"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.539" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

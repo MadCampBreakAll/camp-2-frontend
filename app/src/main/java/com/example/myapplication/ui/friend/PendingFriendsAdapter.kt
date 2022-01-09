@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.api.friend.dto.PendingFriendDto
 import com.example.myapplication.databinding.PendingFriendBinding
+import com.example.myapplication.util.Character
 
 class PendingFriendsAdapter(
     private val context: Context,
@@ -13,7 +14,6 @@ class PendingFriendsAdapter(
     private val reject: (PendingFriendDto) -> Unit
 ) : RecyclerView.Adapter<PendingFriendsAdapter.ViewHolder>()
 {
-
     private var pendingFriends = mutableListOf<PendingFriendDto>()
     fun addPendingFriend(pendingFriend: PendingFriendDto){
         pendingFriends.add(pendingFriend)
@@ -42,7 +42,16 @@ class PendingFriendsAdapter(
 
     inner class ViewHolder(private val pendingFriendBinding: PendingFriendBinding) : RecyclerView.ViewHolder(pendingFriendBinding.root){
         fun bind(friend: PendingFriendDto){
-            pendingFriendBinding.name.text = friend.nickname
+
+            pendingFriendBinding.requestFriendInfo.createDiaryFriendNickName.text = friend.nickname
+//            var icon = pendingFriendBinding.requestFriendInfo.createDiaryFriendIcon
+//            val userCharacter = Character(body!!, bodyColor!!, blushColor!!, item!!)
+//            CharacterViewer(
+//                this,
+//                icon,
+//
+//            )
+
             pendingFriendBinding.accept.setOnClickListener{
                 accept(friend)
             }

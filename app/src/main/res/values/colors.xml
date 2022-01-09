@@ -26,4 +26,6 @@
     <color name="blush_pink">#f28482</color>
     <color name="blush_orange">#f4a261</color>
     <color name="blush_blue">#6781ba</color>
+
+    <color name="gray">#D3D3D3</color>
 </resources>

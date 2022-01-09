@@ -5,11 +5,13 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
 import com.example.myapplication.api.user.dto.GetMeResponseDto
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.databinding.UserCharacterBinding
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.myapplication.R
 import com.example.myapplication.api.user.UserApiService
 import com.example.myapplication.api.auth.DiaryApiService
 import com.example.myapplication.api.diary.dto.DiaryDto
@@ -18,6 +20,7 @@ import com.example.myapplication.util.Character
 import com.example.myapplication.util.CharacterViewer
 import com.example.myapplication.util.TokenManager
 import com.example.myapplication.util.ViewHandler
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
@@ -46,6 +49,9 @@ class MainActivity : AppCompatActivity() {
         diaryCoverAdapter.diaryList = mutableListOf<DiaryDto>();
         binding.diaryList.adapter = diaryCoverAdapter;
         binding.diaryList.setLayoutManager(GridLayoutManager(this, 2))
+        initMenuButton()
+        initFriendButton()
+        initFriendButton()
     }
 
     private fun bind() {
@@ -110,6 +116,55 @@ class MainActivity : AppCompatActivity() {
 
         } catch (e: Throwable) {
             viewHandler.goLoginActivityAndRemoveTokens()
+        }
+    }
+
+    fun initMenuButton() {
+        binding.menu.setOnClickListener{
+            when(binding.goSetting.visibility) {
+                FloatingActionButton.INVISIBLE -> openDropDownMenu()
+                FloatingActionButton.VISIBLE -> closeDropDownMenu()
+            }
+        }
+    }
+
+    fun openDropDownMenu() {
+        binding.menu
+            .startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_open_with_rotate))
+
+        binding.goFriendActivity
+            .startAnimation(AnimationUtils.loadAnimation(this, R.anim.dropdown_from_top))
+        binding.goFriendActivity.visibility = FloatingActionButton.VISIBLE;
+
+        binding.goSetting
+            .startAnimation(AnimationUtils.loadAnimation(this, R.anim.dropdown_from_top))
+        binding.goSetting.visibility = FloatingActionButton.VISIBLE;
+    }
+
+    fun closeDropDownMenu() {
+        binding.menu
+            .startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_close_with_rotate))
+
+        binding.goFriendActivity
+            .startAnimation(AnimationUtils.loadAnimation(this, R.anim.dropdown_to_top))
+        binding.goFriendActivity.visibility = FloatingActionButton.INVISIBLE;
+
+        binding.goSetting
+            .startAnimation(AnimationUtils.loadAnimation(this, R.anim.dropdown_to_top))
+        binding.goSetting.visibility = FloatingActionButton.INVISIBLE;
+    }
+
+    fun initFriendButton() {
+        binding.goFriendActivity.setOnClickListener {
+            closeDropDownMenu()
+
+        }
+    }
+
+    fun initMySettingButton() {
+        binding.goSetting.setOnClickListener {
+            closeDropDownMenu()
+            //viewholder로 화면 전환
         }
     }
 }
