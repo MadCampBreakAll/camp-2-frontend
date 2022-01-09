@@ -66,16 +66,6 @@ class PageLetterViewPageAdapter(private val context: Context): RecyclerView.Adap
                 dailyColor.setColorFilter(Color.parseColor(color))
                 body.text = _body
                 title.text = _title
-                CharacterViewer(
-                    context,
-                    nextUser,
-                    Character(
-                        next!!.body,
-                        next.bodyColor,
-                        next.blushColor,
-                        next.item
-                    )
-                ).show()
 
                 // background.setBackgroundColor(Color.parseColor(color))
 
