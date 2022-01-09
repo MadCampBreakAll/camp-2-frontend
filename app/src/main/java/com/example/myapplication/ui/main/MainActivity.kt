@@ -49,10 +49,6 @@ class MainActivity : AppCompatActivity() {
         diaryCoverAdapter.diaryList = mutableListOf<DiaryDto>();
         binding.diaryList.adapter = diaryCoverAdapter;
         binding.diaryList.setLayoutManager(GridLayoutManager(this, 2))
-        initMenuButton()
-        initFriendButton()
-        initMySettingButton()
-        initIconFixingButton()
     }
 
     private fun bind() {
@@ -60,9 +56,10 @@ class MainActivity : AppCompatActivity() {
         binding.diaryAddBtn.setOnClickListener {
             viewHandler.goCreateDiaryActivity();
         }
-        binding.goFriendActivity.setOnClickListener {
-            viewHandler.goFriendActivity();
-        }
+        initMenuButton()
+        initFriendButton()
+        initMySettingButton()
+        initIconFixingButton()
     }
 
     private fun update(){
@@ -166,6 +163,7 @@ class MainActivity : AppCompatActivity() {
     fun initFriendButton() {
         binding.goFriendActivity.setOnClickListener {
             closeDropDownMenu()
+
         }
     }
 
@@ -179,6 +177,7 @@ class MainActivity : AppCompatActivity() {
     fun initIconFixingButton(){
         binding.goIconFixing.setOnClickListener {
             closeDropDownMenu()
+            viewHandler.goIconFixActivity()
         }
     }
 }
