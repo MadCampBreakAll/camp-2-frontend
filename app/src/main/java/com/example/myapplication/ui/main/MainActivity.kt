@@ -177,8 +177,7 @@ class MainActivity : AppCompatActivity() {
         return Pair(blush_draw, blush_pos_draw)
     }
 
-    private fun item_kind(item: Int): Int {
-        var shape = CharacterInitActivity.character_init_body_shape
+    private fun item_kind(item: Int, shape: Int): Int {
         var result_item = 0
         when (shape) {
             1 -> {
@@ -241,25 +240,25 @@ class MainActivity : AppCompatActivity() {
             return@handler;
         }
 
-        var body_shape = CharacterInitActivity.character_init_body_shape
-        var body_color = CharacterInitActivity.character_init_body_color
-        var blush = CharacterInitActivity.character_init_blush
-        var item = CharacterInitActivity.character_init_item
-
         var (_, user) = dto
 
-        icon!!.body.setImageResource(getShape(user?.body?:1))
-        icon!!.body.setColorFilter(resources.getColor(getBodyColor(user?.bodyColor?:1)))
-        icon!!.blush.setColorFilter(resources.getColor(getBlush(1, body_shape).first))
+        var body_shape = user?.body?:1
+        var body_color = user?.bodyColor?:1
+        var blush = user?.blush_color?:1
+        var item = user?.item?:1
+
+        icon!!.body.setImageResource(getShape(body_shape))
+        icon!!.body.setColorFilter(resources.getColor(getBodyColor(body_color)))
+        icon!!.blush.setColorFilter(resources.getColor(getBlush(body_color, body_shape).first))
         icon!!.blush.setImageResource(getBlush(blush, body_shape).second)
         if (item == 1) {
             icon!!.item.visibility= View.INVISIBLE
         }
         else {
             icon!!.item.visibility=View.VISIBLE
-            icon!!.item.setImageResource(item_kind(user?.item?:1))
+            icon!!.item.setImageResource(item_kind(item, body_shape))
         }
-        icon!!.face.setImageResource(getFace(user?.body?:1))
+        icon!!.face.setImageResource(getFace(body_shape))
         setUserNickname(nickname = user?.nickname?:"unknown")
     }
 

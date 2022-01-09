@@ -33,11 +33,18 @@ class CreateDiaryActivity : AppCompatActivity() {
     private fun bind(){
         setContentView(binding.root);
         binding.createDiaryButton.setOnClickListener {
+//            val dto = CreateDiaryRequestDto(
+//                title = binding.title.toString(),
+//                userIds = arrayListOf(
+//                    binding.friendId1.text.toString(),
+//                    binding.friendId1.text.toString(),
+//                ),
+//            )
             val dto = CreateDiaryRequestDto(
                 title = binding.title.toString(),
                 userIds = arrayListOf(
-                    binding.friendId1.text.toString(),
-                    binding.friendId1.text.toString(),
+                    "12345",
+                    "11111",
                 ),
             )
             diaryApiService.createDiary(dto, success = createDiaryHandler, fail = null);

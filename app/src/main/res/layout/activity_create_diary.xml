@@ -1,73 +1,222 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.diary.create.CreateDiaryActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ui.diary.create.CreateDiaryActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:scaleType="center"
+        android:src="@drawable/diary_text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="0.7"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        tools:layout_editor_absoluteX="0dp" />
 
     <EditText
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
+        android:layout_marginStart="48dp"
+        android:ems="9"
         android:hint="제목"
-        app:layout_constraintBottom_toTopOf="@+id/editTextNumber"
+        android:inputType="textPersonName"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.323"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        app:layout_constraintVertical_bias="0.356" />
 
-    <EditText
+    <TableLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:id="@+id/friend_id_1"
-        android:hint="친구"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/editTextNumber2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        />
+        app:layout_constraintBottom_toTopOf="@+id/create_diary_button"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintHorizontal_bias="0.375"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintVertical_bias="0.5"
+        app:layout_constraintWidth_percent="1">
 
-    <EditText
-        android:id="@+id/friend_id_2"
-        android:hint="친구"
-        android:inputType="textPersonName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="272dp" />
+        <TableRow
 
-    <EditText
-        android:id="@+id/friend_id_3"
-        android:hint="친구"
-        android:inputType="textPersonName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="361dp" />
+            android:layout_marginBottom="10dp">
 
-    <EditText
-        android:id="@+id/friend_id_4"
-        android:hint="친구"
-        android:inputType="textPersonName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="446dp" />
+            <FrameLayout
+                android:id="@+id/createDiaryMyFrame"
+                android:layout_width="10dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="30dp"
+                android:background="@color/oatmeal"
+                app:cardCornerRadius="20dp">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/create_diary_friend_boundary"/>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp">
+
+                    <include
+                        android:id="@+id/createDiaryMe"
+                        layout="@layout/user_character"
+                        android:visibility="visible" />
+
+                </FrameLayout>
+                <TextView
+                    android:id="@+id/createDiaryMyName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="나"
+                    android:visibility="visible" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/createDiarySecondFriendCardView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/oatmeal">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/create_diary_friend_boundary"/>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/diary_add_friend_btn" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp">
+
+                    <include
+                        android:id="@+id/createDiarySecondFriend"
+                        layout="@layout/user_character"
+                        android:visibility="invisible" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/createDiarySecondFriendName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="친구2"
+                    android:visibility="invisible" />
+
+            </FrameLayout>
+
+        </TableRow>
+
+        <TableRow>
+
+            <FrameLayout
+                android:id="@+id/createDiaryThirdFriendCardView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginRight="30dp"
+                android:background="@color/oatmeal">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/create_diary_friend_boundary"/>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/diary_add_friend_btn" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp">
+
+                    <include
+                        android:id="@+id/createDiaryThirdFriend"
+                        layout="@layout/user_character"
+                        android:visibility="invisible" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/createDiaryThirdFriendName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="친구3"
+                    android:visibility="invisible" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/createDiaryFourthFriendCardView"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:background="@color/oatmeal">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/create_diary_friend_boundary"/>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/diary_add_friend_btn" />
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="80dp">
+
+                    <include
+                        android:id="@+id/createDiaryFourthFriend"
+                        layout="@layout/user_character"
+                        android:visibility="invisible" />
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/createDiaryFourthFriendName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="친구4"
+                    android:visibility="invisible" />
+
+            </FrameLayout>
+        </TableRow>
+
+    </TableLayout>
 
     <Button
         android:id="@+id/create_diary_button"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="생성" />
-</LinearLayout>
+        android:text="생성"
+        app:layout_constraintWidth_percent="0.3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+</androidx.constraintlayout.widget.ConstraintLayout>
