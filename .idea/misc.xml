@@ -11,7 +11,8 @@
         <entry key="app/src/main/res/layout-w936dp/activity_login.xml" value="0.158984375" />
         <entry key="app/src/main/res/layout/activity.xml" value="0.21197916666666666" />
         <entry key="app/src/main/res/layout/activity_character_init.xml" value="0.1853408544508593" />
-        <entry key="app/src/main/res/layout/activity_create_diary.xml" value="0.4730290456431535" />
+        <entry key="app/src/main/res/layout/activity_create_diary.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_create_page.xml" value="0.1439814814814815" />
         <entry key="app/src/main/res/layout/activity_diary_inner.xml" value="0.165" />
         <entry key="app/src/main/res/layout/activity_friend.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.25226449275362317" />
