@@ -1,5 +1,6 @@
 package com.example.myapplication.api.page.dto
 
+import com.example.myapplication.api.diary.dto.NextUserDto
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
@@ -17,5 +18,7 @@ data class PageDto (
     @SerializedName("user")
     val user: UserDto?,
     @SerializedName("createdAt")
-    val createdAt: Date?
+    val createdAt: Date?,
+    @SerializedName("nextUser")
+    val nextUser: NextUserDto?
 )

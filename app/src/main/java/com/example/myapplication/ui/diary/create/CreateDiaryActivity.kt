@@ -26,7 +26,9 @@ class CreateDiaryActivity : AppCompatActivity() {
     private lateinit var userApiService: UserApiService
     private lateinit var tokenManager: TokenManager
     private lateinit var viewHandler: ViewHandler
-    private var createDiary: CreateDiary? = null
+    private val createDiary: CreateDiary by lazy {
+        CreateDiary()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -139,7 +141,6 @@ class CreateDiaryActivity : AppCompatActivity() {
             if(!dto?.status!!){
                 throw Throwable()
             }
-            setCreateDto()
             createDiary!!.setFriends(dto.friends!!)
             updateSelectedFriendView()
         } catch (e: Throwable) {
@@ -150,7 +151,6 @@ class CreateDiaryActivity : AppCompatActivity() {
 
     private val getMeHandler: (GetMeResponseDto?) -> Unit = handler@{ dto ->
         try {
-            setCreateDto()
             createDiary!!.setMe(userDto = dto?.user!!)
             updateSelectedFriendView()
         } catch (e: Throwable) {
@@ -159,9 +159,4 @@ class CreateDiaryActivity : AppCompatActivity() {
         }
     }
 
-    private fun setCreateDto(){
-        if(createDiary == null){
-            createDiary = CreateDiary()
-        }
-    }
 }

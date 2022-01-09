@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
+import com.example.myapplication.api.diary.dto.NextUserDto
 import com.example.myapplication.api.page.dto.PageDto
 import com.example.myapplication.api.page.dto.UserDto
 import com.example.myapplication.databinding.PageLetterItemBinding
@@ -19,11 +20,6 @@ import com.example.myapplication.util.Character
 import com.example.myapplication.util.CharacterViewer
 import com.google.gson.annotations.SerializedName
 import java.time.LocalDate
-
-// 이 어뎁터는 diary의 letter pages를 담는 fragment_page_letter의 viewpager이 각각의 page들에 값을 binding하여 view를 만들어준다.
-// page_letter에 적절한 값을 바인딩할 수 있어야 한다.
-// DiaryInnerActivity 안에 있는 viewpager에 page view를 바인딩
-// viewpager은 diaryinneractivity에 있다.
 
 class PageLetterViewPageAdapter(private val context: Context): RecyclerView.Adapter<PageLetterViewPageAdapter.ViewHolder>() {
     private var pageList = mutableListOf<PageDto>()
@@ -63,22 +59,38 @@ class PageLetterViewPageAdapter(private val context: Context): RecyclerView.Adap
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(page: PageDto) {
             try {
-                val (_, _title, _body, color, img, user, createdAt) = page
+                val (_, _title, _body, color, img, user, createdAt, _nextUser) = page
                 writenDate.text = createdAt!!.time.toString()
                 dailyColor.setColorFilter(Color.parseColor(color))
                 body.text = _body
                 title.text = _title
 
                 // background.setBackgroundColor(Color.parseColor(color))
-                //settingOthersIcon(nextUser, page.b)
                 bindWriter(user!!)
+                bindNextUser(_nextUser!!)
             } catch (e: Throwable) {
+                e.printStackTrace()
                 Log.d("DEBUG", "PAGE LETTER VIEW PAGE ADAPTER BIND")
             }
         }
 
-        private fun bindNextUser(){
-
+        private fun bindNextUser(_nextUser: NextUserDto){
+            try {
+                val (_, _, body, bodyColor, blushColor, item) = _nextUser
+                CharacterViewer(
+                    context,
+                    nextUser,
+                    Character(
+                        body!!,
+                        bodyColor!!,
+                        blushColor!!,
+                        item!!
+                    )
+                ).show()
+            } catch (e: Throwable) {
+                e.printStackTrace()
+                Log.d("DEBUG", "BIND NEXT USER FAIL")
+            }
         }
 
         private fun bindWriter(_writer: UserDto){
