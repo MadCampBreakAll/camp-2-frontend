@@ -3,11 +3,13 @@ package com.example.myapplication.util
 import android.app.Activity
 import android.content.Intent
 import androidx.core.content.ContextCompat
+import com.example.myapplication.databinding.ActivityNicknameSettingBinding
 import com.example.myapplication.ui.diary.create.CreateDiaryActivity
 import com.example.myapplication.ui.diary.create.CreateDiaryAddFriendPopupActivity
 import com.example.myapplication.ui.friend.FriendActivity
 import com.example.myapplication.ui.friend.PendingFriendActivity
 import com.example.myapplication.ui.join.CharacterInitActivity
+import com.example.myapplication.ui.join.NicknameSettingActivity
 import com.example.myapplication.ui.login.LoginActivity
 import com.example.myapplication.ui.main.MainActivity
 import com.example.myapplication.ui.page.DiaryInnerActivity
@@ -94,6 +96,11 @@ class ViewHandler {
     fun goAddFriendPopupActivity(friendSeq: Int){
         val intent = Intent(activity, CreateDiaryAddFriendPopupActivity::class.java)
         intent.putExtra("friendSeq", friendSeq)
+        activity.startActivity(intent)
+    }
+
+    fun goNicknameActivity(){
+        val intent = Intent(activity, NicknameSettingActivity::class.java)
         activity.startActivity(intent)
     }
 }

@@ -53,20 +53,7 @@ class CharacterItemSelectFragment : Fragment() {
         next.setImageResource(R.drawable.start)
         next.setColorFilter(resources.getColor(R.color.body_red))
         next.setOnClickListener {
-            val registerRequestDto = RegisterRequestDto(
-                tokenManager.getAccessToken(),
-                nickname = "TEST",
-                body = CharacterInitActivity.character_init_body_shape,
-                bodyColor = CharacterInitActivity.character_init_body_color,
-                font = 0,
-                item = CharacterInitActivity.character_init_item,
-                blushColor = CharacterInitActivity.character_init_blush,
-            );
-            authApiService.register(
-                registerRequestDto,
-                success = registerHandler,
-                fail = null
-            );
+            viewHandler.goNicknameActivity()
         }
 
         var prev = character_init_binding.userCharacterInitPrevBtn
@@ -203,18 +190,5 @@ class CharacterItemSelectFragment : Fragment() {
             }
         }
         return result_item
-    }
-
-    var registerHandler : ( RegisterResponseDto? ) -> Unit = handler@{ response ->
-        try {
-            if(!response!!.status!!){
-                throw Error()
-            }else {
-                this.tokenManager.setJWT(response!!.token!!);
-                viewHandler.goMainActivity();
-            }
-        } catch (e: Throwable) {
-            viewHandler.goLoginActivityAndRemoveTokens()
-        }
     }
 }

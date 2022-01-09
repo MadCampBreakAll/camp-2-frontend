@@ -3,6 +3,8 @@ package com.example.myapplication.ui.diary.create
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -27,6 +29,7 @@ class CreateDiaryAddFriendPopupActivity(
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        super.getWindow()?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         init()
         bind()
         update()
