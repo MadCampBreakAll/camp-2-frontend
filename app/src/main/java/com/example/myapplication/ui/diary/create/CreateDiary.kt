@@ -24,6 +24,10 @@ class CreateDiary {
         }
     }
 
+    fun getSelectedFriend(): List<FriendDto?> {
+        return this.selectedFriends.toList()
+    }
+
     @RequiresApi(Build.VERSION_CODES.N)
     fun selectFriend(index: Int, friendDto: FriendDto){
         selectedFriends.replaceAll {
@@ -53,7 +57,7 @@ class CreateDiary {
     }
 
     companion object {
-        val MAX_CAPACTIRY = 4
+        val MAX_CAPACTIRY = 3
     }
 
 }

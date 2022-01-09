@@ -1,17 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="150dp"
     android:layout_height="150dp">
 
     <FrameLayout
-        android:layout_width="150dp"
-        android:layout_height="150dp">
+        android:id="@+id/frameLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="125dp">
+
             <include
-                android:id="createDiaryFriendIcon"
-                layout="@layout/user_character"/>
+                android:id="@+id/createDiaryFriendIcon"
+                layout="@layout/user_character" />
         </FrameLayout>
 
         <TextView
@@ -21,7 +29,7 @@
             android:layout_gravity="bottom"
             android:gravity="center"
             android:text="Test"
-            android:textSize="20dp"/>
+            android:textSize="20dp" />
     </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
