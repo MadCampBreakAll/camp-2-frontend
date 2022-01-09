@@ -20,6 +20,5 @@ interface AuthApiProvider {
         @Body registerRequestDto: RegisterRequestDto
     ) : Call<RegisterResponseDto>
 
-    @GET("/")
-    fun test() : Call<Unit>
+
 }

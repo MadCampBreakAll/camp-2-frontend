@@ -90,6 +90,8 @@ class MainActivity : AppCompatActivity() {
                 userCharacter
             ).show()
             setUserNickname(nickname = nickname ?:"unknown")
+            Setting.backgroundColor = response.user!!.backgroundColor!!
+            Setting.font = response.user.font!!
         } catch (e: Throwable) {
             viewHandler.goLoginActivityAndRemoveTokens()
         }
