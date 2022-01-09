@@ -1,8 +1,8 @@
-package com.example.myapplication.api.entity
+package com.example.myapplication.api.user.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class NextUser (
+data class UserDto(
     @SerializedName("id")
     val id: String?,
     @SerializedName("nickname")
@@ -12,7 +12,9 @@ data class NextUser (
     @SerializedName("bodyColor")
     val bodyColor: Int?,
     @SerializedName("blushColor")
-    val blushColor: Int?,
+    val blush_color: Int?,
     @SerializedName("item")
-    val item: Int?
+    val item: Int?,
+    @SerializedName("font")
+    val font: String?,
 )

@@ -1,10 +1,10 @@
-package com.example.myapplication.api.entity
+package com.example.myapplication.api.diary.dto
 
 import com.google.gson.annotations.SerializedName
 
-data class ChamyeoUser(
+data class NextUserDto (
     @SerializedName("id")
-    val id: Long,
+    val id: String?,
     @SerializedName("nickname")
     val nickname: String?,
     @SerializedName("body")
@@ -14,5 +14,5 @@ data class ChamyeoUser(
     @SerializedName("blushColor")
     val blushColor: Int?,
     @SerializedName("item")
-    val item: Int?,
+    val item: Int?
 )

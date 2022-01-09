@@ -11,19 +11,5 @@ interface UserApiProvider {
     @GET("/users/me")
     fun getMe() : Call<GetMeResponseDto>;
 
-    @GET("/friends")
-    fun getFriends() : Call<GetMyFriendsResponseDto>;
 
-    @GET("/friends/requests")
-    fun getPendingFriends() : Call<GetPendingFriendResponseDto>;
-
-    @POST("/friends/requests")
-    fun makeFriend(
-        @Body dto: MakeFriendRequestDto
-    ) : Call<MakeFriendResponseDto>;
-
-    @POST("/friends/accept")
-    fun acceptFriend(
-        @Body dto: AcceptFriendRequestDto
-    ) : Call<AcceptFriendResponseDto>;
 }

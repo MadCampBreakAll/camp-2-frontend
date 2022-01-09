@@ -1,17 +1,17 @@
-package com.example.myapplication.api.entity
+package com.example.myapplication.api.diary.dto
 
 import com.google.gson.annotations.SerializedName
-import java.time.LocalDateTime
+import java.util.*
 
-data class Diary (
+data class DiaryDto (
     @SerializedName("id")
     val id: String,
     @SerializedName("title")
     val title: String,
     @SerializedName("createdAt")
-    val createdAt: LocalDateTime,
+    val createdAt: Date,
     @SerializedName("nextUser")
-    val nextUser: NextUser,
+    val nextUser: NextUserDto,
     @SerializedName("chamyeoUsers")
-    val chamyeoUsers: List<ChamyeoUser>
+    val chamyeoUsers: List<ChamyeoUserDto>
 )

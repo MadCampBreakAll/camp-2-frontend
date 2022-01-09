@@ -11,9 +11,9 @@ import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myapplication.ui.join.CharacterInitActivity
 import com.example.myapplication.R
-import com.example.myapplication.api.entity.Diary
 import com.example.myapplication.api.user.UserApiService
 import com.example.myapplication.api.auth.DiaryApiService
+import com.example.myapplication.api.diary.dto.DiaryDto
 import com.example.myapplication.api.diary.dto.GetMyDiariesResponseDto
 import com.example.myapplication.util.TokenManager
 import com.example.myapplication.util.ViewHandler
@@ -23,13 +23,15 @@ class MainActivity : AppCompatActivity() {
     private lateinit var diaryCoverAdapter: DiaryCoverAdapter
     private lateinit var userApiService: UserApiService
     private lateinit var diaryApiService: DiaryApiService
-    private var icon: UserCharacterBinding?= null
+    private lateinit var viewHandler: ViewHandler
+    private lateinit var icon: UserCharacterBinding
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         init()
         bind()
+
         userApiService.getMe(
             success = getUserHandler,
             fail = null
@@ -45,17 +47,20 @@ class MainActivity : AppCompatActivity() {
         userApiService = UserApiService(tokenManager)
         diaryApiService = DiaryApiService(tokenManager)
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
         icon = binding.userCharacterIcon
     }
 
-    private fun bind(){
+    private fun bind() {
+        setContentView(binding.root)
+        viewHandler = ViewHandler(this);
         binding.diaryAddBtn.setOnClickListener {
-            val viewHandler = ViewHandler(this);
-            viewHandler.goCreateDiary();
+            viewHandler.goCreateDiaryActivity();
+        }
+        binding.goFriendActivity.setOnClickListener {
+            viewHandler.goFriendActivity();
         }
         diaryCoverAdapter = DiaryCoverAdapter(this)
-        diaryCoverAdapter.diaryList = mutableListOf<Diary>();
+        diaryCoverAdapter.diaryList = mutableListOf<DiaryDto>();
         binding.diaryList.adapter = diaryCoverAdapter;
         binding.diaryList.setLayoutManager(GridLayoutManager(this, 2))
     }
@@ -221,8 +226,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val getUserHandler : (GetMeResponseDto?) -> Unit = handler@{ response ->
-        val viewHandler = ViewHandler(this)
-
         if(
                 viewHandler.goLoginActivityIfNull(response) ||
                 viewHandler.goLoginActivityIfNull(response?.status) ||
@@ -265,7 +268,6 @@ class MainActivity : AppCompatActivity() {
     }
 
      private val getMyDiariesHandler: (GetMyDiariesResponseDto?) -> Unit = handler@{ response ->
-        val viewHandler = ViewHandler(this);
 
         if(
             viewHandler.goLoginActivityIfNull(response) ||

@@ -7,4 +7,6 @@ data class LoginResponseDto (
     val status: Boolean?,
     @SerializedName("token")
     val token: String?,
+    @SerializedName("register")
+    val register: Boolean?
 )

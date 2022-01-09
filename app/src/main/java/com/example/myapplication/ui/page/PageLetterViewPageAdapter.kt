@@ -1,4 +1,4 @@
-package com.example.myapplication.ui.diary
+package com.example.myapplication.ui.page
 
 import android.content.Context
 import android.graphics.Color
@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
-import com.example.myapplication.api.dto.PageDto
+import com.example.myapplication.api.page.dto.PageDto
 import com.example.myapplication.databinding.PageLetterItemBinding
 import com.example.myapplication.databinding.UserCharacterBinding
 import com.example.myapplication.ui.join.CharacterInitActivity
@@ -23,6 +23,10 @@ import java.time.LocalDate
 class PageLetterViewPageAdapter(private val context: Context): RecyclerView.Adapter<PageLetterViewPageAdapter.ViewHolder>() {
     private lateinit var innerpagerBinding: PageLetterItemBinding
     var pageList = mutableListOf<PageDto>()
+
+    fun addAllPage(pages: List<PageDto>){
+        this.pageList.addAll(pages);
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -51,18 +55,17 @@ class PageLetterViewPageAdapter(private val context: Context): RecyclerView.Adap
 
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(page: PageDto) {
-            writenDate.text = LocalDate.now().toString()
+            writenDate.text = page!!.createdAt!!.toString()
 
             // background는 설정을 변경하는 화면의 activity 혹은 fragment에서 저장된 companion object 값에 따라서 setting 하는 것으로 하자.
 
             dailyColor.setColorFilter(Color.parseColor(page.color))
 
-//            settingOthersIcon(nextUser, user의 정보들을 뒤의 인자로 추가)
+//            settingOthersIcon(nextUser, page.b)
 //            settingOthersIcon(writer, writer의 정보를 뒤의 인자로 추가)
-//            background.setBackgroundColor(Color.parseColor(page.배경 색상 정보가 있어야 할 듯 하다))
+            background.setBackgroundColor(Color.parseColor(page.color))
             body.text = page.body
             title.text = page.title
-
         }
         fun getShape(shape: Int): Int {
             var shape_draw = 0

@@ -2,19 +2,23 @@ package com.example.myapplication.util
 
 import android.app.Activity
 import android.content.Intent
-import com.example.myapplication.ui.diary.create.CreateDiary
+import com.example.myapplication.ui.diary.create.CreateDiaryActivity
+import com.example.myapplication.ui.friend.FriendActivity
+import com.example.myapplication.ui.friend.PendingFriendActivity
 import com.example.myapplication.ui.join.CharacterInitActivity
 import com.example.myapplication.ui.login.LoginActivity
 import com.example.myapplication.ui.main.MainActivity
 
 class ViewHandler {
-    var activity: Activity;
+    private var activity: Activity
+    private var tokenManager: TokenManager
+
     constructor(activity: Activity){
         this.activity = activity;
+        this.tokenManager = TokenManager(this.activity)
     }
 
     fun goLoginActivityAndRemoveTokens(): Boolean {
-        val tokenManager = TokenManager(this.activity) ;
         tokenManager.removeJWT();
         tokenManager.removeAccessToken()
 
@@ -26,9 +30,13 @@ class ViewHandler {
 
     fun goLoginActivityIfNull(test: Any?): Boolean{
         if(test == null){
+            tokenManager.removeJWT();
+            tokenManager.removeAccessToken()
+
             val intent = Intent(activity, LoginActivity::class.java)
             activity.startActivity(intent)
             activity.finish()
+
             return true
         }
 
@@ -49,16 +57,29 @@ class ViewHandler {
         return true
     }
 
-    fun goCreateDiary() : Boolean {
-        val intent = Intent(activity, CreateDiary::class.java)
+    fun goCreateDiaryActivity() : Boolean {
+        val intent = Intent(activity, CreateDiaryActivity::class.java)
+        activity.startActivity(intent)
+        return true;
+    }
+
+    fun goCreateDiaryAndFinish() : Boolean {
+        val intent = Intent(activity, CreateDiaryActivity::class.java)
         activity.startActivity(intent)
         activity.finish()
         return true;
     }
 
-    fun goCreateDiaryAndFinish() : Boolean {
-        val intent = Intent(activity, CreateDiary::class.java)
+    fun goFriendActivity(): Boolean {
+        val intent = Intent(activity, FriendActivity::class.java)
+        activity.startActivity(intent)
+        return true
+    }
+
+    fun goPendingFriendActivity(): Boolean{
+        val intent = Intent(activity, PendingFriendActivity::class.java)
         activity.startActivity(intent)
         return true;
     }
+
 }

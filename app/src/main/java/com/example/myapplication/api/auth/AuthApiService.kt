@@ -1,12 +1,18 @@
 package com.example.myapplication.api.auth
 
+import android.content.Context
 import android.util.Log
 import com.example.myapplication.BuildConfig
+import com.example.myapplication.api.BasicApiService
 import com.example.myapplication.api.auth.dto.LoginRequestDto
 import com.example.myapplication.api.auth.dto.LoginResponseDto
 import com.example.myapplication.api.auth.dto.RegisterRequestDto
 import com.example.myapplication.api.auth.dto.RegisterResponseDto
+import com.example.myapplication.api.diary.DiaryApiProvider
 import com.example.myapplication.util.TokenManager
+import com.google.gson.GsonBuilder
+import com.kakao.sdk.auth.model.OAuthToken
+import com.kakao.sdk.user.UserApiClient
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Call
@@ -16,33 +22,28 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 
-class AuthApiService {
+class AuthApiService : BasicApiService{
 
-    private val apiProvider: AuthApiProvider;
+    private final val apiProvider: AuthApiProvider
+    private val tokenManager: TokenManager
 
     constructor(tokenManager: TokenManager){
-        this.apiProvider= getProvider(tokenManager);
+        this.tokenManager = tokenManager
+        this.apiProvider = getProvider(tokenManager)
     }
 
     private fun getProvider(tokenManager: TokenManager): AuthApiProvider {
-        val apiInterceptor = Interceptor {
-            val originalRequest = it.request()
-            val newHttp = originalRequest.newBuilder()
-                .header("Authorization", "Bearer " + tokenManager.getJWT())
-                .build()
-            it.proceed(newHttp)
-        }
-
-        val httpClient = OkHttpClient.Builder()
-            .addInterceptor(apiInterceptor)
-            .build()
+        val httpClient = getBasicHttpClientBuilder().addInterceptor(
+            getApiInterceptorWithJWT(tokenManager.getJWT())
+        ).build()
 
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.TEST_BASE_URI)
+            .baseUrl(BuildConfig.BASE_URI)
             .client(httpClient)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory
+                .create(getBasicGson()))
             .build()
-            .create(AuthApiProvider::class.java)
+            .create(AuthApiProvider::class.java);
     }
 
 
@@ -50,7 +51,7 @@ class AuthApiService {
          loginRequestDto: LoginRequestDto,
          success: (LoginResponseDto?) -> Unit,
          fail: ((Throwable) -> Unit)?,
-    ) : Unit {
+    ) {
         this.apiProvider.login(loginRequestDto).enqueue(object : Callback<LoginResponseDto> {
             override fun onResponse(
                 call: Call<LoginResponseDto>,
@@ -76,7 +77,7 @@ class AuthApiService {
         registerRequestDto: RegisterRequestDto,
         success: (RegisterResponseDto?) -> Unit,
         fail: ((Throwable) -> Unit)?,
-    ): Unit {
+    ) {
         this.apiProvider.register(registerRequestDto).enqueue(object: Callback<RegisterResponseDto> {
             override fun onResponse(
                 call: Call<RegisterResponseDto>,
@@ -95,8 +96,24 @@ class AuthApiService {
 
                 fail?.invoke(t);
             }
-
         })
+    }
+
+    fun loginWithKaKao(
+        context: Context,
+        callback: (OAuthToken?, Throwable?) -> Unit
+    ): Boolean {
+        if(tokenManager.hasJWT()){
+            return false
+        }
+
+        if(UserApiClient.instance.isKakaoTalkLoginAvailable(context)){
+            UserApiClient.instance.loginWithKakaoTalk(context, callback = callback)
+            return true
+        }
+
+        UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
+        return true
     }
 
 }
