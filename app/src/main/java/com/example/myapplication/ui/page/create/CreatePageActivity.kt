@@ -12,15 +12,49 @@ import android.widget.EditText
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.lifecycle.Observer
+import com.example.myapplication.api.page.PageApiService
+import com.example.myapplication.api.page.dto.CreatePageRequestDto
+import com.example.myapplication.ui.main.DiaryCoverAdapter
+import com.example.myapplication.ui.main.Setting
+import com.example.myapplication.util.TokenManager
 
 class CreatePageActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreatePageBinding
     private var dailyColor = ""
+    private lateinit var tokenManager: TokenManager
+    private lateinit var pageApiService: PageApiService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         init()
+        bind()
+    }
+
+    fun init(){
+        binding = ActivityCreatePageBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        tokenManager = TokenManager(this)
+        pageApiService = PageApiService(tokenManager)
+
+        Setting.setting.observe(this, Observer {
+            updateBackground()
+        })
+    }
+
+    fun updateBackground() {
+        binding.pageBackgroundColor.setBackgroundColor(Color.parseColor(Setting.backgroundColor))
+
+        if(Setting.page == 0) {
+            binding.monoonBackground.visibility = View.INVISIBLE
+        }
+        else {
+            binding.monoonBackground.visibility = View.VISIBLE
+        }
+    }
+
+    fun bind(){
         binding.innerPageDailyColor.setOnClickListener{
             val colorPicker: ColorPickerDialog = ColorPickerDialog.Builder()
                 .setInitialColor(Color.parseColor("#fff1e6"))
@@ -35,18 +69,10 @@ class CreatePageActivity : AppCompatActivity() {
                 .create()
 
             colorPicker.show(supportFragmentManager, "color_picker")
-
         }
     }
 
-    fun init(){
-        binding = ActivityCreatePageBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-    }
 
-    fun bind(){
-
-    }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         val view: View? = currentFocus

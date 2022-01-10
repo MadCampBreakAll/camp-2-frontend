@@ -4,11 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/blankPageBackground"
+    android:background="@color/oatmeal"
     >
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.page.DiaryInnerActivity">
+        <ImageView
+            android:id="@+id/monoon_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/monoon_background"
+            android:visibility="invisible"/>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/blank_page"
+            android:scaleType="fitCenter"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="아직 작성된 페이지가 없어요."
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintVertical_bias="0.7"
+            android:textSize="15dp"
+            android:gravity="center" />
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/innerMainPageFragment"
             android:layout_width="match_parent"
@@ -20,7 +42,7 @@
             android:layout_height="match_parent"
             >
         </androidx.viewpager2.widget.ViewPager2>
-        
+
         <ImageButton
             android:id="@+id/pageAddBtn"
             android:layout_width="40dp"

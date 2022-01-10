@@ -11,10 +11,10 @@
         app:fontWeight="400"/>
 
     <font
-        android:font="@font/cafe24oneprettynight"
+        android:font="@font/babymind"
         android:fontStyle="normal"
         android:fontWeight="1500"
-        app:font="@font/cafe24oneprettynight"
+        app:font="@font/babymind"
         app:fontStyle="normal"
         app:fontWeight="1500"/>
 </font-family>
