@@ -109,7 +109,7 @@
                     app:layout_constraintVertical_bias="0.4"
                     android:src="@drawable/inner_page_postit"/>
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/innerPageDailyColor"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
@@ -120,7 +120,7 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintVertical_bias="0.425"
-                    android:src="@drawable/inner_page_daily_color"
+                    android:background="@drawable/inner_page_daily_color"
                     app:tint="@color/body_red"/>
 
                 <ScrollView
