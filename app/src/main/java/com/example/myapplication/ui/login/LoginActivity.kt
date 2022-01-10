@@ -50,7 +50,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private val loginWithKaKaoHandler : (OAuthToken?, Throwable?) -> Unit = handler@{ token, error ->
-
+        println(token)
         if(token == null){
             return@handler
         }
