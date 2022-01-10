@@ -60,15 +60,15 @@ class FriendApiService : BasicApiService{
         })
     }
 
-    fun getPendingFriend(
-        success: (GetPendingFriendResponseDto?) -> Unit,
+    fun getRequestsFriend(
+        success: (GetRequestsFriendResponseDto?) -> Unit,
         fail: ((Throwable) -> Unit)?
     ) {
         this.friendApiProvider.getPendingFriends().enqueue(object:
-            Callback<GetPendingFriendResponseDto> {
+            Callback<GetRequestsFriendResponseDto> {
             override fun onResponse(
-                call: Call<GetPendingFriendResponseDto>,
-                response: Response<GetPendingFriendResponseDto>
+                call: Call<GetRequestsFriendResponseDto>,
+                response: Response<GetRequestsFriendResponseDto>
             ) {
                 Log.d("DEBUG", "GET MY PENDING FRIEND SUCCESS")
                 Log.d("DEBUG", response.toString())
@@ -77,7 +77,7 @@ class FriendApiService : BasicApiService{
                 success(response.body());
             }
 
-            override fun onFailure(call: Call<GetPendingFriendResponseDto>, t: Throwable) {
+            override fun onFailure(call: Call<GetRequestsFriendResponseDto>, t: Throwable) {
                 Log.d("DEBUG", "GET MY PENDING FRIEND FAIL")
                 Log.d("DEBUG", t.toString())
 
@@ -91,6 +91,7 @@ class FriendApiService : BasicApiService{
         success: (MakeFriendResponseDto?) -> Unit,
         fail: ((Throwable) -> Unit)?
     ) {
+        Log.d("DEBUG", "START MAKE FRIEND$dto")
         this.friendApiProvider.makeFriend(dto).enqueue(object: Callback<MakeFriendResponseDto> {
             override fun onResponse(
                 call: Call<MakeFriendResponseDto>,

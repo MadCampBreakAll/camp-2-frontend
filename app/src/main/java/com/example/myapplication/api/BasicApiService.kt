@@ -16,6 +16,7 @@ open class BasicApiService {
 
     protected fun getApiInterceptorWithJWT(token: String): Interceptor{
         return Interceptor {
+            println("${token} in interceptor!!!")
             val originalRequest = it.request()
             val newHttp = originalRequest.newBuilder()
                 .header("Authorization", "Bearer " + token)

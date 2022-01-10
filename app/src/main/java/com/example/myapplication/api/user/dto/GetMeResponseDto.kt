@@ -6,5 +6,7 @@ data class GetMeResponseDto(
     @SerializedName("status")
     val status: Boolean?,
     @SerializedName("user")
-    val user: UserDto?
+    val user: UserDto?,
+    @SerializedName("login")
+    val login: Boolean?
 )

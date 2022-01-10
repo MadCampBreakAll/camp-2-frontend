@@ -26,7 +26,7 @@
             android:name=".ui.join.NicknameSettingActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.friend.PendingFriendActivity"
+            android:name=".ui.friend.SearchUserDialog"
             android:exported="false" />
         <activity
             android:name=".ui.friend.FriendActivity"

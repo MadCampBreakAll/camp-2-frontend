@@ -6,5 +6,7 @@ data class UpdateUIRequestDto (
     @SerializedName("font")
     val font: Int,
     @SerializedName("backgroundColor")
-    val backgroundColor: Int
+    val backgroundColor: String,
+    @SerializedName("backgroundPaper")
+    val backgroundPaper: Int,
 )

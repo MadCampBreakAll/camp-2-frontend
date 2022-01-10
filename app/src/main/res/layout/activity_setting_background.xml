@@ -29,11 +29,13 @@
             android:backgroundTint="@color/transparent"
             app:cardElevation="2dp"
             app:layout_constraintVertical_bias="0.2">
-            <ImageView
+
+            <include
+                android:id="@+id/user_character"
+                layout="@layout/user_character"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/setting_background_test"
-                android:scaleType="fitCenter"/>
+                android:layout_height="115dp"
+                android:src="@drawable/setting_background_test" />
         </androidx.cardview.widget.CardView>
         <ImageView
             android:layout_width="170dp"

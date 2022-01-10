@@ -7,4 +7,7 @@ data class GetMyDiariesResponseDto (
     val status: Boolean?,
     @SerializedName("diaries")
     val diaries: List<DiaryDto>?,
-)
+    @SerializedName("login")
+    val login: Boolean?,
+
+    )

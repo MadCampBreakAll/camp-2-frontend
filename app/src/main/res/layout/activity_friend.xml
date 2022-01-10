@@ -1,90 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/friendListBackground"
     android:background="@color/oatmeal"
     tools:context=".ui.friend.FriendActivity"
-    android:orientation="vertical">
-
-    <ScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:id="@+id/friendListBackground"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <TextView
-                android:id="@+id/textView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="20dp"
-                android:text="친구 요청"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:textSize="20dp"
-                android:paddingBottom="5dp"
-                />
-            <TextView
-                android:id="@+id/none_friend_request_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="아직 친구 요청이 없습니다."
-                android:textSize="15dp"
-                android:gravity="center"
-                android:textColor="@color/gray"
-                android:visibility="invisible"/>
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/pending_friends"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                tools:listitem="@layout/pending_friend"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2"
-                >
-            </androidx.recyclerview.widget.RecyclerView>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="20dp"
-                android:paddingBottom="5dp"
-                android:textSize="20dp"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="친구 목록"/>
-            <TextView
-                android:id="@+id/none_friend_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="아직 친구가 없습니다."
-                android:textColor="@color/gray"
-                android:textSize="15dp"
-                android:gravity="center"
-                android:visibility="invisible"/>
+            android:layout_height="match_parent">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/friends"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/create_diary_adding_friend_item"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                app:spanCount="2"
-                android:paddingLeft="20dp"
-                android:layout_gravity="center">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:text="친구 요청"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:textSize="20dp"
+                    android:paddingBottom="5dp"
+                    />
+                <TextView
+                    android:id="@+id/none_friend_request_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="아직 친구 요청이 없습니다."
+                    android:textSize="15dp"
+                    android:gravity="center"
+                    android:textColor="@color/gray"
+                    android:visibility="invisible"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/pending_friends"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    tools:listitem="@layout/pending_friend"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2"
+                    >
+                </androidx.recyclerview.widget.RecyclerView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="5dp"
+                    android:textSize="20dp"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="친구 목록"/>
+                <TextView
+                    android:id="@+id/none_friend_text"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="아직 친구가 없습니다."
+                    android:textColor="@color/gray"
+                    android:textSize="15dp"
+                    android:gravity="center"
+                    android:visibility="invisible"/>
 
-            <Button
-                android:id="@+id/go_pending_friend_activity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_gravity="center"
-                android:text="SEND"
-                />
-        </LinearLayout>
-    </ScrollView>
-</LinearLayout>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/friends"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/create_diary_adding_friend_item"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="2"
+                    android:paddingLeft="20dp"
+                    android:layout_gravity="center">
+                </androidx.recyclerview.widget.RecyclerView>
+
+                <Button
+                    android:id="@+id/go_pending_friend_activity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:layout_gravity="center"
+                    android:text="SEND"
+                    />
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

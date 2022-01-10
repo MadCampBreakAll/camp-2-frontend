@@ -7,4 +7,6 @@ data class SearchUserFriendWithNicknameResponseDto (
     val status: Boolean?,
     @SerializedName("user")
     val user: SearchedFriendDto?,
+    @SerializedName("login")
+    val login: Boolean?,
 )
