@@ -21,7 +21,9 @@ import com.wajahatkarim3.easyflipviewpager.BookFlipPageTransformer2
 import android.R.string.no
 import android.graphics.Color
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import com.example.myapplication.api.user.UserApiService
+import com.example.myapplication.ui.main.Setting
 import vadiole.colorpicker.ColorModel
 import vadiole.colorpicker.ColorPickerDialog
 
@@ -71,6 +73,21 @@ class DiaryInnerActivity : AppCompatActivity() {
         } catch (e: Throwable){
             Log.d("DEBUG", e.toString())
             finish()
+        }
+
+        Setting.setting.observe(this, Observer { setting ->
+            updateBackground()
+        })
+    }
+
+    fun updateBackground() {
+        binding.blankPageBackground.setBackgroundColor(Color.parseColor(Setting.backgroundColor))
+
+        if(Setting.page == 0) {
+            binding.monoonBackground.visibility = View.INVISIBLE
+        }
+        else {
+            binding.monoonBackground.visibility = View.VISIBLE
         }
     }
 
