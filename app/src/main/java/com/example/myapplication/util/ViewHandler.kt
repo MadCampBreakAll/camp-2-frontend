@@ -11,6 +11,7 @@ import com.example.myapplication.ui.join.NicknameSettingActivity
 import com.example.myapplication.ui.login.LoginActivity
 import com.example.myapplication.ui.main.MainActivity
 import com.example.myapplication.ui.page.DiaryInnerActivity
+import com.example.myapplication.ui.page.create.CreatePageActivity
 import com.example.myapplication.ui.setting.backfont.SettingBackgroundActivity
 import com.example.myapplication.ui.setting.icon.CharacterFixActivity
 
@@ -110,6 +111,11 @@ class ViewHandler {
 
     fun goBackgroundSetting(){
         val intent = Intent(activity, SettingBackgroundActivity::class.java)
+        activity.startActivity(intent)
+    }
+
+    fun goCreatePageAcitivty() {
+        val intent = Intent(activity, CreatePageActivity::class.java)
         activity.startActivity(intent)
     }
 }
