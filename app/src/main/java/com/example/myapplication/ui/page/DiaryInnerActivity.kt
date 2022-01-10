@@ -19,6 +19,7 @@ import com.example.myapplication.util.ViewHandler
 import com.wajahatkarim3.easyflipviewpager.BookFlipPageTransformer2
 
 import android.R.string.no
+import android.widget.Toast
 import com.example.myapplication.api.user.UserApiService
 
 
@@ -68,11 +69,13 @@ class DiaryInnerActivity : AppCompatActivity() {
             Log.d("DEBUG", e.toString())
             finish()
         }
-        println("userId = $userId")
     }
 
     private fun bind(){
         setContentView(binding.root)
+        binding.pageAddBtn.setOnClickListener {
+            viewHandler.goCreatePageAcitivty()
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -99,6 +102,7 @@ class DiaryInnerActivity : AppCompatActivity() {
     }
 
     private fun updateView(nextUserId: Int){
+        binding.pageAddBtn.visibility = View.INVISIBLE
         if(userId == nextUserId){
             binding.pageAddBtn.visibility = View.VISIBLE
         }
