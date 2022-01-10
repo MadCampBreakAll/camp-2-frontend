@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        println("진짜 이거임 ${TokenManager(this).getJWT()}")
         init()
         bind()
         update()

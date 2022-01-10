@@ -49,6 +49,10 @@ class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<Diar
 
     override fun getItemCount(): Int = diaryList.size
 
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val layoutParams = holder.itemView.layoutParams
         layoutParams.height=600
@@ -70,7 +74,7 @@ class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<Diar
             }
             binding.diaryImage.setOnClickListener {
                 if(myId == null){
-                    return@setOnClickListener;
+                    return@setOnClickListener
                 }
                 val intent = Intent(context, DiaryInnerActivity::class.java)
                 intent.putExtra("diary_id", item.id)

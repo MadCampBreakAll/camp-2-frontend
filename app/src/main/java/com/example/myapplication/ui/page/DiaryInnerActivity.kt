@@ -72,13 +72,23 @@ class DiaryInnerActivity : AppCompatActivity() {
             Log.d("DEBUG", e.toString())
             finish()
         }
+
+        binding.root.setOnRefreshListener {
+            update()
+            binding.root.isRefreshing = false
+        }
     }
 
     private fun bind(){
         setContentView(binding.root)
         binding.pageAddBtn.setOnClickListener {
-            viewHandler.goCreatePageAcitivty()
+            viewHandler.goCreatePageAcitivty(diaryId?:-1)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        update()
     }
 
     @SuppressLint("NotifyDataSetChanged")

@@ -181,7 +181,6 @@ class CharacterViewer(
             item
         ) = character
 
-        println("$bodyShape $bodyColor $blushColor $item")
         try {
             binding.root.visibility = View.VISIBLE
             binding.body.setImageResource(getShape(bodyShape))

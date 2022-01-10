@@ -98,7 +98,6 @@ class SettingBackgroundActivity : AppCompatActivity() {
             setting.backgroundColor,
             setting.page
         )
-        println(dto)
         userApiService.updateUI(dto,
             success = { dto ->
                 try {

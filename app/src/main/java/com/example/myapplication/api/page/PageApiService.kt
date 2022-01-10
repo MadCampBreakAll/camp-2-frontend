@@ -51,7 +51,7 @@ class PageApiService : BasicApiService{
                 call: Call<CreatePageResponseDto>,
                 response: Response<CreatePageResponseDto>
             ) {
-                Log.d("DEBUG", "LOGIN SUCCESS")
+                Log.d("DEBUG", "CREATE PAGE SUCCESS")
                 Log.d("DEBUG", response.toString())
                 Log.d("DEBUG", response.body().toString())
 
@@ -59,7 +59,7 @@ class PageApiService : BasicApiService{
             }
 
             override fun onFailure(call: Call<CreatePageResponseDto>, t: Throwable) {
-                Log.d("DEBUG", "LOGIN FAIL")
+                Log.d("DEBUG", "CREATE PAGE FAIL")
                 Log.d("DEBUG", t.toString())
 
                 fail?.invoke(t);
