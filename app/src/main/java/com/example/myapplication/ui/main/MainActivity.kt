@@ -163,14 +163,14 @@ class MainActivity : AppCompatActivity() {
     fun initFriendButton() {
         binding.goFriendActivity.setOnClickListener {
             closeDropDownMenu()
-
+            viewHandler.goFriendActivity()
         }
     }
 
     fun initMySettingButton() {
         binding.goSetting.setOnClickListener {
             closeDropDownMenu()
-            //viewholder로 화면 전환
+            viewHandler.goBackgroundSetting()
         }
     }
 

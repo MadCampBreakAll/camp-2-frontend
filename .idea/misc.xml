@@ -24,6 +24,8 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_nickname_setting.xml" value="0.2388888888888889" />
+        <entry key="app/src/main/res/layout/activity_setting_background.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/background_color_item.xml" value="0.5" />
         <entry key="app/src/main/res/layout/content_create_diary.xml" value="0.25" />
         <entry key="app/src/main/res/layout/content_diary_inner.xml" value="0.23324275362318841" />
         <entry key="app/src/main/res/layout/create_diary_adding_friend_item.xml" value="0.2675925925925926" />
