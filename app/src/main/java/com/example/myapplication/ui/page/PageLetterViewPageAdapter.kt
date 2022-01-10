@@ -2,11 +2,13 @@ package com.example.myapplication.ui.page
 
 import android.content.Context
 import android.graphics.Color
+import android.graphics.Typeface
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.api.diary.dto.NextUserDto
 import com.example.myapplication.api.page.dto.PageDto
@@ -14,8 +16,10 @@ import com.example.myapplication.api.page.dto.UserDto
 import com.example.myapplication.databinding.PageLetterItemBinding
 import com.example.myapplication.util.Character
 import com.example.myapplication.util.CharacterViewer
+import vadiole.colorpicker.ColorModel
+import vadiole.colorpicker.ColorPickerDialog
 
-class PageLetterViewPageAdapter(private val context: Context): RecyclerView.Adapter<PageLetterViewPageAdapter.ViewHolder>() {
+class PageLetterViewPageAdapter(private val context: Context, private val supportFragmentManager: FragmentManager): RecyclerView.Adapter<PageLetterViewPageAdapter.ViewHolder>() {
     private var pageList = mutableListOf<PageDto>()
 
     fun addAllPage(pages: List<PageDto>){

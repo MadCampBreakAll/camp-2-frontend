@@ -19,8 +19,11 @@ import com.example.myapplication.util.ViewHandler
 import com.wajahatkarim3.easyflipviewpager.BookFlipPageTransformer2
 
 import android.R.string.no
+import android.graphics.Color
 import android.widget.Toast
 import com.example.myapplication.api.user.UserApiService
+import vadiole.colorpicker.ColorModel
+import vadiole.colorpicker.ColorPickerDialog
 
 
 // Diary의 속지(페이지들을 볼 수 있는 곳)를 보는 화면 -> 속지들은 viewpager로 표현된다
@@ -52,7 +55,7 @@ class DiaryInnerActivity : AppCompatActivity() {
         tokenManager = TokenManager(this)
         diaryApiService = DiaryApiService(tokenManager)
         pageApiService = PageApiService(tokenManager)
-        pageLetterViewPageAdapter = PageLetterViewPageAdapter(this)
+        pageLetterViewPageAdapter = PageLetterViewPageAdapter(this, supportFragmentManager)
         binding.pagesLetterViewPager.adapter = pageLetterViewPageAdapter
 
         var bookFlipPageTransformer = BookFlipPageTransformer2()
