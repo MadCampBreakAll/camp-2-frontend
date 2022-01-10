@@ -5,7 +5,7 @@ import java.util.*
 
 data class DiaryDto (
     @SerializedName("id")
-    val id: String,
+    val id: Int,
     @SerializedName("title")
     val title: String,
     @SerializedName("createdAt")

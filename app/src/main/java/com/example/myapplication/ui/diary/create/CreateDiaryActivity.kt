@@ -135,6 +135,7 @@ class CreateDiaryActivity : AppCompatActivity() {
             }
             viewHandler.goMainActivity()
         } catch (e: Throwable) {
+            e.printStackTrace()
             viewHandler.goLoginActivityAndRemoveTokens()
         }
     }

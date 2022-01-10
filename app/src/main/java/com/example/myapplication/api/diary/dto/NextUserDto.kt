@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class NextUserDto (
     @SerializedName("id")
-    val id: String?,
+    val id: Int?,
     @SerializedName("nickname")
     val nickname: String?,
     @SerializedName("body")

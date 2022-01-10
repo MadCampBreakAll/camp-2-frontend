@@ -6,5 +6,5 @@ data class CreateDiaryRequestDto (
     @SerializedName("title")
     val title: String,
     @SerializedName("userIds")
-    val userIds: List<String>
+    val userIds: List<Int>
 )

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class PendingFriendDto (
     @SerializedName("id")
-    val id: String,
+    val id: Int,
     @SerializedName("nickname")
     val nickname: String,
 )
