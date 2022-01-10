@@ -17,6 +17,9 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.setting.backfont.SettingBackgroundActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.join.NicknameSettingActivity"
             android:exported="false" />
         <activity
@@ -70,7 +73,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.setting.icon.CharacterFixActivity"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 
 </manifest>
