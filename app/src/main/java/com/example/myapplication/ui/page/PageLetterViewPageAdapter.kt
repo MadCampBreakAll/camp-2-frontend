@@ -63,7 +63,7 @@ class PageLetterViewPageAdapter(private val context: Context): RecyclerView.Adap
                 body.text = _body
                 title.text = _title
 
-                // background.setBackgroundColor(Color.parseColor(color))
+//                 background.setBackgroundColor(Color.parseColor(color))
 
                 bindWriter(user!!)
                 bindNextUser(_nextUser!!)

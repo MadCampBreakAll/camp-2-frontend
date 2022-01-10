@@ -13,6 +13,14 @@
             android:id="@+id/innerMainPageFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/pagesLetterViewPager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+        </androidx.viewpager2.widget.ViewPager2>
+        
         <ImageButton
             android:id="@+id/pageAddBtn"
             android:layout_width="40dp"
@@ -27,11 +35,5 @@
             app:layout_constraintVertical_bias="0.95"
             android:backgroundTint="@color/transparent"
             android:src="@drawable/add"/>
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/pagesLetterViewPager"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            >
-        </androidx.viewpager2.widget.ViewPager2>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
