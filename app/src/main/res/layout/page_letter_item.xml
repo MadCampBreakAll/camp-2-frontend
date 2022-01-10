@@ -20,7 +20,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/monoon_background"
-                android:visibility="visible">
+                android:visibility="visible"
+                >
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
                 <TextView
                     android:id="@+id/innerPageWrittenDate"
                     android:layout_width="0dp"

@@ -75,7 +75,7 @@ class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<Diar
             }
             binding.diaryImage.setOnClickListener {
                 if(myId == null){
-                    return@setOnClickListener;
+                    return@setOnClickListener
                 }
                 val intent = Intent(context, DiaryInnerActivity::class.java)
                 intent.putExtra("diary_id", item.id)
