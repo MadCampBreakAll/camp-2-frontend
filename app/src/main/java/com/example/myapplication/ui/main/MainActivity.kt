@@ -56,6 +56,7 @@ class MainActivity : AppCompatActivity() {
         binding.diaryAddBtn.setOnClickListener {
             viewHandler.goCreateDiaryActivity();
         }
+        binding.goFriendActivity
         initMenuButton()
         initFriendButton()
         initMySettingButton()

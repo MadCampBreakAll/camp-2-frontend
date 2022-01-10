@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class AcceptFriendRequestDto (
        @SerializedName("friendId")
-       val friendId: String,
+       val friendId: Int,
        @SerializedName("accept")
        val accept: Boolean,
 )

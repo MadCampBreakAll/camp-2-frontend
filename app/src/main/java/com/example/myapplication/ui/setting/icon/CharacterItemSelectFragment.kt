@@ -54,7 +54,6 @@ class CharacterItemSelectFragment : Fragment() {
         next.setImageResource(R.drawable.start)
         next.setColorFilter(resources.getColor(R.color.body_red))
         next.setOnClickListener {
-            viewHandler.goMainActivity()
             try {
                 val dto = UpdateAvatarRequestDto(
                     CharacterFixActivity.character_init_body_shape,
@@ -69,6 +68,7 @@ class CharacterItemSelectFragment : Fragment() {
                             if (!dto!!.status!!) {
                                 throw Throwable()
                             }
+                            viewHandler.goMainActivity()
                         } catch (e: Throwable) {
                             e.printStackTrace()
                             viewHandler.goLoginActivityAndRemoveTokens()
@@ -79,7 +79,6 @@ class CharacterItemSelectFragment : Fragment() {
             } catch (e: Throwable) {
                 e.printStackTrace()
             }
-            viewHandler.goMainActivity()
         }
 
         var prev = character_init_binding.userCharacterInitPrevBtn

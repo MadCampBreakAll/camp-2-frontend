@@ -47,6 +47,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintWidth_percent="0.7"
                 android:layout_gravity="center"
+                android:singleLine="true"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"

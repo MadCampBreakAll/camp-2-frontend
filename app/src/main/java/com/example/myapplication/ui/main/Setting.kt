@@ -4,12 +4,12 @@ import androidx.lifecycle.MutableLiveData
 
 object Setting {
     data class _Setting(
-        var backgroundColor: Int,
+        var backgroundColor: String,
         var font: Int,
     )
 
     private var _setting = MutableLiveData<_Setting>(
-        _Setting(0, 0)
+        _Setting("#FFFFFF", 0)
     )
 
     var backgroundColor

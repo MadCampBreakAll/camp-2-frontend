@@ -12,11 +12,11 @@ data class UserDto(
     @SerializedName("bodyColor")
     val bodyColor: Int?,
     @SerializedName("blushColor")
-    val blush_color: Int?,
+    val blushColor: Int?,
     @SerializedName("item")
     val item: Int?,
     @SerializedName("font")
     val font: Int?,
     @SerializedName("backgroundColor")
-    val backgroundColor: Int?
+    val backgroundColor: String?
 )

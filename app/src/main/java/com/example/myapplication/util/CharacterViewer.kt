@@ -14,7 +14,7 @@ class CharacterViewer(
 ) {
 
     fun getShape(shape: Int): Int {
-        var shape_draw = 0
+        var shape_draw = 1
         when(shape){
             1 -> shape_draw = R.drawable.body_shape_triangle
             2 -> shape_draw = R.drawable.body_shape_cloud
@@ -26,7 +26,7 @@ class CharacterViewer(
     }
 
     private fun getBodyColor(color: Int): Int {
-        var color_draw = 0
+        var color_draw = 1
         when(color){
             1 -> color_draw = R.color.body_blue
             2 -> color_draw = R.color.body_dark_navy
@@ -38,8 +38,8 @@ class CharacterViewer(
     }
 
     private fun getBlush(blush: Int, shape: Int): Pair<Int, Int> {
-        var blush_draw = 0
-        var blush_pos_draw = 0
+        var blush_draw = 1
+        var blush_pos_draw = 1
         when(shape){
             1 -> {
                 when(blush){
@@ -126,7 +126,7 @@ class CharacterViewer(
     }
 
     private fun getItemKind(item: Int, shape: Int): Int {
-        var result_item = 0
+        var result_item = 1
         when (shape) {
             1 -> {
                 when (item) {
@@ -157,7 +157,7 @@ class CharacterViewer(
     }
 
     fun getFace(shape: Int): Int {
-        var face_draw = 0
+        var face_draw = 1
         when(shape) {
             1 -> {
                 face_draw = R.drawable.face_traingle
@@ -199,6 +199,7 @@ class CharacterViewer(
                     "bodyColor = ${bodyColor}" +
                     "blushColor = ${blushColor}" +
                     "item = ${item}")
+            e.printStackTrace()
         }
     }
 

@@ -16,7 +16,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 
 class UserApiService : BasicApiService{
-    private val userApiProvider: UserApiProvider;
+    private val userApiProvider: UserApiProvider
 
     constructor(tokenManager: TokenManager){
         this.userApiProvider = getProvider(tokenManager);

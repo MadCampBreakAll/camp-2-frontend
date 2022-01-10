@@ -69,6 +69,7 @@ class DiaryApiService : BasicApiService{
         success: (CreateDiaryResponseDto?) -> Unit,
         fail: ((Throwable) -> Unit)?
     ){
+        Log.d("DEBUG", "CREATE DIARY START  $dto")
         this.apiProvider.createDiary(dto).enqueue(object: Callback<CreateDiaryResponseDto>{
             override fun onResponse(
                 call: Call<CreateDiaryResponseDto>,
