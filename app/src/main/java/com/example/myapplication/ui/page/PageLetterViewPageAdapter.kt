@@ -5,21 +5,15 @@ import android.graphics.Color
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.R
 import com.example.myapplication.api.diary.dto.NextUserDto
 import com.example.myapplication.api.page.dto.PageDto
 import com.example.myapplication.api.page.dto.UserDto
 import com.example.myapplication.databinding.PageLetterItemBinding
-import com.example.myapplication.databinding.UserCharacterBinding
-import com.example.myapplication.ui.join.CharacterInitActivity
 import com.example.myapplication.util.Character
 import com.example.myapplication.util.CharacterViewer
-import com.google.gson.annotations.SerializedName
-import java.time.LocalDate
 
 class PageLetterViewPageAdapter(private val context: Context): RecyclerView.Adapter<PageLetterViewPageAdapter.ViewHolder>() {
     private var pageList = mutableListOf<PageDto>()

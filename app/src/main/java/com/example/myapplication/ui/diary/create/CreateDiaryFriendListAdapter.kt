@@ -5,15 +5,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.api.friend.dto.FriendDto
-import com.example.myapplication.api.friend.dto.PendingFriendDto
-import com.example.myapplication.databinding.ActivityCreateDiaryAddFriendPopupBinding
 import com.example.myapplication.databinding.CreateDiaryAddingFriendItemBinding
-import com.example.myapplication.databinding.DiaryBinding
-import com.example.myapplication.databinding.PendingFriendBinding
-import com.example.myapplication.ui.friend.PendingFriendsAdapter
 import com.example.myapplication.util.Character
 import com.example.myapplication.util.CharacterViewer
-import com.google.gson.annotations.SerializedName
 
 class CreateDiaryFriendListAdapter(
     private val context: Context,

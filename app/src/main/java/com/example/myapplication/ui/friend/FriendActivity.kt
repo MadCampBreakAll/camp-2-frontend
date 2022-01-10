@@ -1,10 +1,10 @@
 package com.example.myapplication.ui.friend
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.api.friend.FriendApiService
@@ -19,7 +19,7 @@ class FriendActivity : AppCompatActivity() {
     private lateinit var friendApiService: FriendApiService
     private lateinit var viewHandler: ViewHandler
     private lateinit var friendsAdapter: FriendsAdapter
-    private lateinit var pendingFriendAdapter: PendingFriendsAdapter
+    private lateinit var requestsFriendAdapter: RequestsFriendsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,10 +33,11 @@ class FriendActivity : AppCompatActivity() {
         binding = ActivityFriendBinding.inflate(layoutInflater)
         friendApiService = FriendApiService(TokenManager(this))
         friendsAdapter = FriendsAdapter(this)
-        pendingFriendAdapter = PendingFriendsAdapter(
+        requestsFriendAdapter = RequestsFriendsAdapter(
+            this,
             this,
             accept = acceptPendingFriendHandler,
-            reject = rejectPendingFriendHandler
+            reject = rejectPendingFriendHandler,
         )
     }
 
@@ -47,35 +48,45 @@ class FriendActivity : AppCompatActivity() {
         }
         binding.friends.layoutManager = GridLayoutManager(this, 2)
         binding.friends.adapter = friendsAdapter
-        if(friendsAdapter.itemCount == 0){
-            binding.noneFriendText.visibility = View.VISIBLE
-        }
-
         binding.pendingFriends.layoutManager = LinearLayoutManager(this)
-        binding.pendingFriends.adapter = pendingFriendAdapter
-        if(pendingFriendAdapter.itemCount == 0) {
-            binding.noneFriendRequestText.visibility = View.VISIBLE
+        binding.pendingFriends.adapter = requestsFriendAdapter
+        binding.root.setOnRefreshListener {
+            update()
+            binding.root.isRefreshing = false
         }
     }
 
     private fun update(){
         updateFriends()
-        updatePendingFriends()
+        updateRequestFriends()
+    }
+
+    private fun updateView(){
+        binding.noneFriendRequestText.visibility = View.INVISIBLE
+        binding.noneFriendText.visibility = View.INVISIBLE
+        if(requestsFriendAdapter.itemCount == 0) {
+            binding.noneFriendRequestText.visibility = View.VISIBLE
+        }
+        if(friendsAdapter.itemCount == 0){
+            binding.noneFriendText.visibility = View.VISIBLE
+        }
     }
 
     private fun updateFriends(){
         friendApiService.getFriends(success = getFriendsHandler, fail = null)
     }
 
-    private fun updatePendingFriends(){
-        friendApiService.getPendingFriend(success = getPendingFriendsHandler, fail = null)
+    private fun updateRequestFriends(){
+        friendApiService.getRequestsFriend(success = getRequestsFriendHandler, fail = null)
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private val getFriendsHandler : (GetMyFriendsResponseDto?) -> Unit = handler@{ response ->
         try {
             friendsAdapter.clear()
             friendsAdapter.addFriends(response?.friends!!)
             friendsAdapter.notifyDataSetChanged()
+            updateView()
             return@handler
         } catch (e : Throwable) {
             viewHandler.goLoginActivityAndRemoveTokens()
@@ -83,9 +94,36 @@ class FriendActivity : AppCompatActivity() {
         }
     }
 
-    private val getPendingFriendsHandler : (GetPendingFriendResponseDto?) -> Unit = handler@{ response ->
+    @SuppressLint("NotifyDataSetChanged")
+    private val getRequestsFriendHandler : (GetRequestsFriendResponseDto?) -> Unit = handler@{ dto ->
         try {
+            val pendingFriends = dto!!.pending!!.map {
+                RequestsFriend(
+                    it.id,
+                    it.nickname,
+                    it.body,
+                    it.bodyColor,
+                    it.blushColor,
+                    it.item,
+                    true
+                )
+            }
+            val askedFriends = dto.asked!!.map {
+                RequestsFriend(
+                it.id,
+                it.nickname,
+                it.body,
+                it.bodyColor,
+                it.blushColor,
+                it.item,
+                false)
+            }
 
+            requestsFriendAdapter.clear()
+            requestsFriendAdapter.addRequestFriends(pendingFriends)
+            requestsFriendAdapter.addRequestFriends(askedFriends)
+            requestsFriendAdapter.notifyDataSetChanged()
+            updateView()
             return@handler
         } catch (e: Throwable) {
             viewHandler.goLoginActivityAndRemoveTokens()
@@ -93,7 +131,7 @@ class FriendActivity : AppCompatActivity() {
         }
     }
 
-    private val acceptPendingFriendHandler : (PendingFriendDto) -> Unit = { dto ->
+    private val acceptPendingFriendHandler : (RequestsFriend) -> Unit = { dto ->
         try {
             val requestDto = AcceptFriendRequestDto(
                 dto.id,
@@ -106,6 +144,7 @@ class FriendActivity : AppCompatActivity() {
                         if(!responseDto?.status!!){
                             throw Error()
                         }
+                        update()
                         Toast.makeText(this, "${dto.nickname}님을 친구 추가 하셨습니다.", Toast.LENGTH_SHORT).show()
                     } catch (e : Throwable){
                         viewHandler.goLoginActivityAndRemoveTokens()
@@ -118,7 +157,7 @@ class FriendActivity : AppCompatActivity() {
         }
     }
 
-    private val rejectPendingFriendHandler : (PendingFriendDto) -> Unit = { dto ->
+    private val rejectPendingFriendHandler : (RequestsFriend) -> Unit = { dto ->
         try {
             val requestDto = AcceptFriendRequestDto(
                 dto.id,
@@ -131,6 +170,7 @@ class FriendActivity : AppCompatActivity() {
                         if(!responseDto?.status!!){
                             throw Error()
                         }
+                        update()
                         Toast.makeText(this, "${dto.nickname}님의 요청을 거절했습니다.", Toast.LENGTH_SHORT).show()
                     } catch (e: Throwable) {
                         viewHandler.goLoginActivityAndRemoveTokens()
@@ -143,12 +183,9 @@ class FriendActivity : AppCompatActivity() {
         }
     }
 
-
-
     private fun createSearchUserDialog() {
         var dialog = SearchUserDialog(this, viewHandler)
         dialog.show()
         dialog.window?.setLayout(750, 650)
     }
-
 }
