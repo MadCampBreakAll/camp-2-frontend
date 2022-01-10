@@ -25,10 +25,17 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.util.*
+import androidx.lifecycle.Observer
+import com.example.myapplication.api.page.PageApiService
+import com.example.myapplication.api.page.dto.CreatePageRequestDto
+import com.example.myapplication.ui.main.DiaryCoverAdapter
+import com.example.myapplication.ui.main.Setting
+import com.example.myapplication.util.TokenManager
 
 class CreatePageActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreatePageBinding
+
     private lateinit var pageApiService: PageApiService
     private lateinit var viewHandler: ViewHandler
     private var dailyColor = "#fff1e6"
@@ -40,6 +47,7 @@ class CreatePageActivity : AppCompatActivity() {
 
         init()
         bind()
+
 
         try {
             diaryId = intent.getIntExtra(
@@ -70,6 +78,32 @@ class CreatePageActivity : AppCompatActivity() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
+
+    }
+
+    fun init(){
+        binding = ActivityCreatePageBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        tokenManager = TokenManager(this)
+        pageApiService = PageApiService(tokenManager)
+
+        Setting.setting.observe(this, Observer {
+            updateBackground()
+        })
+    }
+
+    fun updateBackground() {
+        binding.pageBackgroundColor.setBackgroundColor(Color.parseColor(Setting.backgroundColor))
+
+        if(Setting.page == 0) {
+            binding.monoonBackground.visibility = View.INVISIBLE
+        }
+        else {
+            binding.monoonBackground.visibility = View.VISIBLE
+        }
+    }
+
+
     fun bind(){
         binding.innerPageDailyColor.setOnClickListener{
             val colorPicker: ColorPickerDialog = ColorPickerDialog.Builder()
@@ -86,6 +120,7 @@ class CreatePageActivity : AppCompatActivity() {
 
             colorPicker.show(supportFragmentManager, "color_picker")
         }
+
 
         binding.innerPageCompleteBtn.setOnClickListener {
             val pageTitle = binding.pageTitle.text
@@ -111,6 +146,8 @@ class CreatePageActivity : AppCompatActivity() {
                 fail = null
             )
         }
+    }
+
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {

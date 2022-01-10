@@ -6,6 +6,7 @@ import android.content.Intent
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
@@ -32,7 +33,7 @@ class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<Diar
     }
 
     fun clearDiary(){
-        diaryList.clear()
+        diaryList = mutableListOf()
     }
 
     fun setMyId(id: Int){
@@ -83,6 +84,10 @@ class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<Diar
             }
             bindNextUser(nextUser)
             bindChamyeonUsers(chamyeoUsers)
+
+            if(myId != null && nextUser!!.id!! == myId){
+                binding.alarmNextWriter.visibility = View.VISIBLE
+            }
         }
 
         private fun bindNextUser(nextUser: NextUserDto){

@@ -21,15 +21,11 @@ import com.wajahatkarim3.easyflipviewpager.BookFlipPageTransformer2
 import android.R.string.no
 import android.graphics.Color
 import android.widget.Toast
+import androidx.lifecycle.Observer
 import com.example.myapplication.api.user.UserApiService
+import com.example.myapplication.ui.main.Setting
 import vadiole.colorpicker.ColorModel
 import vadiole.colorpicker.ColorPickerDialog
-
-
-// Diary의 속지(페이지들을 볼 수 있는 곳)를 보는 화면 -> 속지들은 viewpager로 표현된다
-// button의 setonclicklistner은 DiaryCoverAdapter 안에 있다. -> diaryList를 가지고 있어 diary 정보들을 모두 알고 있다.
-// putExtra을 통해서 diary의 id를 알 수 있도록 한다. -> 이 정보로 원하는 것들을 activity에서 얻어내자
-// 이 activity에서는 diary_id를 통해 page들의 정보를 알 수 있어야 한다.
 
 class DiaryInnerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDiaryInnerBinding
@@ -73,9 +69,23 @@ class DiaryInnerActivity : AppCompatActivity() {
             finish()
         }
 
+ Setting.setting.observe(this, Observer { setting ->
+            updateBackground()
+ })
         binding.root.setOnRefreshListener {
             update()
             binding.root.isRefreshing = false
+        }
+    }
+
+    fun updateBackground() {
+        binding.blankPageBackground.setBackgroundColor(Color.parseColor(Setting.backgroundColor))
+
+        if(Setting.page == 0) {
+            binding.monoonBackground.visibility = View.INVISIBLE
+        }
+        else {
+            binding.monoonBackground.visibility = View.VISIBLE
         }
     }
 

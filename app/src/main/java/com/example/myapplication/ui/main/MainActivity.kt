@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.animation.AnimationUtils
 import com.example.myapplication.api.user.dto.GetMeResponseDto
 import com.example.myapplication.databinding.ActivityMainBinding
@@ -85,6 +86,13 @@ class MainActivity : AppCompatActivity() {
         binding.backgroundColor.setBackgroundColor(
             Color.parseColor(Setting.backgroundColor)
         )
+        if(Setting.page == 0){
+            binding.monoonBackground.visibility = View.INVISIBLE
+        }
+        else {
+            binding.monoonBackground.visibility = View.VISIBLE
+        }
+
     }
 
     private fun updateFont(){
@@ -108,12 +116,14 @@ class MainActivity : AppCompatActivity() {
             ).show()
 
             this.diaryCoverAdapter.setMyId(id!!)
+            diaryCoverAdapter.notifyDataSetChanged()
             setUserNickname(nickname = nickname ?:"unknown")
             Setting.backgroundColor = response.user!!.backgroundColor!!
             Setting.font = response.user.font!!
-
+            Setting.page = response.user.backgroundPaper!!
             updateBackground()
             updateFont()
+
         } catch (e: Throwable) {
             viewHandler.goLoginActivityAndRemoveTokens()
         }
