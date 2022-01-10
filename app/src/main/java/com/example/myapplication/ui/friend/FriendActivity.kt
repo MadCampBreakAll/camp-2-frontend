@@ -48,7 +48,7 @@ class FriendActivity : AppCompatActivity() {
         }
         binding.friends.layoutManager = GridLayoutManager(this, 2)
         binding.friends.adapter = friendsAdapter
-        binding.pendingFriends.layoutManager = LinearLayoutManager(this)
+        binding.pendingFriends.layoutManager = GridLayoutManager(this, 2)
         binding.pendingFriends.adapter = requestsFriendAdapter
         binding.root.setOnRefreshListener {
             update()
