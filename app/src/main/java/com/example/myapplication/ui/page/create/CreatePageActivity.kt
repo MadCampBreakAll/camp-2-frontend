@@ -12,6 +12,10 @@ import android.widget.EditText
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.util.*
 
 class CreatePageActivity : AppCompatActivity() {
 
@@ -41,7 +45,14 @@ class CreatePageActivity : AppCompatActivity() {
 
     fun init(){
         binding = ActivityCreatePageBinding.inflate(layoutInflater)
+        binding.innerPageWrittenDate.text = createDate()
         setContentView(binding.root)
+    }
+
+    fun createDate(): String{
+        val sdf = SimpleDateFormat("yyyy/M/dd hh:mm")
+        val currentDate = sdf.format(Date())
+        return currentDate;
     }
 
     fun bind(){
