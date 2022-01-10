@@ -27,7 +27,8 @@ import org.w3c.dom.Text
 import java.util.*
 
 class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<DiaryCoverAdapter.ViewHolder>() {
-    var diaryList = mutableListOf<DiaryDto>()
+    private var diaryList = mutableListOf<DiaryDto>()
+    private var myId: Int?= null
 
     fun addDiary(diary: DiaryDto){
         diaryList.add(diary)
@@ -39,6 +40,10 @@ class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<Diar
 
     fun clearDiary(){
         diaryList.clear()
+    }
+
+    fun setMyId(id: Int){
+        myId = id
     }
 
     override fun onCreateViewHolder(
@@ -71,8 +76,12 @@ class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<Diar
                 text = title
             }
             binding.diaryImage.setOnClickListener {
+                if(myId == null){
+                    return@setOnClickListener;
+                }
                 val intent = Intent(context, DiaryInnerActivity::class.java)
-                intent.putExtra(context.resources.getString(R.string.diary_id), item.id)
+                intent.putExtra("diary_id", item.id)
+                intent.putExtra("user_id", myId)
                 startActivity(context, intent, null)
             }
             bindNextUser(nextUser)

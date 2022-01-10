@@ -3,7 +3,6 @@ package com.example.myapplication.ui.friend
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.view.WindowManager
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
@@ -44,7 +43,7 @@ class FriendActivity : AppCompatActivity() {
     private fun bind(){
         setContentView(binding.root);
         binding.goPendingFriendActivity.setOnClickListener{
-            requestFriend(searchUserHandler)
+            createSearchUserDialog()
         }
         binding.friends.layoutManager = GridLayoutManager(this, 2)
         binding.friends.adapter = friendsAdapter
@@ -144,50 +143,10 @@ class FriendActivity : AppCompatActivity() {
         }
     }
 
-    private val searchUserHandler : (SearchUserFriendWithNicknameResponseDto?) ->  Unit = handler@{ dto ->
-        try {
-            if(dto?.status == false){
-                Toast.makeText(this, "존재하지 않습니다.", Toast.LENGTH_SHORT).show()
-                return@handler
-            }
 
-            AlertDialog.Builder(this)
-                .setTitle("${dto!!.user!!.nickname}에게 친구 신청을 보내겠습니까?")
-                .setPositiveButton("수락") { dialog, i ->
-                    val makeFriendRequestDto = MakeFriendRequestDto(
-                        dto?.user?.id!!
-                    )
-                    friendApiService.makeFriend(
-                        makeFriendRequestDto,
-                        success = handler@{ responseDto ->
-                            try {
-                                if(responseDto?.login != null && responseDto.login == false) {
-                                    throw Error()
-                                }
-                                if(!responseDto!!.status!!){
-                                    Toast.makeText(this, "이미 친구입니다.", Toast.LENGTH_SHORT).show()
-                                    return@handler
-                                }
-                                Toast.makeText(this, "친구 요청을 보냈습니다.", Toast.LENGTH_SHORT).show()
-                            } catch (e: Throwable) {
-                                viewHandler.goLoginActivityAndRemoveTokens()
-                            }
-                        },
-                        fail = null
-                    )
-                }
-                .setNegativeButton("취소") { dialog, i ->
-                    dialog.dismiss()
-                }
-                .create()
-                .show()
-        } catch (e: Throwable) {
-            viewHandler.goLoginActivityAndRemoveTokens()
-        }
-    }
 
-    private fun requestFriend(callback: (SearchUserFriendWithNicknameResponseDto?) -> Unit) {
-        var dialog = PendingFriendActivity(this, callback)
+    private fun createSearchUserDialog() {
+        var dialog = SearchUserDialog(this, viewHandler)
         dialog.show()
         dialog.window?.setLayout(750, 650)
     }

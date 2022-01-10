@@ -16,7 +16,7 @@
         <entry key="app/src/main/res/layout/activity_create_diary.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_create_diary_add_friend_popup.xml" value="0.24861111111111112" />
         <entry key="app/src/main/res/layout/activity_create_page.xml" value="0.1439814814814815" />
-        <entry key="app/src/main/res/layout/activity_diary_inner.xml" value="0.165" />
+        <entry key="app/src/main/res/layout/activity_diary_inner.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_friend.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.25226449275362317" />
         <entry key="app/src/main/res/layout/activity_invited_friend.xml" value="0.22447916666666667" />
@@ -24,7 +24,6 @@
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.5" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_nickname_setting.xml" value="0.2388888888888889" />
-        <entry key="app/src/main/res/layout/activity_setting_background.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_setting_background.xml" value="0.25" />
         <entry key="app/src/main/res/layout/background_color_item.xml" value="0.5" />
         <entry key="app/src/main/res/layout/content_create_diary.xml" value="0.25" />

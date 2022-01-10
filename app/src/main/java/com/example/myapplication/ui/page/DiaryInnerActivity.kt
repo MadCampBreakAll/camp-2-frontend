@@ -19,8 +19,7 @@ import com.example.myapplication.util.ViewHandler
 import com.wajahatkarim3.easyflipviewpager.BookFlipPageTransformer2
 
 import android.R.string.no
-
-
+import com.example.myapplication.api.user.UserApiService
 
 
 // Diary의 속지(페이지들을 볼 수 있는 곳)를 보는 화면 -> 속지들은 viewpager로 표현된다
@@ -36,6 +35,7 @@ class DiaryInnerActivity : AppCompatActivity() {
     private lateinit var pageApiService: PageApiService
     private lateinit var viewHandler: ViewHandler
     private var diaryId: Int? = null
+    private var userId: Int? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,11 +62,13 @@ class DiaryInnerActivity : AppCompatActivity() {
         binding.pagesLetterViewPager.setPageTransformer(bookFlipPageTransformer)
 
         try {
-            diaryId = intent.getStringExtra(resources.getString(R.string.diary_id))!!.toInt()
+            diaryId = intent.getIntExtra("diary_id", -1)
+            userId = intent.getIntExtra("user_id", -1)
         } catch (e: Throwable){
             Log.d("DEBUG", e.toString())
             finish()
         }
+        println("userId = $userId")
     }
 
     private fun bind(){
@@ -75,6 +77,7 @@ class DiaryInnerActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun update(){
+
         pageApiService.getDiaryInnerPages(
             diaryId?:-1,
             success = {
@@ -86,11 +89,18 @@ class DiaryInnerActivity : AppCompatActivity() {
                     pageLetterViewPageAdapter.clear()
                     pageLetterViewPageAdapter.addAllPage(dto.pages)
                     pageLetterViewPageAdapter.notifyDataSetChanged()
+                    updateView(dto.diary.nextUser.id!!)
                 } catch (e: Throwable) {
                     viewHandler.goLoginActivityAndRemoveTokens()
                 }
             },
             fail = null
         )
+    }
+
+    private fun updateView(nextUserId: Int){
+        if(userId == nextUserId){
+            binding.pageAddBtn.visibility = View.VISIBLE
+        }
     }
 }

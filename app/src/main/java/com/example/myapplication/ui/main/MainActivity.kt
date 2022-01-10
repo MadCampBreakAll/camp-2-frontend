@@ -11,6 +11,7 @@ import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.databinding.UserCharacterBinding
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.myapplication.R
 import com.example.myapplication.api.user.UserApiService
 import com.example.myapplication.api.auth.DiaryApiService
@@ -46,8 +47,7 @@ class MainActivity : AppCompatActivity() {
         icon = binding.userCharacterIcon
         viewHandler = ViewHandler(this);
         diaryCoverAdapter = DiaryCoverAdapter(this)
-        diaryCoverAdapter.diaryList = mutableListOf<DiaryDto>();
-        binding.diaryList.adapter = diaryCoverAdapter;
+        binding.diaryList.adapter = diaryCoverAdapter
         binding.diaryList.setLayoutManager(GridLayoutManager(this, 2))
     }
 
@@ -56,7 +56,10 @@ class MainActivity : AppCompatActivity() {
         binding.diaryAddBtn.setOnClickListener {
             viewHandler.goCreateDiaryActivity();
         }
-        binding.goFriendActivity
+        binding.root.setOnRefreshListener {
+            update()
+            binding.root.isRefreshing = false
+        }
         initMenuButton()
         initFriendButton()
         initMySettingButton()
@@ -81,7 +84,7 @@ class MainActivity : AppCompatActivity() {
             }
 
             val (_, user) = response
-            val (_, nickname, body, bodyColor, blushColor, item) = user!!
+            val (id, nickname, body, bodyColor, blushColor, item) = user!!
             val userCharacter = Character(body!!, bodyColor!!, blushColor!!, item!!)
             CharacterViewer(
                 this,
@@ -89,6 +92,7 @@ class MainActivity : AppCompatActivity() {
                 userCharacter
             ).show()
             setUserNickname(nickname = nickname ?:"unknown")
+            this.diaryCoverAdapter.setMyId(id!!)
             Setting.backgroundColor = response.user!!.backgroundColor!!
             Setting.font = response.user.font!!
         } catch (e: Throwable) {
@@ -181,4 +185,5 @@ class MainActivity : AppCompatActivity() {
             viewHandler.goIconFixActivity()
         }
     }
+
 }

@@ -91,6 +91,7 @@ class FriendApiService : BasicApiService{
         success: (MakeFriendResponseDto?) -> Unit,
         fail: ((Throwable) -> Unit)?
     ) {
+        Log.d("DEBUG", "START MAKE FRIEND$dto")
         this.friendApiProvider.makeFriend(dto).enqueue(object: Callback<MakeFriendResponseDto> {
             override fun onResponse(
                 call: Call<MakeFriendResponseDto>,

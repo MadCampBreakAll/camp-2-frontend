@@ -7,5 +7,5 @@ data class GetPendingFriendResponseDto (
     @SerializedName("status")
     val status: Boolean?,
     @SerializedName("users")
-    val users: List<PendingFriendDto>?
+    val users: List<FriendDto>?
 )

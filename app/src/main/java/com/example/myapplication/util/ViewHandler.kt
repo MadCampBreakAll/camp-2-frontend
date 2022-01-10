@@ -2,12 +2,10 @@ package com.example.myapplication.util
 
 import android.app.Activity
 import android.content.Intent
-import androidx.core.content.ContextCompat
-import com.example.myapplication.databinding.ActivityNicknameSettingBinding
 import com.example.myapplication.ui.diary.create.CreateDiaryActivity
 import com.example.myapplication.ui.diary.create.CreateDiaryAddFriendPopupActivity
 import com.example.myapplication.ui.friend.FriendActivity
-import com.example.myapplication.ui.friend.PendingFriendActivity
+import com.example.myapplication.ui.friend.SearchUserDialog
 import com.example.myapplication.ui.join.CharacterInitActivity
 import com.example.myapplication.ui.join.NicknameSettingActivity
 import com.example.myapplication.ui.login.LoginActivity
@@ -84,7 +82,7 @@ class ViewHandler {
     }
 
     fun goPendingFriendActivity(): Boolean{
-        val intent = Intent(activity, PendingFriendActivity::class.java)
+        val intent = Intent(activity, SearchUserDialog::class.java)
         activity.startActivity(intent)
         return true;
     }

@@ -6,5 +6,7 @@ data class MakeFriendResponseDto (
     @SerializedName("status")
     val status: Boolean?,
     @SerializedName("login")
-    val login: Boolean?
+    val login: Boolean?,
+    @SerializedName("message")
+    val message: String?
 )
