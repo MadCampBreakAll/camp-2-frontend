@@ -8,4 +8,7 @@ data class GetMyFriendsResponseDto (
     val status: Boolean?,
     @SerializedName("users")
     val friends: List<FriendDto>?,
-)
+    @SerializedName("login")
+    val login: Boolean?,
+
+    )

@@ -7,4 +7,6 @@ data class CreateDiaryResponseDto (
     val status: Boolean?,
     @SerializedName("diary")
     val diary: CreateDiaryDto?,
+    @SerializedName("login")
+    val login: Boolean?,
 )

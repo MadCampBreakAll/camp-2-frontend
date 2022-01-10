@@ -51,7 +51,6 @@ class ViewHandler {
     fun goMainActivity() : Boolean{
         val intent = Intent(activity, MainActivity::class.java)
         activity.startActivity(intent)
-        activity.finish()
         return true
     }
 

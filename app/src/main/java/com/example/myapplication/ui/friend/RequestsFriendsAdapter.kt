@@ -103,7 +103,7 @@ class RequestsFriendsAdapter(
         }
     }
 
-    inner abstract class RequestFriendViewHolder(private val binding:ViewBinding) : RecyclerView.ViewHolder(binding.root){
+    abstract inner class RequestFriendViewHolder(private val binding:ViewBinding) : RecyclerView.ViewHolder(binding.root){
         abstract fun bind(friend: RequestsFriend)
     }
 }

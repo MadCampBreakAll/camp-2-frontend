@@ -7,4 +7,7 @@ data class CreatePageResponseDto (
     val status: Boolean?,
     @SerializedName("page")
     val page: CreatePageDto?,
-)
+    @SerializedName("login")
+    val login: Boolean?,
+
+    )

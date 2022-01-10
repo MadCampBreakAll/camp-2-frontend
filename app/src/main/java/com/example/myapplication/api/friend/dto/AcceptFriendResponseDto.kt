@@ -5,5 +5,8 @@ import com.google.gson.annotations.SerializedName
 data class AcceptFriendResponseDto (
     @SerializedName("status")
     val status: Boolean?,
-)
+    @SerializedName("login")
+    val login: Boolean?,
+
+    )
 

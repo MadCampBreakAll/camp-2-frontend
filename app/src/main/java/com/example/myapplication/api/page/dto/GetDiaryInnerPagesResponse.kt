@@ -9,5 +9,7 @@ data class GetDiaryInnerPagesResponse (
     @SerializedName("pages")
     val pages: List<PageDto>,
     @SerializedName("diary")
-    val diary: DiaryDto
+    val diary: DiaryDto,
+    @SerializedName("login")
+    val login: Boolean?,
 )
