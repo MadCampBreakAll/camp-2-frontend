@@ -49,7 +49,8 @@ class PageLetterViewPageAdapter(private val context: Context): RecyclerView.Adap
 
     inner class ViewHolder(binding: PageLetterItemBinding) : RecyclerView.ViewHolder(binding.root) {
         private var writenDate = binding.innerPageWrittenDate
-        private var background = binding.pageBackgroundLayout
+        private var background = binding.pageBackgroundColor
+        private var monoon = binding.monoonBackground
         private var dailyColor = binding.innerPageDailyColor
         private var nextUser = binding.innerPageNextUserCharacter
         private var body = binding.innerPageText
