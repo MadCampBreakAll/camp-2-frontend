@@ -4,7 +4,6 @@ package com.example.myapplication.ui.setting.icon
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.myapplication.R
 import com.example.myapplication.api.user.UserApiService
@@ -13,8 +12,6 @@ import com.example.myapplication.databinding.UserCharacterBinding
 import com.example.myapplication.util.Character
 import com.example.myapplication.util.CharacterViewer
 import com.example.myapplication.util.TokenManager
-import com.google.gson.annotations.SerializedName
-import java.util.concurrent.ConcurrentHashMap
 
 
 class CharacterFixActivity : AppCompatActivity() {

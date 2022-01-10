@@ -1,21 +1,22 @@
 package com.example.myapplication.ui.main
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.view.animation.AnimationUtils
 import com.example.myapplication.api.user.dto.GetMeResponseDto
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.databinding.UserCharacterBinding
 import androidx.annotation.RequiresApi
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.myapplication.R
 import com.example.myapplication.api.user.UserApiService
 import com.example.myapplication.api.auth.DiaryApiService
-import com.example.myapplication.api.diary.dto.DiaryDto
 import com.example.myapplication.api.diary.dto.GetMyDiariesResponseDto
+import com.example.myapplication.ui.main.Setting.backgroundColor
 import com.example.myapplication.util.Character
 import com.example.myapplication.util.CharacterViewer
 import com.example.myapplication.util.TokenManager
@@ -33,22 +34,26 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        println("진짜 이거임 ${TokenManager(this).getJWT()}")
         init()
         bind()
         update()
     }
 
     private fun init(){
-        val tokenManager = TokenManager(applicationContext)
+        val tokenManager = TokenManager(this)
         userApiService = UserApiService(tokenManager)
         diaryApiService = DiaryApiService(tokenManager)
         binding = ActivityMainBinding.inflate(layoutInflater)
         icon = binding.userCharacterIcon
         viewHandler = ViewHandler(this);
         diaryCoverAdapter = DiaryCoverAdapter(this)
-        diaryCoverAdapter.diaryList = mutableListOf<DiaryDto>();
-        binding.diaryList.adapter = diaryCoverAdapter;
+        binding.diaryList.adapter = diaryCoverAdapter
         binding.diaryList.setLayoutManager(GridLayoutManager(this, 2))
+        Setting.setting.observe(this, Observer {  setting ->
+            updateBackground()
+            updateFont()
+        })
     }
 
     private fun bind() {
@@ -56,7 +61,10 @@ class MainActivity : AppCompatActivity() {
         binding.diaryAddBtn.setOnClickListener {
             viewHandler.goCreateDiaryActivity();
         }
-        binding.goFriendActivity
+        binding.root.setOnRefreshListener {
+            update()
+            binding.root.isRefreshing = false
+        }
         initMenuButton()
         initFriendButton()
         initMySettingButton()
@@ -74,23 +82,39 @@ class MainActivity : AppCompatActivity() {
         )
     }
 
+    private fun updateBackground(){
+        binding.backgroundColor.setBackgroundColor(
+            Color.parseColor(Setting.backgroundColor)
+        )
+    }
+
+    private fun updateFont(){
+
+    }
+
     private val getUserHandler : (GetMeResponseDto?) -> Unit = handler@{ response ->
         try {
             if(!response?.status!!){
                 throw Throwable()
             }
 
-            val (_, user) = response
-            val (_, nickname, body, bodyColor, blushColor, item) = user!!
+            val (_, user, _) = response
+            val (id, nickname, body, bodyColor, blushColor, item) = user!!
             val userCharacter = Character(body!!, bodyColor!!, blushColor!!, item!!)
+
             CharacterViewer(
                 this,
                 binding.userCharacterIcon,
                 userCharacter
             ).show()
+
+            this.diaryCoverAdapter.setMyId(id!!)
             setUserNickname(nickname = nickname ?:"unknown")
             Setting.backgroundColor = response.user!!.backgroundColor!!
             Setting.font = response.user.font!!
+
+            updateBackground()
+            updateFont()
         } catch (e: Throwable) {
             viewHandler.goLoginActivityAndRemoveTokens()
         }
@@ -106,13 +130,11 @@ class MainActivity : AppCompatActivity() {
             if(!response?.status!!){
                 throw Error()
             }
-
             diaryCoverAdapter.run {
                 clearDiary()
                 addAllDiary(response.diaries!!)
                 notifyDataSetChanged()
-            };
-
+            }
         } catch (e: Throwable) {
             viewHandler.goLoginActivityAndRemoveTokens()
         }
@@ -144,7 +166,7 @@ class MainActivity : AppCompatActivity() {
         binding.goIconFixing.visibility = FloatingActionButton.VISIBLE
     }
 
-    fun closeDropDownMenu() {
+    private fun closeDropDownMenu() {
         binding.menu
             .startAnimation(AnimationUtils.loadAnimation(this, R.anim.button_close_with_rotate))
 
@@ -161,24 +183,25 @@ class MainActivity : AppCompatActivity() {
         binding.goIconFixing.visibility = FloatingActionButton.INVISIBLE
     }
 
-    fun initFriendButton() {
+    private fun initFriendButton() {
         binding.goFriendActivity.setOnClickListener {
             closeDropDownMenu()
             viewHandler.goFriendActivity()
         }
     }
 
-    fun initMySettingButton() {
+    private fun initMySettingButton() {
         binding.goSetting.setOnClickListener {
             closeDropDownMenu()
             viewHandler.goBackgroundSetting()
         }
     }
 
-    fun initIconFixingButton(){
+    private fun initIconFixingButton(){
         binding.goIconFixing.setOnClickListener {
             closeDropDownMenu()
             viewHandler.goIconFixActivity()
         }
     }
+
 }

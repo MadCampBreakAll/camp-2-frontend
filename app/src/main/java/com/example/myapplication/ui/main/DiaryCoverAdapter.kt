@@ -3,31 +3,25 @@ package com.example.myapplication.ui.main
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.R
 import com.example.myapplication.api.diary.dto.ChamyeoUserDto
 import com.example.myapplication.api.diary.dto.DiaryDto
 import com.example.myapplication.api.diary.dto.NextUserDto
 import com.example.myapplication.databinding.*
 import com.example.myapplication.ui.page.DiaryInnerActivity
-import com.example.myapplication.ui.join.CharacterInitActivity
 import com.example.myapplication.util.Character
 import com.example.myapplication.util.CharacterViewer
-import com.example.myapplication.util.ViewHandler
-import com.google.gson.annotations.SerializedName
-import org.w3c.dom.Text
 import java.util.*
 
 class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<DiaryCoverAdapter.ViewHolder>() {
-    var diaryList = mutableListOf<DiaryDto>()
+    private var diaryList = mutableListOf<DiaryDto>()
+    private var myId: Int?= null
 
     fun addDiary(diary: DiaryDto){
         diaryList.add(diary)
@@ -39,6 +33,10 @@ class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<Diar
 
     fun clearDiary(){
         diaryList.clear()
+    }
+
+    fun setMyId(id: Int){
+        myId = id
     }
 
     override fun onCreateViewHolder(
@@ -71,8 +69,12 @@ class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<Diar
                 text = title
             }
             binding.diaryImage.setOnClickListener {
+                if(myId == null){
+                    return@setOnClickListener;
+                }
                 val intent = Intent(context, DiaryInnerActivity::class.java)
-                intent.putExtra(context.resources.getString(R.string.diary_id), item.id)
+                intent.putExtra("diary_id", item.id)
+                intent.putExtra("user_id", myId)
                 startActivity(context, intent, null)
             }
             bindNextUser(nextUser)

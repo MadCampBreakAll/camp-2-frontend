@@ -8,6 +8,7 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.R
 import com.example.myapplication.databinding.BackgroundColorItemBinding
+import com.example.myapplication.ui.main.Setting
 import com.example.myapplication.ui.page.PageLetterViewPageAdapter
 
 class BackgroundColorAdapter(private val context: Context, private val callback: (String) -> Unit): RecyclerView.Adapter<BackgroundColorAdapter.ViewHolder>() {

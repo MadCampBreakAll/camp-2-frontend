@@ -2,10 +2,8 @@ package com.example.myapplication.ui.diary.create
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.example.myapplication.api.auth.DiaryApiService
-import com.example.myapplication.api.diary.dto.CreateDiaryRequestDto
 import com.example.myapplication.api.diary.dto.CreateDiaryResponseDto
 import com.example.myapplication.api.friend.FriendApiService
 import com.example.myapplication.api.friend.dto.GetMyFriendsResponseDto
@@ -16,7 +14,6 @@ import com.example.myapplication.util.Character
 import com.example.myapplication.util.CharacterViewer
 import com.example.myapplication.util.TokenManager
 import com.example.myapplication.util.ViewHandler
-import com.google.gson.annotations.SerializedName
 
 class CreateDiaryActivity : AppCompatActivity() {
 

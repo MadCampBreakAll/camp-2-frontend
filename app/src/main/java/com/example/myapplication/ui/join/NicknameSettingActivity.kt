@@ -40,7 +40,7 @@ class NicknameSettingActivity : AppCompatActivity() {
     fun bind() {
         binding.createNicknameBtn.setOnClickListener handler@{
             var nickname = binding.editTextNickname.text.toString()
-            if (nickname.length <= 2) {
+            if (nickname.length <= 1) {
                 binding.checkNicknameText.text = "닉네임은 세 글자 이상으로 설정해 주십시오."
                 binding.checkNicknameText.visibility= View.VISIBLE
                 return@handler
@@ -53,39 +53,39 @@ class NicknameSettingActivity : AppCompatActivity() {
                         if (!dto!!.status!!) {
                             binding.checkNicknameText.text = "이미 존재하는 닉네임입니다."
                             binding.checkNicknameText.visibility = View.VISIBLE
+
                         }
+
+                        val registerRequestDto = RegisterRequestDto(
+                            tokenManager.getAccessToken(),
+                            nickname = nickname,
+                            body = CharacterInitActivity.character_init_body_shape,
+                            bodyColor = CharacterInitActivity.character_init_body_color,
+                            font = 0,
+                            item = CharacterInitActivity.character_init_item,
+                            blushColor = CharacterInitActivity.character_init_blush,
+                        );
+                        authApiService.register(
+                            registerRequestDto,
+                            success = registerHandler,
+                            fail = null
+                        );
                     } catch (e: Throwable) {
                         viewHandler.goLoginActivityAndRemoveTokens()
                     }
                 },
                 fail = null
             )
-
-            val registerRequestDto = RegisterRequestDto(
-                tokenManager.getAccessToken(),
-                nickname = nickname,
-                body = CharacterInitActivity.character_init_body_shape,
-                bodyColor = CharacterInitActivity.character_init_body_color,
-                font = 0,
-                item = CharacterInitActivity.character_init_item,
-                blushColor = CharacterInitActivity.character_init_blush,
-            );
-            authApiService.register(
-                registerRequestDto,
-                success = registerHandler,
-                fail = null
-            );
         }
     }
 
     var registerHandler : (RegisterResponseDto? ) -> Unit = handler@{ response ->
         try {
             if(!response!!.status!!){
-                throw Error()
-            }else {
-                this.tokenManager.setJWT(response!!.token!!);
-                viewHandler.goMainActivity();
+                throw Throwable()
             }
+            this.tokenManager.setJWT(response.token!!)
+            viewHandler.goMainActivity()
         } catch (e: Throwable) {
             viewHandler.goLoginActivityAndRemoveTokens()
         }
