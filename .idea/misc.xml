@@ -13,10 +13,11 @@
         <entry key="app/src/main/res/layout-w936dp/activity_login.xml" value="0.158984375" />
         <entry key="app/src/main/res/layout/activity.xml" value="0.21197916666666666" />
         <entry key="app/src/main/res/layout/activity_add_friend_popup.xml" value="0.2550925925925926" />
+        <entry key="app/src/main/res/layout/activity_c.xml" value="0.21574074074074073" />
         <entry key="app/src/main/res/layout/activity_character_init.xml" value="0.1853408544508593" />
         <entry key="app/src/main/res/layout/activity_create_diary.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_create_diary_add_friend_popup.xml" value="0.14285714285714285" />
         <entry key="app/src/main/res/layout/activity_create_diary_add_friend_popup.xml" value="0.24861111111111112" />
+        <entry key="app/src/main/res/layout/activity_create_image_page.xml" value="0.21574074074074073" />
         <entry key="app/src/main/res/layout/activity_create_page.xml" value="0.2817258883248731" />
         <entry key="app/src/main/res/layout/activity_diary_inner.xml" value="0.14432989690721648" />
         <entry key="app/src/main/res/layout/activity_friend.xml" value="0.22" />

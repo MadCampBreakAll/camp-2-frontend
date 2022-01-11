@@ -133,7 +133,7 @@
                         app:layout_constraintHeight_percent="0.12"
                         android:layout_gravity="center"
                         android:src="@drawable/image_page_img_empty" />
-                    
+
                     <ImageView
                         android:id="@+id/innerPageDailyColor"
                         android:layout_width="200dp"

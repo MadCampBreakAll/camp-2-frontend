@@ -131,7 +131,17 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.605"
                 tools:listitem="@layout/diary" />
-
+            <co.aenterhy.toggleswitch.ToggleSwitchButton
+                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:id="@+id/toggleAddBtn"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/diaryList"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintVertical_bias="1"
+                app:layout_constraintHorizontal_bias="0.65"
+                style="@style/ToggleSwitchButton"/>
             <ImageButton
                 android:id="@+id/diaryAddBtn"
                 android:layout_width="40dp"
