@@ -11,6 +11,7 @@ import com.example.myapplication.ui.join.NicknameSettingActivity
 import com.example.myapplication.ui.login.LoginActivity
 import com.example.myapplication.ui.main.MainActivity
 import com.example.myapplication.ui.page.DiaryInnerActivity
+import com.example.myapplication.ui.page.create.CreateImagePageActivity
 import com.example.myapplication.ui.page.create.CreatePageActivity
 import com.example.myapplication.ui.setting.backfont.SettingBackgroundActivity
 import com.example.myapplication.ui.setting.icon.CharacterFixActivity
@@ -130,6 +131,12 @@ class ViewHandler {
 
     fun goCreatePageAcitivty(diaryId: Int) {
         val intent = Intent(activity, CreatePageActivity::class.java)
+        intent.putExtra("diaryId", diaryId)
+        activity.startActivity(intent)
+    }
+
+    fun goCreateImagePageActivity(diaryId: Int) {
+        val intent = Intent(activity, CreateImagePageActivity::class.java)
         intent.putExtra("diaryId", diaryId)
         activity.startActivity(intent)
     }
