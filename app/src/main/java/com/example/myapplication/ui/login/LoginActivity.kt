@@ -63,12 +63,10 @@ class LoginActivity : AppCompatActivity() {
                 else -> true
             }
         }
-        binding.kakaoLoginButton.setOnClickListener{
-
-        }
     }
 
     private val loginWithKaKaoHandler : (OAuthToken?, Throwable?) -> Unit = handler@{ token, error ->
+        println("token: ${token}")
         if(token == null){
             return@handler
         }
