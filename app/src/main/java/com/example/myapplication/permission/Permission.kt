@@ -23,8 +23,9 @@ class Permission(private val activity: Activity){
     fun request(){
         val permissions: Array<String> = arrayOf(
             android.Manifest.permission.INTERNET,
+            android.Manifest.permission.WRITE_EXTERNAL_STORAGE
         );
 
-        activity.requestPermissions(permissions, requestCode);
+        activity.requestPermissions(permissions, requestCode)
     }
 }
