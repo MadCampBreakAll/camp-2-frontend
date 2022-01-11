@@ -15,8 +15,8 @@
             android:id="@+id/monoon_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/monoon_background"
-            android:visibility="invisible"/>
+            android:background="@drawable/monoon_background"
+            android:visibility="visible"/>
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
