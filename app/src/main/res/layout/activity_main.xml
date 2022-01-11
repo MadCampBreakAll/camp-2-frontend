@@ -10,6 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.main.MainActivity">
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/background_color"
             android:layout_width="match_parent"
@@ -103,7 +104,8 @@
                     layout="@layout/user_character"/>
             </FrameLayout>
 
-            <TextView
+            <TextView            android:fontFamily="@font/babymind"
+
                 android:id="@+id/user_nickname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -20,7 +20,9 @@
             android:layout_height="match_parent"
             android:src="@drawable/blank_page"
             android:scaleType="fitCenter"/>
-        <TextView
+        <TextView            android:fontFamily="@font/babymind"
+
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="아직 작성된 페이지가 없어요."

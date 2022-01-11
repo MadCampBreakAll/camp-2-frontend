@@ -16,7 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <TextView
+            <TextView            android:fontFamily="@font/babymind"
+
+
                 android:id="@+id/gridViewTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -6,7 +6,9 @@
     android:layout_height="match_parent"
     tools:context=".ui.loading.LoadingActivity">
 
-    <TextView
+    <TextView            android:fontFamily="@font/babymind"
+
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="20dp"

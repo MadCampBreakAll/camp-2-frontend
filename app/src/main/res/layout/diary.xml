@@ -23,7 +23,9 @@
             android:scaleType="fitCenter"
             android:src="@drawable/diary_text" />
 
-        <TextView
+        <TextView            android:fontFamily="@font/babymind"
+
+
             android:id="@+id/diaryTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"

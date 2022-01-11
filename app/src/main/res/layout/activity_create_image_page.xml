@@ -42,7 +42,9 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.02" />
-                <TextView
+                <TextView            android:fontFamily="@font/babymind"
+
+
                     android:id="@+id/innerPageWrittenDate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -66,7 +68,9 @@
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintVertical_bias="0.08">
-                    <TextView
+                    <TextView            android:fontFamily="@font/babymind"
+
+
                         android:id="@+id/writerNickname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -91,7 +95,9 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintVertical_bias="0.13"
                     app:layout_constraintHorizontal_bias="0.87">
-                    <TextView
+                    <TextView            android:fontFamily="@font/babymind"
+
+
                         android:id="@+id/nextUserNickname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -105,11 +111,12 @@
                 </FrameLayout>
 
                 <EditText
+
                     android:id="@+id/pageTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/rounded_highlight"
-                    android:fontFamily="@font/custom_font_family"
+                    android:fontFamily="@font/babymind"
                     android:gravity="center"
                     android:hint="제목.."
                     android:paddingLeft="10dp"
@@ -193,11 +200,12 @@
                         android:layout_gravity="center"
                         android:layout_marginTop="60dp"
                         android:hint="오늘은 하루종일 코딩을 했다. 정말 죽는 줄 알았다. \n 근데 세상에 똑똑한 사람이 너무 많다. \n 다들 어디서 이걸 다 배운걸까 \n 오늘도 잠 자긴 글렀겠지 \n 그래도 재밌군!"
+
                         android:lineSpacingExtra="20dp"
                         android:gravity="center"
                         app:layout_constraintRight_toRightOf="parent"
                         app:layout_constraintVertical_bias="0.75"
-                        android:fontFamily="@font/custom_font_family"/>
+                        android:fontFamily="@font/babymind"/>
                 </ScrollView>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>

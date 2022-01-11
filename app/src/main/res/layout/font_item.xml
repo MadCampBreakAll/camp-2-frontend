@@ -6,11 +6,12 @@
     android:layout_height="wrap_content"
     android:background="@color/transparent">
     <Button
+
         android:id="@+id/fontName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="교보 손글씨"
-        android:fontFamily="@font/custom_font_family"
+        android:fontFamily="@font/babymind"
         android:textSize="20dp"
         android:background="@color/transparent"
         android:textColor="@color/black"

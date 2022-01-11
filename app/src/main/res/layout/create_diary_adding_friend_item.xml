@@ -22,7 +22,9 @@
                 layout="@layout/user_character" />
         </FrameLayout>
 
-        <TextView
+        <TextView            android:fontFamily="@font/babymind"
+
+
             android:id="@+id/createDiaryFriendNickName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

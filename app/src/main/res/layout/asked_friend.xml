@@ -11,10 +11,14 @@
             android:id="@+id/request_friend_info"
             layout="@layout/create_diary_adding_friend_item"/>
     </FrameLayout>
-    <TextView
+    <TextView            android:fontFamily="@font/babymind"
+
+
+
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="수락 기다리는 중.."
         android:gravity="center">
-    </TextView>
+    </TextView
+>
 </LinearLayout>
