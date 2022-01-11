@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.page
 
+import android.R.id
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -22,10 +23,16 @@ import android.R.string.no
 import android.graphics.Color
 import android.widget.Toast
 import androidx.lifecycle.Observer
+import co.aenterhy.toggleswitch.ToggleSwitchButton
 import com.example.myapplication.api.user.UserApiService
 import com.example.myapplication.ui.main.Setting
 import vadiole.colorpicker.ColorModel
 import vadiole.colorpicker.ColorPickerDialog
+import com.example.myapplication.ui.main.MainActivity
+
+import android.R.id.toggle
+import co.aenterhy.toggleswitch.ToggleSwitchButton.OnTriggerListener
+
 
 class DiaryInnerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDiaryInnerBinding
@@ -92,9 +99,19 @@ class DiaryInnerActivity : AppCompatActivity() {
 
     private fun bind(){
         setContentView(binding.root)
-        binding.pageAddBtn.setOnClickListener {
-            viewHandler.goCreatePageAcitivty(diaryId?:-1)
-        }
+        binding.pageAddBtn.setOnTriggerListener(object : OnTriggerListener {
+            override fun toggledUp() {
+                Toast.makeText(this@DiaryInnerActivity, "Letter", Toast.LENGTH_SHORT).show()
+                viewHandler.goCreatePageAcitivty(diaryId?:-1)
+            }
+
+            override fun toggledDown() {
+                Toast.makeText(this@DiaryInnerActivity, "Image", Toast.LENGTH_SHORT).show()
+            }
+        })
+//        binding.pageAddBtn.setOnClickListener {
+//            viewHandler.goCreatePageAcitivty(diaryId?:-1)
+//        }
         binding.goGridView.setOnClickListener{
 
         }

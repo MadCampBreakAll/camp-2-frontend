@@ -38,8 +38,14 @@
         <item name="android:layout_alignParentBottom">true</item>
         <item name="android:layout_alignParentRight">true</item>
         <item name="outerRadius">50dp</item>
-        <item name="handleDrawable">@drawable/add</item>
-        <item name="upper">@drawable/add</item>
-        <item name="bottom">@drawable/add</item>
+        <item name="handleDrawable">@drawable/test</item>
+        <item name="upper">@drawable/test</item>
+        <item name="bottom">@drawable/test</item>
+    </style>
+    <style name="MiddleIcon">
+        <item name="android:src">@drawable/add</item>
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">50dp</item>
+        <item name="android:scaleType">fitCenter</item>
     </style>
 </resources>
