@@ -77,6 +77,7 @@ class DiaryInnerActivity : AppCompatActivity() {
             update()
             binding.root.isRefreshing = false
         }
+
     }
 
     fun updateBackground() {
@@ -96,7 +97,9 @@ class DiaryInnerActivity : AppCompatActivity() {
             viewHandler.goCreatePageAcitivty(diaryId?:-1)
         }
         binding.goGridView.setOnClickListener{
-
+            val dialog = AllPageDialog(this, diaryId!!, this)
+            dialog.window?.setLayout(800, 1200)
+            dialog.show()
         }
     }
 
