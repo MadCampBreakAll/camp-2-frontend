@@ -3,6 +3,7 @@ package com.example.myapplication.ui.diary.create
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import com.example.myapplication.api.auth.DiaryApiService
 import com.example.myapplication.api.diary.dto.CreateDiaryResponseDto
 import com.example.myapplication.api.friend.FriendApiService
@@ -46,9 +47,13 @@ class CreateDiaryActivity : AppCompatActivity() {
     private fun bind(){
         setContentView(binding.root);
         binding.createDiaryButton.setOnClickListener {
+            if(binding.title.text.toString().isBlank()) {
+                Toast.makeText(this, "제목을 없어요 ㅠㅠ", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener;
+            }
             try {
-                createDiary!!.setTitle(binding.title.text.toString())
-                val dto = createDiary!!.toCreateDiaryRequestDto()
+                createDiary.setTitle(binding.title.text.toString())
+                val dto = createDiary.toCreateDiaryRequestDto()
                 diaryApiService.createDiary(dto, success = createDiaryHandler, fail = null);
             } catch (e: Throwable) {
                 e.printStackTrace()
