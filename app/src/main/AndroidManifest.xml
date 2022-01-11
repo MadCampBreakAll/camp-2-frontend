@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission." />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".application.GlobalApplication"
@@ -16,6 +17,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".ui.page.create.CreateImagePageActivity"
+            android:exported="false" />
         <activity
             android:name=".ui.page.PageGridDialog"
             android:exported="false" />

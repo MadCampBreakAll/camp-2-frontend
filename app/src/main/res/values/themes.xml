@@ -32,4 +32,14 @@
     <style name="Theme.MyApplication.AppBarOverlay"
         parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
     <style name="Theme.MyApplication.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="ToggleSwitchButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentRight">true</item>
+        <item name="outerRadius">50dp</item>
+        <item name="handleDrawable">@drawable/add</item>
+        <item name="upper">@drawable/add</item>
+        <item name="bottom">@drawable/add</item>
+    </style>
 </resources>
