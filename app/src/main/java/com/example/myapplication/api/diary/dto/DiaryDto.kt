@@ -3,7 +3,7 @@ package com.example.myapplication.api.diary.dto
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
-data class DiaryDto (
+data class DiaryDto(
     @SerializedName("id")
     val id: Int,
     @SerializedName("title")
@@ -13,5 +13,5 @@ data class DiaryDto (
     @SerializedName("nextUser")
     val nextUser: NextUserDto,
     @SerializedName("chamyeoUsers")
-    val chamyeoUsers: List<ChamyeoUserDto>
+    val chamyeoUsers: List<ChamyeoUserDto>,
 )

@@ -55,6 +55,13 @@ class ViewHandler {
         return true
     }
 
+    fun goMainActivityAndFinish(): Boolean {
+        val intent = Intent(activity, MainActivity::class.java)
+        activity.startActivity(intent)
+        activity.finish()
+        return true
+    }
+
     fun goCharacterInitActivity() : Boolean {
         val intent = Intent(activity, CharacterInitActivity::class.java)
         activity.startActivity(intent)
@@ -114,8 +121,9 @@ class ViewHandler {
         activity.startActivity(intent)
     }
 
-    fun goCreatePageAcitivty() {
+    fun goCreatePageAcitivty(diaryId: Int) {
         val intent = Intent(activity, CreatePageActivity::class.java)
+        intent.putExtra("diaryId", diaryId)
         activity.startActivity(intent)
     }
 }

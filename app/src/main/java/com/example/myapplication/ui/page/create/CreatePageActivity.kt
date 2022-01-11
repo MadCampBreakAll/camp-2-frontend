@@ -2,44 +2,110 @@ package com.example.myapplication.ui.page.create
 
 import android.graphics.Color
 import android.content.Context
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MotionEvent
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityCreatePageBinding
 import vadiole.colorpicker.ColorModel
 import vadiole.colorpicker.ColorPickerDialog
 import android.widget.EditText
-import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.RequiresApi
+import androidx.core.graphics.convertTo
+import com.example.myapplication.api.auth.DiaryApiService
+import com.example.myapplication.api.diary.dto.CreateDiaryRequestDto
+import com.example.myapplication.util.ViewHandler
+import java.util.*
 import androidx.lifecycle.Observer
 import com.example.myapplication.api.page.PageApiService
 import com.example.myapplication.api.page.dto.CreatePageRequestDto
-import com.example.myapplication.ui.main.DiaryCoverAdapter
 import com.example.myapplication.ui.main.Setting
+import com.example.myapplication.ui.singleton.DiaryResponseSingleton
+import com.example.myapplication.ui.singleton.UserResponseSingleton
+import com.example.myapplication.util.Character
+import com.example.myapplication.util.CharacterViewer
+import com.example.myapplication.util.SimpleDate
 import com.example.myapplication.util.TokenManager
+import com.google.gson.annotations.SerializedName
 
 class CreatePageActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreatePageBinding
-    private var dailyColor = ""
-    private lateinit var tokenManager: TokenManager
     private lateinit var pageApiService: PageApiService
+    private lateinit var viewHandler: ViewHandler
+    private var dailyColor = "#fff1e6"
+    private var diaryId: Int? = null
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         init()
         bind()
+
+        try {
+            diaryId = intent.getIntExtra(
+                "diaryId",
+                -1
+            )
+        } catch (e: Throwable) {
+            e.printStackTrace()
+            viewHandler.goLoginActivityAndRemoveTokens()
+        }
     }
 
     fun init(){
+        viewHandler = ViewHandler(this)
+        pageApiService = PageApiService(
+            TokenManager(this)
+        )
         binding = ActivityCreatePageBinding.inflate(layoutInflater)
+        binding.innerPageWrittenDate.text = SimpleDate.of(Date())
+        binding.innerPageDailyColor.setColorFilter(Color.parseColor(dailyColor))
         setContentView(binding.root)
-        tokenManager = TokenManager(this)
-        pageApiService = PageApiService(tokenManager)
-
         Setting.setting.observe(this, Observer {
             updateBackground()
+        })
+
+        DiaryResponseSingleton.getMyDiariesResponseDto.observe(this, Observer { dto ->
+            try {
+                println(dto!!.diaries?.findLast { it.id == diaryId }?.chamyeoUsers!!)
+//                val nextUser = binding.innerPageNextUserCharacter
+//                CharacterViewer(
+//                    this,
+//                    nextUser,
+//                    Character(
+//                        body!!,
+//                        bodyColor!!,
+//                        blushColor!!,
+//                        item!!
+//                    )
+//                ).show()
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
+        })
+
+        UserResponseSingleton.getMeResponseDto.observe(this, Observer { dto ->
+            try {
+                val (_, _, body, bodyColor, blushColor, item) = dto!!.user!!
+                val nextUser = binding.innerPageWriteUserCharacter
+                CharacterViewer(
+                    this,
+                    nextUser,
+                    Character(
+                        body!!,
+                        bodyColor!!,
+                        blushColor!!,
+                        item!!
+                    )
+                ).show()
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
         })
     }
 
@@ -57,22 +123,46 @@ class CreatePageActivity : AppCompatActivity() {
     fun bind(){
         binding.innerPageDailyColor.setOnClickListener{
             val colorPicker: ColorPickerDialog = ColorPickerDialog.Builder()
-                .setInitialColor(Color.parseColor("#fff1e6"))
+                .setInitialColor(Color.parseColor(dailyColor))
                 .setColorModel(ColorModel.RGB)
                 .setColorModelSwitchEnabled(true)
                 .setButtonOkText(android.R.string.ok)
                 .setButtonCancelText(android.R.string.cancel)
                 .onColorSelected{ color: Int ->
-                    dailyColor = "#$color"
+                    dailyColor = "#${"%06X".format(color + 16777216)}"
                     binding.innerPageDailyColor.setColorFilter(color)
                 }
                 .create()
 
             colorPicker.show(supportFragmentManager, "color_picker")
         }
+
+
+        binding.innerPageCompleteBtn.setOnClickListener {
+            val pageTitle = binding.pageTitle.text
+            val body = binding.innerPageText.text
+            val color = dailyColor
+            pageApiService.createPage(
+                CreatePageRequestDto(
+                    diaryId!!,
+                    pageTitle.toString(),
+                    body.toString(),
+                    color
+                ),
+                success = {dto ->
+                    try {
+                        if(dto!!.login != null && dto.login === false) {
+                            throw Throwable()
+                        }
+                        finish()
+                    } catch (e : Throwable) {
+                        e.printStackTrace()
+                    }
+                },
+                fail = null
+            )
+        }
     }
-
-
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         val view: View? = currentFocus

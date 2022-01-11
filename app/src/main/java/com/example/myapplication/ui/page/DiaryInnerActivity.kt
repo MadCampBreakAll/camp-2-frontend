@@ -27,12 +27,6 @@ import com.example.myapplication.ui.main.Setting
 import vadiole.colorpicker.ColorModel
 import vadiole.colorpicker.ColorPickerDialog
 
-
-// Diary의 속지(페이지들을 볼 수 있는 곳)를 보는 화면 -> 속지들은 viewpager로 표현된다
-// button의 setonclicklistner은 DiaryCoverAdapter 안에 있다. -> diaryList를 가지고 있어 diary 정보들을 모두 알고 있다.
-// putExtra을 통해서 diary의 id를 알 수 있도록 한다. -> 이 정보로 원하는 것들을 activity에서 얻어내자
-// 이 activity에서는 diary_id를 통해 page들의 정보를 알 수 있어야 한다.
-
 class DiaryInnerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDiaryInnerBinding
     private lateinit var pageLetterViewPageAdapter: PageLetterViewPageAdapter
@@ -75,9 +69,13 @@ class DiaryInnerActivity : AppCompatActivity() {
             finish()
         }
 
-        Setting.setting.observe(this, Observer { setting ->
+ Setting.setting.observe(this, Observer { setting ->
             updateBackground()
-        })
+ })
+        binding.root.setOnRefreshListener {
+            update()
+            binding.root.isRefreshing = false
+        }
     }
 
     fun updateBackground() {
@@ -94,8 +92,13 @@ class DiaryInnerActivity : AppCompatActivity() {
     private fun bind(){
         setContentView(binding.root)
         binding.pageAddBtn.setOnClickListener {
-            viewHandler.goCreatePageAcitivty()
+            viewHandler.goCreatePageAcitivty(diaryId?:-1)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        update()
     }
 
     @SuppressLint("NotifyDataSetChanged")

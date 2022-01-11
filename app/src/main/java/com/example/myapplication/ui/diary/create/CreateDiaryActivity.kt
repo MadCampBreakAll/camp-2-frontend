@@ -1,8 +1,14 @@
 package com.example.myapplication.ui.diary.create
 
+import android.annotation.SuppressLint
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
+import androidx.lifecycle.Observer
+import com.example.myapplication.R
+import com.example.myapplication.R.drawable.monoon_background
 import com.example.myapplication.api.auth.DiaryApiService
 import com.example.myapplication.api.diary.dto.CreateDiaryResponseDto
 import com.example.myapplication.api.friend.FriendApiService
@@ -10,6 +16,7 @@ import com.example.myapplication.api.friend.dto.GetMyFriendsResponseDto
 import com.example.myapplication.api.user.UserApiService
 import com.example.myapplication.api.user.dto.GetMeResponseDto
 import com.example.myapplication.databinding.ActivityCreateDiaryBinding
+import com.example.myapplication.ui.main.Setting
 import com.example.myapplication.util.Character
 import com.example.myapplication.util.CharacterViewer
 import com.example.myapplication.util.TokenManager
@@ -34,6 +41,7 @@ class CreateDiaryActivity : AppCompatActivity() {
         update()
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     private fun init(){
         binding = ActivityCreateDiaryBinding.inflate(layoutInflater)
         tokenManager = TokenManager(this)
@@ -41,14 +49,29 @@ class CreateDiaryActivity : AppCompatActivity() {
         diaryApiService = DiaryApiService(tokenManager)
         friendApiService = FriendApiService(tokenManager)
         userApiService = UserApiService(tokenManager)
+
+        Setting.setting.observe(this, Observer { setting ->
+            binding.root.setBackgroundColor(Color.parseColor(setting.backgroundColor))
+
+            if(setting.page == 0) {
+                binding.monoonBackground.visibility = View.INVISIBLE
+                return@Observer
+            }
+
+            binding.monoonBackground.visibility = View.VISIBLE
+        })
     }
 
     private fun bind(){
         setContentView(binding.root);
         binding.createDiaryButton.setOnClickListener {
+            if(binding.title.text.toString().isBlank()) {
+                Toast.makeText(this, "제목이 없어요 ㅠㅠ", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener;
+            }
             try {
-                createDiary!!.setTitle(binding.title.text.toString())
-                val dto = createDiary!!.toCreateDiaryRequestDto()
+                createDiary.setTitle(binding.title.text.toString())
+                val dto = createDiary.toCreateDiaryRequestDto()
                 diaryApiService.createDiary(dto, success = createDiaryHandler, fail = null);
             } catch (e: Throwable) {
                 e.printStackTrace()

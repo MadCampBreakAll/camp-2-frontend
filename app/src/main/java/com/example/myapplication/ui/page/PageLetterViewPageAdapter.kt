@@ -6,6 +6,7 @@ import android.graphics.Typeface
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.FragmentManager
@@ -14,10 +15,13 @@ import com.example.myapplication.api.diary.dto.NextUserDto
 import com.example.myapplication.api.page.dto.PageDto
 import com.example.myapplication.api.page.dto.UserDto
 import com.example.myapplication.databinding.PageLetterItemBinding
+import com.example.myapplication.ui.main.Setting
 import com.example.myapplication.util.Character
 import com.example.myapplication.util.CharacterViewer
+import com.example.myapplication.util.SimpleDate
 import vadiole.colorpicker.ColorModel
 import vadiole.colorpicker.ColorPickerDialog
+import java.util.*
 
 class PageLetterViewPageAdapter(private val context: Context, private val supportFragmentManager: FragmentManager): RecyclerView.Adapter<PageLetterViewPageAdapter.ViewHolder>() {
     private var pageList = mutableListOf<PageDto>()
@@ -35,10 +39,14 @@ class PageLetterViewPageAdapter(private val context: Context, private val suppor
         viewType: Int
     ): ViewHolder {
         val binding = PageLetterItemBinding.inflate(LayoutInflater.from(context), parent, false)
-        return(ViewHolder(binding))
+        return (ViewHolder(binding))
     }
 
     override fun getItemCount(): Int = pageList.size
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -59,16 +67,21 @@ class PageLetterViewPageAdapter(private val context: Context, private val suppor
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(page: PageDto) {
             try {
-
                 val (_, _title, _body, color, img, user, createdAt, _nextUser) = page
 
-                writenDate.text = createdAt!!.time.toString()
-                dailyColor.setColorFilter(Color.parseColor(color))
+                writenDate.text = SimpleDate.of(createdAt!!)
+                dailyColor.setBackgroundColor(Color.parseColor(color))
                 body.text = _body
                 title.text = _title
 
-//                 background.setBackgroundColor(Color.parseColor(color))
-
+                background.setBackgroundColor(Color.parseColor(
+                    Setting.backgroundColor
+                ))
+                if(Setting.page == 0) {
+                    monoon.visibility = View.INVISIBLE
+                } else {
+                    monoon.visibility = View.VISIBLE
+                }
                 bindWriter(user!!)
                 bindNextUser(_nextUser!!)
             } catch (e: Throwable) {

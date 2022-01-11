@@ -4,6 +4,7 @@ import android.util.Log
 import com.example.myapplication.BuildConfig
 import com.example.myapplication.api.BasicApiService
 import com.example.myapplication.api.user.dto.*
+import com.example.myapplication.ui.singleton.UserResponseSingleton
 import com.example.myapplication.util.TokenManager
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
@@ -49,15 +50,15 @@ class UserApiService : BasicApiService{
                 Log.d("DEBUG", "GET ME SUCCESS")
                 Log.d("DEBUG", response.toString())
                 Log.d("DEBUG", response.body().toString())
-
-                success(response.body());
+                UserResponseSingleton.setGetMeResponseDto = response.body()
+                success(response.body())
             }
 
             override fun onFailure(call: Call<GetMeResponseDto>, t: Throwable) {
                 Log.d("DEBUG", "GET ME FAIL")
                 Log.d("DEBUG", t.toString())
 
-                fail?.invoke(t);
+                fail?.invoke(t)
             }
         })
     }
