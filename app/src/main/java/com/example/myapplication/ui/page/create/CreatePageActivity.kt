@@ -2,6 +2,7 @@ package com.example.myapplication.ui.page.create
 
 import android.graphics.Color
 import android.content.Context
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,14 +16,10 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.core.graphics.convertTo
-import com.example.myapplication.api.auth.DiaryApiService
-import com.example.myapplication.api.diary.dto.CreateDiaryRequestDto
 import com.example.myapplication.util.ViewHandler
 import java.util.*
 import androidx.lifecycle.Observer
 import com.example.myapplication.api.page.PageApiService
-import com.example.myapplication.api.page.dto.CreatePageRequestDto
 import com.example.myapplication.ui.main.Setting
 import com.example.myapplication.ui.singleton.DiaryResponseSingleton
 import com.example.myapplication.ui.singleton.UserResponseSingleton
@@ -30,8 +27,12 @@ import com.example.myapplication.util.Character
 import com.example.myapplication.util.CharacterViewer
 import com.example.myapplication.util.SimpleDate
 import com.example.myapplication.util.TokenManager
-import com.google.gson.annotations.SerializedName
+import gun0912.tedbottompicker.TedBottomPicker
+import okhttp3.MediaType
 import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import java.io.File
+
 
 class CreatePageActivity : AppCompatActivity() {
 
@@ -40,6 +41,7 @@ class CreatePageActivity : AppCompatActivity() {
     private lateinit var viewHandler: ViewHandler
     private var dailyColor = "#fff1e6"
     private var diaryId: Int? = null
+    private var uri: Uri? = null
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +61,7 @@ class CreatePageActivity : AppCompatActivity() {
         }
     }
 
-    fun init(){
+    fun init() {
         viewHandler = ViewHandler(this)
         pageApiService = PageApiService(
             TokenManager(this)
@@ -84,7 +86,8 @@ class CreatePageActivity : AppCompatActivity() {
                     }
                 }
                 val nextNextUser = chameyeos[nextNextUserIndex]
-                val (_, _, body, bodyColor, blushColor, item) = nextNextUser
+                val (_, nickname, body, bodyColor, blushColor, item) = nextNextUser
+                binding.nextUserNickname.text = nickname
                 val nextNextUserCharacter = binding.innerPageNextUserCharacter
                 CharacterViewer(
                     this,
@@ -104,6 +107,7 @@ class CreatePageActivity : AppCompatActivity() {
         UserResponseSingleton.getMeResponseDto.observe(this, Observer { dto ->
             try {
                 val (_, _, body, bodyColor, blushColor, item) = dto!!.user!!
+                binding.writerNickname.text = dto.user!!.nickname
                 val nextUser = binding.innerPageWriteUserCharacter
                 CharacterViewer(
                     this,
@@ -119,28 +123,36 @@ class CreatePageActivity : AppCompatActivity() {
                 e.printStackTrace()
             }
         })
+
+    // TODO 버튼과 연결
+
+//        binding.button.setOnClickListener {
+//            TedBottomPicker.with(this@CreatePageActivity)
+//                .show {
+//                    uri = it
+//                }
+//        }
     }
 
     fun updateBackground() {
         binding.pageBackgroundColor.setBackgroundColor(Color.parseColor(Setting.backgroundColor))
 
-        if(Setting.page == 0) {
+        if (Setting.page == 0) {
             binding.monoonBackground.visibility = View.INVISIBLE
-        }
-        else {
+        } else {
             binding.monoonBackground.visibility = View.VISIBLE
         }
     }
 
-    fun bind(){
-        binding.innerPageDailyColor.setOnClickListener{
+    fun bind() {
+        binding.innerPageDailyColor.setOnClickListener {
             val colorPicker: ColorPickerDialog = ColorPickerDialog.Builder()
                 .setInitialColor(Color.parseColor(dailyColor))
                 .setColorModel(ColorModel.RGB)
                 .setColorModelSwitchEnabled(true)
                 .setButtonOkText(android.R.string.ok)
                 .setButtonCancelText(android.R.string.cancel)
-                .onColorSelected{ color: Int ->
+                .onColorSelected { color: Int ->
                     dailyColor = "#${"%06X".format(color + 16777216)}"
                     binding.innerPageDailyColor.setColorFilter(color)
                 }
@@ -151,7 +163,6 @@ class CreatePageActivity : AppCompatActivity() {
 
 
         binding.innerPageCompleteBtn.setOnClickListener {
-
             val pageTitle = binding.pageTitle.text
             val body = binding.innerPageText.text
             val color = dailyColor
@@ -161,20 +172,33 @@ class CreatePageActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
 
+            var file: File? = null
+            if (uri != null) {
+                file = File(uri!!.path)
+            }
+
+            var img: MultipartBody.Part? = null
+            if (file != null) {
+                img = MultipartBody.Part.createFormData(
+                    "img",
+                    file!!.getName(),
+                    RequestBody.create(MediaType.parse("image/*"), file)
+                )
+            }
+
             pageApiService.createPage(
                 MultipartBody.Part.createFormData("diaryId", diaryId!!.toString()),
                 MultipartBody.Part.createFormData("title", pageTitle.toString()),
                 MultipartBody.Part.createFormData("body", body.toString()),
                 MultipartBody.Part.createFormData("color", color),
-                // TODO img 형태로 전송
-                MultipartBody.Part.createFormData("img", color),
-                success = {dto ->
+                img,
+                success = { dto ->
                     try {
-                        if(dto!!.login != null && dto.login === false) {
+                        if (dto!!.login != null && dto.login === false) {
                             throw Throwable()
                         }
                         finish()
-                    } catch (e : Throwable) {
+                    } catch (e: Throwable) {
                         e.printStackTrace()
                     }
                 },
