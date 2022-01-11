@@ -1,6 +1,7 @@
 package com.example.myapplication.ui.page
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.graphics.Typeface
 import android.os.Build
@@ -70,7 +71,8 @@ class PageLetterViewPageAdapter(private val context: Context, private val suppor
                 val (_, _title, _body, color, img, user, createdAt, _nextUser) = page
 
                 writenDate.text = SimpleDate.of(createdAt!!)
-                dailyColor.setBackgroundColor(Color.parseColor(color))
+//                dailyColor.setColorFilter(Color.parseColor(color))
+                dailyColor.imageTintList = ColorStateList.valueOf(Color.parseColor(color))
                 body.text = _body
                 title.text = _title
 
