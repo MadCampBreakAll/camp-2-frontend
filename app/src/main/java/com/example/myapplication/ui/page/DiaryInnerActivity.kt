@@ -69,9 +69,10 @@ class DiaryInnerActivity : AppCompatActivity() {
             finish()
         }
 
- Setting.setting.observe(this, Observer { setting ->
+         Setting.setting.observe(this, Observer { setting ->
             updateBackground()
- })
+         })
+
         binding.root.setOnRefreshListener {
             update()
             binding.root.isRefreshing = false
@@ -93,6 +94,9 @@ class DiaryInnerActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.pageAddBtn.setOnClickListener {
             viewHandler.goCreatePageAcitivty(diaryId?:-1)
+        }
+        binding.goGridView.setOnClickListener{
+
         }
     }
 

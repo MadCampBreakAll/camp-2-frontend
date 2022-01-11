@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/friendAddPopupBackground"
+    android:layout_width="300dp"
+    android:layout_height="375dp"
+    android:layout_gravity="center"
+    android:background="@color/transparent"
+    android:backgroundTint="@color/transparent"
+    app:cardCornerRadius="50dp"
+    >
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="375dp"
+        app:cardCornerRadius="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintVertical_bias="1"
+        android:backgroundTint="@color/oatmeal">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/createDiaryFriendListView"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            tools:listitem="@layout/create_diary_adding_friend_item"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"/>
+
+        <Button
+            android:id="@+id/remove"
+            android:layout_width="100dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="10dp"
+            android:text="Delete"/>
+
+    </androidx.cardview.widget.CardView>
+</androidx.cardview.widget.CardView>
