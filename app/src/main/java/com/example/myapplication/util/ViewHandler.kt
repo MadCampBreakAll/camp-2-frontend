@@ -31,7 +31,6 @@ class ViewHandler {
 
         val intent = Intent(activity, LoginActivity::class.java)
         activity.startActivity(intent)
-        activity.finish()
         return true
     }
 
@@ -42,8 +41,6 @@ class ViewHandler {
 
             val intent = Intent(activity, LoginActivity::class.java)
             activity.startActivity(intent)
-            activity.finish()
-
             return true
         }
 
@@ -53,7 +50,6 @@ class ViewHandler {
     fun goMainActivity() : Boolean{
         val intent = Intent(activity, MainActivity::class.java)
         activity.startActivity(intent)
-    
         return true
     }
 
