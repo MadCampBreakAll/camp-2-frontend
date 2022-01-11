@@ -26,8 +26,8 @@ class CharacterBlushFragment : Fragment() {
         _binding = FragmentCharacterBlushShapeBinding.inflate(inflater, container, false)
 
         var character_init_binding = CharacterInitActivity.character_init_binding
-        character_init_binding.userCharacterInitType.text="Blush"
-       character_init_binding.userCharacterInitFirstBar.setImageResource(R.drawable.init_rest_steps)
+        character_init_binding.userCharacterInitType.text = "Blush"
+        character_init_binding.userCharacterInitFirstBar.setImageResource(R.drawable.init_rest_steps)
         character_init_binding.userCharacterInitSecondBar.setImageResource(R.drawable.init_rest_steps)
         character_init_binding.userCharacterInitThirdBar.setImageResource(R.drawable.init_current_step)
         character_init_binding.userCharacterInitForthBar.setImageResource(R.drawable.init_rest_steps)
@@ -57,13 +57,15 @@ class CharacterBlushFragment : Fragment() {
     fun setBlush(button: Int) {
         var character_body_binding = CharacterInitActivity.character_init_binding
 
-        when(button){
+        when (button) {
             1 -> {
                 CharacterInitActivity.character_init_blush = 1
                 binding.bodyColorOneBtn.setOnClickListener {
-                    character_body_binding.userCharacterInit.blush.setColorFilter(resources.getColor(
-                        R.color.blush_pink
-                    ))
+                    character_body_binding.userCharacterInit.blush.setColorFilter(
+                        resources.getColor(
+                            R.color.blush_pink
+                        )
+                    )
                     clickButton(button)
                 }
 
@@ -71,9 +73,11 @@ class CharacterBlushFragment : Fragment() {
             2 -> {
                 CharacterInitActivity.character_init_blush = 2
                 binding.bodyColorTwoBtn.setOnClickListener {
-                    character_body_binding.userCharacterInit.blush.setColorFilter(resources.getColor(
-                        R.color.blush_orange
-                    ))
+                    character_body_binding.userCharacterInit.blush.setColorFilter(
+                        resources.getColor(
+                            R.color.blush_orange
+                        )
+                    )
                     clickButton(button)
                 }
             }
@@ -94,7 +98,7 @@ class CharacterBlushFragment : Fragment() {
 
     fun clickButton(button: Int) {
         var i = 0
-        when(button) {
+        when (button) {
             1 -> {
                 binding.bodyColorOneBtn.setImageResource(R.drawable.one_btn_click)
                 binding.bodyColorTwoBtn.setImageResource(R.drawable.two_btn_nonclick)
