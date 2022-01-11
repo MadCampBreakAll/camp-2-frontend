@@ -103,15 +103,18 @@ class AuthApiService : BasicApiService{
         context: Context,
         callback: (OAuthToken?, Throwable?) -> Unit
     ): Boolean {
+        Log.d("DEBUG", "LOGIN WITH KAKAO START")
         if(tokenManager.hasJWT()){
+            Log.d("DEBUG", "LOGIN WITH KAKAO HAS JWT")
             return false
         }
 
         if(UserApiClient.instance.isKakaoTalkLoginAvailable(context)){
+            Log.d("DEBUG", "LOGIN WITH KAKAO TALK")
             UserApiClient.instance.loginWithKakaoTalk(context, callback = callback)
             return true
         }
-
+        Log.d("DEBUG", "LOGIN WITH KAKAO ACCOUNT")
         UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
         return true
     }
