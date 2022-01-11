@@ -51,7 +51,7 @@ class DiaryInnerActivity : AppCompatActivity() {
         tokenManager = TokenManager(this)
         diaryApiService = DiaryApiService(tokenManager)
         pageApiService = PageApiService(tokenManager)
-        pageLetterViewPageAdapter = PageLetterViewPageAdapter(this, supportFragmentManager)
+        pageLetterViewPageAdapter = PageLetterViewPageAdapter(this)
         binding.pagesLetterViewPager.adapter = pageLetterViewPageAdapter
 
         var bookFlipPageTransformer = BookFlipPageTransformer2()
