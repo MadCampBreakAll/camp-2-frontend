@@ -79,4 +79,5 @@ dependencies {
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
     implementation 'com.wajahatkarim3.easyflipviewpager:easyflipviewpager:2.0.0'
     implementation 'io.github.vadiole:colorpicker:1.0.2'
+    implementation 'co.aenterhy:toggleswitch:1.0.0'
 }
