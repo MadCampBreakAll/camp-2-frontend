@@ -72,18 +72,28 @@ class CreatePageActivity : AppCompatActivity() {
 
         DiaryResponseSingleton.getMyDiariesResponseDto.observe(this, Observer { dto ->
             try {
-                println(dto!!.diaries?.findLast { it.id == diaryId }?.chamyeoUsers!!)
-//                val nextUser = binding.innerPageNextUserCharacter
-//                CharacterViewer(
-//                    this,
-//                    nextUser,
-//                    Character(
-//                        body!!,
-//                        bodyColor!!,
-//                        blushColor!!,
-//                        item!!
-//                    )
-//                ).show()
+                val diary = dto!!.diaries?.findLast { it.id == diaryId }!!
+                val chameyeos = diary.chamyeoUsers
+                val nextUser = diary.nextUser
+                var nextNextUserIndex = -1
+                for(chameyoIndex: Int in 0 until chameyeos.size) {
+                    if(chameyeos.get(chameyoIndex).id!! == nextUser.id!!) {
+                        nextNextUserIndex = (chameyoIndex + chameyeos.size + 1)%chameyeos.size
+                    }
+                }
+                val nextNextUser = chameyeos[nextNextUserIndex]
+                val (_, _, body, bodyColor, blushColor, item) = nextNextUser
+                val nextNextUserCharacter = binding.innerPageNextUserCharacter
+                CharacterViewer(
+                    this,
+                    nextNextUserCharacter,
+                    Character(
+                        body!!,
+                        bodyColor!!,
+                        blushColor!!,
+                        item!!
+                    )
+                ).show()
             } catch (e: Throwable) {
                 e.printStackTrace()
             }

@@ -6,6 +6,7 @@ import com.example.myapplication.api.BasicApiService
 import com.example.myapplication.api.page.dto.CreatePageRequestDto
 import com.example.myapplication.api.page.dto.CreatePageResponseDto
 import com.example.myapplication.api.page.dto.GetDiaryInnerPagesResponse
+import com.example.myapplication.ui.singleton.PageResponseSingleton
 import com.example.myapplication.util.TokenManager
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
@@ -21,7 +22,7 @@ class PageApiService : BasicApiService{
     private val apiProvider: PageApiProvider
 
     constructor(tokenManager: TokenManager){
-        this.apiProvider= getProvider(tokenManager)
+        this.apiProvider = getProvider(tokenManager)
     }
 
     private fun getProvider(tokenManager: TokenManager): PageApiProvider {
@@ -80,8 +81,8 @@ class PageApiService : BasicApiService{
                 Log.d("DEBUG", "GET DIARY INNER PAGES SUCCESS")
                 Log.d("DEBUG", response.toString())
                 Log.d("DEBUG", response.body().toString())
-
-                success(response.body());
+                PageResponseSingleton.setGetDiaryInnerPagesResponse = response.body()
+                success(response.body())
             }
 
             override fun onFailure(call: Call<GetDiaryInnerPagesResponse>, t: Throwable) {
