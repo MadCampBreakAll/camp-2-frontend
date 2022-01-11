@@ -29,13 +29,15 @@
             android:textSize="15dp"
             android:gravity="center" />
 
-        <Button
+        <ImageButton
             android:id="@+id/go_grid_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@color/transparent"
+            android:src="@drawable/grid"
+            android:scaleType="fitCenter"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
-            android:text="그리드 뷰 보러가기"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -52,19 +54,21 @@
             android:layout_height="match_parent"
             >
         </androidx.viewpager2.widget.ViewPager2>
-        
-        <ImageButton
+        <co.aenterhy.toggleswitch.ToggleSwitchButton
             android:id="@+id/pageAddBtn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
-            android:background="@color/transparent"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintVertical_bias="0.95"
-            android:backgroundTint="@color/transparent"
-            android:src="@drawable/add"/>
+            app:layout_constraintHorizontal_bias="0.95"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            app:outerRadius="50dp"
+
+            app:bottom="@drawable/bottom_image"
+            app:upper="@drawable/upper_letter"
+            app:handleDrawable="@drawable/test" />
     </androidx.constraintlayout.widget.ConstraintLayout>
