@@ -125,7 +125,6 @@ class PageLetterViewPageAdapter(
                     binding.picture.setImageBitmap(bitmap)
                 }
 
-
                 bindWriter(user!!)
                 bindNextUser(_nextUser!!)
             } catch (e: Throwable) {
@@ -208,6 +207,7 @@ class PageLetterViewPageAdapter(
         @RequiresApi(Build.VERSION_CODES.N)
         @SuppressLint("SimpleDateFormat")
         override fun bind(page: PageDto) {
+            Log.d("DEBUG", "PAGE LETTER VIEW PAGE ADAPTER BIND START")
             try {
                 val (_, _title, _body, color, img, user, createdAt, _nextUser) = page
                 writenDate.text = SimpleDate.getUTCTime(createdAt!!)

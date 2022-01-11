@@ -60,14 +60,12 @@ class ViewHandler {
     fun goMainActivityAndFinish(): Boolean {
         val intent = Intent(activity, MainActivity::class.java)
         activity.startActivity(intent)
-        activity.finish()
         return true
     }
 
     fun goCharacterInitActivity() : Boolean {
         val intent = Intent(activity, CharacterInitActivity::class.java)
         activity.startActivity(intent)
-        activity.finish()
         return true
     }
 
@@ -80,7 +78,6 @@ class ViewHandler {
     fun goCreateDiaryAndFinish() : Boolean {
         val intent = Intent(activity, CreateDiaryActivity::class.java)
         activity.startActivity(intent)
-        activity.finish()
         return true;
     }
 
@@ -93,7 +90,6 @@ class ViewHandler {
     fun goPendingFriendActivity(): Boolean{
         val intent = Intent(activity, SearchUserDialog::class.java)
         activity.startActivity(intent)
-        activity.finish()
         return true;
     }
 
@@ -101,32 +97,27 @@ class ViewHandler {
         val intent = Intent(activity, DiaryInnerActivity::class.java)
         intent.putExtra("diaryId", diaryId)
         activity.startActivity(intent)
-        activity.finish()
     }
 
     fun goAddFriendPopupActivity(friendSeq: Int){
         val intent = Intent(activity, CreateDiaryAddFriendPopupActivity::class.java)
         intent.putExtra("friendSeq", friendSeq)
         activity.startActivity(intent)
-        activity.finish()
     }
 
     fun goNicknameActivity(){
         val intent = Intent(activity, NicknameSettingActivity::class.java)
         activity.startActivity(intent)
-        activity.finish()
     }
 
     fun goIconFixActivity(){
         val intent = Intent(activity, CharacterFixActivity::class.java)
         activity.startActivity(intent)
-        activity.finish()
     }
 
     fun goBackgroundSetting(){
         val intent = Intent(activity, SettingBackgroundActivity::class.java)
         activity.startActivity(intent)
-        activity.finish()
     }
 
     fun goCreatePageAcitivty(diaryId: Int) {
