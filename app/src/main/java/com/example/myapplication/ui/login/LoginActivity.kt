@@ -1,9 +1,13 @@
 package com.example.myapplication.ui.login
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.os.Debug
 import android.util.Log
+import android.view.MotionEvent
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityLoginBinding
 import com.example.myapplication.api.auth.AuthApiService
 import com.example.myapplication.api.auth.dto.LoginRequestDto
@@ -38,14 +42,29 @@ class LoginActivity : AppCompatActivity() {
         viewHandler = ViewHandler(this)
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private fun bind(){
-        binding.kakaoLoginButton.setOnClickListener {
-            if(!this.authApiService.loginWithKaKao(
-                    this,
-                    callback = loginWithKaKaoHandler
-            )) {
-                viewHandler.goMainActivity();
+        binding.kakaoLoginButton.setOnTouchListener { _: View, event: MotionEvent ->
+            when(event.action) {
+                MotionEvent.ACTION_DOWN -> {
+                    binding.kakaoLoginButton.setImageResource(R.drawable.login_door_open)
+                    if(!this.authApiService.loginWithKaKao(
+                            this,
+                            callback = loginWithKaKaoHandler
+                        )) {
+                        viewHandler.goMainActivity();
+                    }
+                    true
+                }
+                MotionEvent.ACTION_UP -> {
+                    binding.kakaoLoginButton.setImageResource(R.drawable.login_door)
+                    false
+                }
+                else -> true
             }
+        }
+        binding.kakaoLoginButton.setOnClickListener{
+
         }
     }
 
