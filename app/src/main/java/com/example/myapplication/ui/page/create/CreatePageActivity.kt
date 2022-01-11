@@ -13,6 +13,7 @@ import vadiole.colorpicker.ColorPickerDialog
 import android.widget.EditText
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.graphics.convertTo
 import com.example.myapplication.api.auth.DiaryApiService
@@ -149,9 +150,16 @@ class CreatePageActivity : AppCompatActivity() {
 
 
         binding.innerPageCompleteBtn.setOnClickListener {
+
             val pageTitle = binding.pageTitle.text
             val body = binding.innerPageText.text
             val color = dailyColor
+
+            if(pageTitle.isBlank()){
+                Toast.makeText(this, "오늘 하루의 제목을 정해주세요!!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+
             pageApiService.createPage(
                 CreatePageRequestDto(
                     diaryId!!,
