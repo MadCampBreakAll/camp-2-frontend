@@ -5,37 +5,35 @@ import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MotionEvent
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityCreatePageBinding
 import vadiole.colorpicker.ColorModel
 import vadiole.colorpicker.ColorPickerDialog
 import android.widget.EditText
-import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
 import androidx.core.graphics.convertTo
 import com.example.myapplication.api.auth.DiaryApiService
 import com.example.myapplication.api.diary.dto.CreateDiaryRequestDto
-import com.example.myapplication.api.page.PageApiService
-import com.example.myapplication.api.page.dto.CreatePageRequestDto
-import com.example.myapplication.util.TokenManager
 import com.example.myapplication.util.ViewHandler
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.time.LocalDateTime
 import java.util.*
 import androidx.lifecycle.Observer
 import com.example.myapplication.api.page.PageApiService
 import com.example.myapplication.api.page.dto.CreatePageRequestDto
-import com.example.myapplication.ui.main.DiaryCoverAdapter
 import com.example.myapplication.ui.main.Setting
+import com.example.myapplication.ui.singleton.DiaryResponseSingleton
+import com.example.myapplication.ui.singleton.UserResponseSingleton
+import com.example.myapplication.util.Character
+import com.example.myapplication.util.CharacterViewer
+import com.example.myapplication.util.SimpleDate
 import com.example.myapplication.util.TokenManager
+import com.google.gson.annotations.SerializedName
 
 class CreatePageActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreatePageBinding
-
     private lateinit var pageApiService: PageApiService
     private lateinit var viewHandler: ViewHandler
     private var dailyColor = "#fff1e6"
@@ -47,7 +45,6 @@ class CreatePageActivity : AppCompatActivity() {
 
         init()
         bind()
-
 
         try {
             diaryId = intent.getIntExtra(
@@ -66,29 +63,49 @@ class CreatePageActivity : AppCompatActivity() {
             TokenManager(this)
         )
         binding = ActivityCreatePageBinding.inflate(layoutInflater)
-        binding.innerPageWrittenDate.text = createDate()
+        binding.innerPageWrittenDate.text = SimpleDate.of(Date())
         binding.innerPageDailyColor.setColorFilter(Color.parseColor(dailyColor))
         setContentView(binding.root)
-    }
-
-    fun createDate(): String{
-        val sdf = SimpleDateFormat("yyyy/M/dd hh:mm")
-        val currentDate = sdf.format(Date())
-        return currentDate;
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-
-    }
-
-    fun init(){
-        binding = ActivityCreatePageBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        tokenManager = TokenManager(this)
-        pageApiService = PageApiService(tokenManager)
-
         Setting.setting.observe(this, Observer {
             updateBackground()
+        })
+
+        DiaryResponseSingleton.getMyDiariesResponseDto.observe(this, Observer { dto ->
+            try {
+                println(dto!!.diaries?.findLast { it.id == diaryId }?.chamyeoUsers!!)
+//                val nextUser = binding.innerPageNextUserCharacter
+//                CharacterViewer(
+//                    this,
+//                    nextUser,
+//                    Character(
+//                        body!!,
+//                        bodyColor!!,
+//                        blushColor!!,
+//                        item!!
+//                    )
+//                ).show()
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
+        })
+
+        UserResponseSingleton.getMeResponseDto.observe(this, Observer { dto ->
+            try {
+                val (_, _, body, bodyColor, blushColor, item) = dto!!.user!!
+                val nextUser = binding.innerPageWriteUserCharacter
+                CharacterViewer(
+                    this,
+                    nextUser,
+                    Character(
+                        body!!,
+                        bodyColor!!,
+                        blushColor!!,
+                        item!!
+                    )
+                ).show()
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
         })
     }
 
@@ -102,7 +119,6 @@ class CreatePageActivity : AppCompatActivity() {
             binding.monoonBackground.visibility = View.VISIBLE
         }
     }
-
 
     fun bind(){
         binding.innerPageDailyColor.setOnClickListener{
@@ -146,8 +162,6 @@ class CreatePageActivity : AppCompatActivity() {
                 fail = null
             )
         }
-    }
-
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {

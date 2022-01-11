@@ -18,8 +18,10 @@ import com.example.myapplication.databinding.PageLetterItemBinding
 import com.example.myapplication.ui.main.Setting
 import com.example.myapplication.util.Character
 import com.example.myapplication.util.CharacterViewer
+import com.example.myapplication.util.SimpleDate
 import vadiole.colorpicker.ColorModel
 import vadiole.colorpicker.ColorPickerDialog
+import java.util.*
 
 class PageLetterViewPageAdapter(private val context: Context, private val supportFragmentManager: FragmentManager): RecyclerView.Adapter<PageLetterViewPageAdapter.ViewHolder>() {
     private var pageList = mutableListOf<PageDto>()
@@ -65,16 +67,16 @@ class PageLetterViewPageAdapter(private val context: Context, private val suppor
         @RequiresApi(Build.VERSION_CODES.O)
         fun bind(page: PageDto) {
             try {
-
                 val (_, _title, _body, color, img, user, createdAt, _nextUser) = page
 
-                writenDate.text = createdAt!!.time.toString()
+                writenDate.text = SimpleDate.of(createdAt!!)
                 dailyColor.setColorFilter(Color.parseColor(color))
                 body.text = _body
                 title.text = _title
 
-                background.setBackgroundColor(Color.parseColor(Setting.backgroundColor))
-
+                background.setBackgroundColor(Color.parseColor(
+                    Setting.backgroundColor
+                ))
                 if(Setting.page == 0) {
                     monoon.visibility = View.INVISIBLE
                 } else {
