@@ -65,11 +65,6 @@ class DiaryInnerActivity : AppCompatActivity() {
             updateBackground()
          })
 
-        binding.root.setOnRefreshListener {
-            update()
-            binding.root.isRefreshing = false
-        }
-
     }
 
     fun updateBackground() {
