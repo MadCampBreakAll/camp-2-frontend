@@ -16,18 +16,23 @@
         <entry key="app/src/main/res/layout/activity_c.xml" value="0.21574074074074073" />
         <entry key="app/src/main/res/layout/activity_character_init.xml" value="0.1853408544508593" />
         <entry key="app/src/main/res/layout/activity_create_diary.xml" value="0.25" />
+
+        <entry key="app/src/main/res/layout/activity_create_diary_add_friend_popup.xml" value="0.14285714285714285" />
+
         <entry key="app/src/main/res/layout/activity_create_diary_add_friend_popup.xml" value="0.24861111111111112" />
         <entry key="app/src/main/res/layout/activity_create_image_page.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/activity_create_image_page.xml" value="0.21574074074074073" />
+          
         <entry key="app/src/main/res/layout/activity_create_page.xml" value="0.2817258883248731" />
         <entry key="app/src/main/res/layout/activity_diary_inner.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_friend.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_home.xml" value="0.25226449275362317" />
         <entry key="app/src/main/res/layout/activity_invited_friend.xml" value="0.22447916666666667" />
         <entry key="app/src/main/res/layout/activity_loading.xml" value="0.19791666666666666" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.5" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_nickname_setting.xml" value="0.2388888888888889" />
-        <entry key="app/src/main/res/layout/activity_page_grid_dialog.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_page_grid_dialog.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_setting_background.xml" value="0.25" />
         <entry key="app/src/main/res/layout/all_page_dialog.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/layout/asked_friend.xml" value="0.21302083333333333" />
@@ -47,8 +52,12 @@
         <entry key="app/src/main/res/layout/fragment_inner_page.xml" value="0.17291666666666666" />
         <entry key="app/src/main/res/layout/fragment_page_letter.xml" value="0.12552083333333333" />
         <entry key="app/src/main/res/layout/friend.xml" value="0.19375" />
+
+        <entry key="app/src/main/res/layout/grid_view_item.xml" value="0.75" />
+
         <entry key="app/src/main/res/layout/grid_view_item.xml" value="0.3587962962962963" />
         <entry key="app/src/main/res/layout/page_image_item.xml" value="0.33" />
+
         <entry key="app/src/main/res/layout/page_letter.xml" value="0.375" />
         <entry key="app/src/main/res/layout/page_letter_item.xml" value="0.2521631644004944" />
         <entry key="app/src/main/res/layout/pending_friend.xml" value="0.19375" />

@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.swiperefreshlayout.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/blankPageBackground"
-    android:background="@color/oatmeal"
-    >
     <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_height="match_parent"
+        android:id="@+id/blankPageBackground"
+        android:background="@color/oatmeal"
         tools:context=".ui.page.DiaryInnerActivity">
         <ImageView
             android:id="@+id/monoon_background"
@@ -63,6 +60,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+<<<<<<< HEAD
             app:layout_constraintVertical_bias="0.97"
             app:layout_constraintHorizontal_bias="0.9"
             android:layout_alignParentBottom="true"
@@ -74,3 +72,9 @@
             />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+=======
+            app:layout_constraintVertical_bias="0.95"
+            android:backgroundTint="@color/transparent"
+            android:src="@drawable/add"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+>>>>>>> ea2c43de7c54fc70c4584f0ee4cb7ed9e0d37cd8
