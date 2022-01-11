@@ -13,16 +13,32 @@ class CharacterViewer(
     private val character: Character,
 ) {
 
-    fun getShape(shape: Int): Int {
+    fun getShape(shape: Int): Pair<Int, Int> {
         var shape_draw = 1
+        var shape_boundary = 1
         when(shape){
-            1 -> shape_draw = R.drawable.body_shape_triangle
-            2 -> shape_draw = R.drawable.body_shape_cloud
-            3 -> shape_draw = R.drawable.body_shape_bean
-            4 -> shape_draw = R.drawable.body_shape_square
-            5 -> shape_draw = R.drawable.body_shape_bread
+            1 -> {
+                shape_draw = R.drawable.body_shape_triangle
+                shape_boundary = R.drawable.body_shape_triangle_boundary
+            }
+            2 -> {
+                shape_draw = R.drawable.body_shape_cloud
+                shape_boundary = R.drawable.body_shape_cloud_boundary
+            }
+            3 -> {
+                shape_draw = R.drawable.body_shape_bean
+                shape_boundary = R.drawable.body_shape_bean_boundary
+            }
+            4 -> {
+                shape_draw = R.drawable.body_shape_square
+                shape_boundary = R.drawable.body_shape_square_boundary
+            }
+            5 -> {
+                shape_draw = R.drawable.body_shape_bread
+                shape_boundary = R.drawable.body_shape_bread_boundary
+            }
         }
-        return shape_draw
+        return Pair(shape_draw, shape_boundary)
     }
 
     private fun getBodyColor(color: Int): Int {
@@ -183,7 +199,8 @@ class CharacterViewer(
 
         try {
             binding.root.visibility = View.VISIBLE
-            binding.body.setImageResource(getShape(bodyShape))
+            binding.body.setImageResource(getShape(bodyShape).first)
+            binding.bodyBoundary.setImageResource(getShape(bodyShape).second)
             binding.blush.setImageResource(getBlush(blushColor, bodyShape).second)
             binding.body.setColorFilter(getColorByResource(getBodyColor(bodyColor)))
             binding.blush.setColorFilter(getColorByResource(getBlush(blushColor, bodyShape).first))
