@@ -84,7 +84,8 @@ class CreatePageActivity : AppCompatActivity() {
                     }
                 }
                 val nextNextUser = chameyeos[nextNextUserIndex]
-                val (_, _, body, bodyColor, blushColor, item) = nextNextUser
+                val (_, nickname, body, bodyColor, blushColor, item) = nextNextUser
+                binding.nextUserNickname.text = nickname
                 val nextNextUserCharacter = binding.innerPageNextUserCharacter
                 CharacterViewer(
                     this,
@@ -104,6 +105,7 @@ class CreatePageActivity : AppCompatActivity() {
         UserResponseSingleton.getMeResponseDto.observe(this, Observer { dto ->
             try {
                 val (_, _, body, bodyColor, blushColor, item) = dto!!.user!!
+                binding.writerNickname.text = dto.user!!.nickname
                 val nextUser = binding.innerPageWriteUserCharacter
                 CharacterViewer(
                     this,
