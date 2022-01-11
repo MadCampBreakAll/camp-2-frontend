@@ -143,7 +143,6 @@ class CreateDiaryActivity : AppCompatActivity() {
         if(createDiary != null) {
             var dialog = CreateDiaryAddFriendPopupActivity(this, createDiary, friendId, callback)
             dialog.show()
-            dialog.show()
             dialog.window?.setLayout(800, 1200)
         }
     }
