@@ -8,6 +8,7 @@
         android:id="@+id/blankPageBackground"
         android:background="@color/oatmeal"
         tools:context=".ui.page.DiaryInnerActivity">
+
         <ImageView
             android:id="@+id/monoon_background"
             android:layout_width="match_parent"
@@ -29,17 +30,6 @@
             android:textSize="15dp"
             android:gravity="center" />
 
-        <ImageButton
-            android:id="@+id/go_grid_view"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@color/transparent"
-            android:src="@drawable/grid"
-            android:scaleType="fitCenter"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/innerMainPageFragment"
@@ -71,4 +61,15 @@
             app:bottom="@drawable/bottom_image"
             app:upper="@drawable/upper_letter"
             app:handleDrawable="@drawable/test" />
+    <ImageButton
+        android:id="@+id/go_grid_view"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@color/transparent"
+        android:src="@drawable/grid"
+        android:scaleType="fitCenter"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
