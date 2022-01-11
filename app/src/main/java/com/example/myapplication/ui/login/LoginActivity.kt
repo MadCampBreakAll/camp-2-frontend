@@ -52,7 +52,7 @@ class LoginActivity : AppCompatActivity() {
                             this,
                             callback = loginWithKaKaoHandler
                         )) {
-                        viewHandler.goMainActivity();
+//                        viewHandler.goMainActivity();
                     }
                     true
                 }
@@ -67,6 +67,7 @@ class LoginActivity : AppCompatActivity() {
 
     private val loginWithKaKaoHandler : (OAuthToken?, Throwable?) -> Unit = handler@{ token, error ->
         println("token: ${token}")
+        println(error)
         if(token == null){
             return@handler
         }
