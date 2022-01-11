@@ -71,8 +71,7 @@ class PageLetterViewPageAdapter(private val context: Context, private val suppor
                 val (_, _title, _body, color, img, user, createdAt, _nextUser) = page
 
                 writenDate.text = SimpleDate.of(createdAt!!)
-//                dailyColor.setColorFilter(Color.parseColor(color))
-                dailyColor.imageTintList = ColorStateList.valueOf(Color.parseColor(color))
+               dailyColor.setColorFilter(Color.parseColor(color))
                 body.text = _body
                 title.text = _title
 
