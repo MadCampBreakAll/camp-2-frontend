@@ -33,6 +33,9 @@
                 app:layout_constraintTop_toBottomOf="@id/gridViewTitle"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintVertical_bias="0.5"
+                tools:listitem="@layout/grid_view_item"
+                android:paddingLeft="15dp"
+                app:spanCount="2"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
