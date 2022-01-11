@@ -22,7 +22,8 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
                 <TextView
-                    android:id="@+id/textView"
+                    android:fontFamily="@font/babymind"
+                    android:id="@+id/TextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="20dp"
@@ -32,7 +33,9 @@
                     android:textSize="20dp"
                     android:paddingBottom="5dp"
                     />
-                <TextView
+                <TextView            android:fontFamily="@font/babymind"
+
+
                     android:id="@+id/none_friend_request_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -51,7 +54,9 @@
                     app:spanCount="2"
                     >
                 </androidx.recyclerview.widget.RecyclerView>
-                <TextView
+                <TextView            android:fontFamily="@font/babymind"
+
+
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:paddingTop="20dp"
@@ -60,7 +65,9 @@
                     android:layout_gravity="center"
                     android:gravity="center"
                     android:text="친구 목록"/>
-                <TextView
+                <TextView            android:fontFamily="@font/babymind"
+
+
                     android:id="@+id/none_friend_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -82,6 +89,8 @@
                 </androidx.recyclerview.widget.RecyclerView>
 
                 <Button
+                    android:fontFamily="@font/babymind"
+
                     android:id="@+id/go_pending_friend_activity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

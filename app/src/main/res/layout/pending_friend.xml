@@ -17,6 +17,8 @@
         android:orientation="horizontal"
         android:layout_gravity="bottom">
         <Button
+            android:fontFamily="@font/babymind"
+
             android:id="@+id/accept"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
@@ -25,6 +27,8 @@
             android:layout_marginRight="5dp">
         </Button>
         <Button
+            android:fontFamily="@font/babymind"
+
             android:id="@+id/reject"
             android:layout_width="70dp"
             android:layout_height="wrap_content"

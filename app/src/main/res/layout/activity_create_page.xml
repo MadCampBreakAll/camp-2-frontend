@@ -23,6 +23,8 @@
                 android:visibility="visible">
 
                 <TextView
+                    android:fontFamily="@font/babymind"
+
                     android:id="@+id/innerPageWrittenDate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -59,7 +61,9 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.08"
                     app:layout_constraintWidth_percent="0.4">
-                    <TextView
+                    <TextView            android:fontFamily="@font/babymind"
+
+
                         android:id="@+id/writerNickname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -85,6 +89,8 @@
                     app:layout_constraintVertical_bias="0.13"
                     app:layout_constraintWidth_percent="0.2">
                     <TextView
+                        android:fontFamily="@font/babymind"
+
                         android:id="@+id/nextUserNickname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -98,11 +104,12 @@
                 </FrameLayout>
 
         <EditText
+
             android:id="@+id/pageTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@drawable/rounded_highlight"
-            android:fontFamily="@font/custom_font_family"
+            android:fontFamily="@font/babymind"
             android:gravity="center"
             android:hint="제목.."
             android:paddingLeft="10dp"
@@ -110,6 +117,7 @@
             android:paddingRight="10dp"
             android:paddingBottom="5dp"
             android:singleLine="true"
+
             android:textSize="24dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -157,12 +165,13 @@
                     app:layout_constraintWidth_percent="0.8">
 
                     <EditText
+
                         android:id="@+id/innerPageText"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
                         android:background="@null"
-                        android:fontFamily="@font/custom_font_family"
+                        android:fontFamily="@font/babymind"
                         android:gravity="center"
                         android:hint="오늘은 하루종일 코딩을 했다. 정말 죽는 줄 알았다. \n 근데 세상에 똑똑한 사람이 너무 많다. \n 다들 어디서 이걸 다 배운걸까 \n 오늘도 잠 자긴 글렀겠지 \n 그래도 재밌군!"
                         android:lineSpacingExtra="20dp"
