@@ -8,6 +8,7 @@ import com.example.myapplication.api.diary.DiaryApiProvider
 import com.example.myapplication.api.diary.dto.CreateDiaryRequestDto
 import com.example.myapplication.api.diary.dto.CreateDiaryResponseDto
 import com.example.myapplication.api.diary.dto.GetMyDiariesResponseDto
+import com.example.myapplication.ui.singleton.DiaryResponseSingleton
 import com.google.gson.GsonBuilder
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -51,8 +52,8 @@ class DiaryApiService : BasicApiService{
                 Log.d("DEBUG", "GET DIARIES SUCCESS")
                 Log.d("DEBUG", response.toString())
                 Log.d("DEBUG", response.body().toString())
-
-                success(response.body());
+                DiaryResponseSingleton.setMyDiariesResponseDto = response.body()
+                success(response.body())
             }
 
             override fun onFailure(call: Call<GetMyDiariesResponseDto>, t: Throwable) {

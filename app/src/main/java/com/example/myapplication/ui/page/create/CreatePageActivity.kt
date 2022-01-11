@@ -5,12 +5,12 @@ import android.content.Context
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MotionEvent
 import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityCreatePageBinding
 import vadiole.colorpicker.ColorModel
 import vadiole.colorpicker.ColorPickerDialog
 import android.widget.EditText
-import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.RequiresApi
@@ -23,8 +23,13 @@ import androidx.lifecycle.Observer
 import com.example.myapplication.api.page.PageApiService
 import com.example.myapplication.api.page.dto.CreatePageRequestDto
 import com.example.myapplication.ui.main.Setting
+import com.example.myapplication.ui.singleton.DiaryResponseSingleton
+import com.example.myapplication.ui.singleton.UserResponseSingleton
+import com.example.myapplication.util.Character
+import com.example.myapplication.util.CharacterViewer
 import com.example.myapplication.util.SimpleDate
 import com.example.myapplication.util.TokenManager
+import com.google.gson.annotations.SerializedName
 
 class CreatePageActivity : AppCompatActivity() {
 
@@ -63,6 +68,44 @@ class CreatePageActivity : AppCompatActivity() {
         setContentView(binding.root)
         Setting.setting.observe(this, Observer {
             updateBackground()
+        })
+
+        DiaryResponseSingleton.getMyDiariesResponseDto.observe(this, Observer { dto ->
+            try {
+                println(dto!!.diaries?.findLast { it.id == diaryId }?.chamyeoUsers!!)
+//                val nextUser = binding.innerPageNextUserCharacter
+//                CharacterViewer(
+//                    this,
+//                    nextUser,
+//                    Character(
+//                        body!!,
+//                        bodyColor!!,
+//                        blushColor!!,
+//                        item!!
+//                    )
+//                ).show()
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
+        })
+
+        UserResponseSingleton.getMeResponseDto.observe(this, Observer { dto ->
+            try {
+                val (_, _, body, bodyColor, blushColor, item) = dto!!.user!!
+                val nextUser = binding.innerPageWriteUserCharacter
+                CharacterViewer(
+                    this,
+                    nextUser,
+                    Character(
+                        body!!,
+                        bodyColor!!,
+                        blushColor!!,
+                        item!!
+                    )
+                ).show()
+            } catch (e: Throwable) {
+                e.printStackTrace()
+            }
         })
     }
 
