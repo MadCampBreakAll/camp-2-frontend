@@ -13,10 +13,10 @@
         <entry key="app/src/main/res/layout-w936dp/activity_login.xml" value="0.158984375" />
         <entry key="app/src/main/res/layout/activity.xml" value="0.21197916666666666" />
         <entry key="app/src/main/res/layout/activity_add_friend_popup.xml" value="0.2550925925925926" />
-        <entry key="app/src/main/res/layout/activity_c.xml" value="0.21574074074074073" />
         <entry key="app/src/main/res/layout/activity_character_init.xml" value="0.1853408544508593" />
         <entry key="app/src/main/res/layout/activity_create_diary.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_create_diary_add_friend_popup.xml" value="0.14285714285714285" />
+        <entry key="app/src/main/res/layout/activity_create_image_page.xml" value="0.20104166666666667" />
         <entry key="app/src/main/res/layout/activity_create_diary_add_friend_popup.xml" value="0.24861111111111112" />
         <entry key="app/src/main/res/layout/activity_create_image_page.xml" value="0.33" />
         <entry key="app/src/main/res/layout/activity_create_image_page.xml" value="0.21574074074074073" />
@@ -27,7 +27,7 @@
         <entry key="app/src/main/res/layout/activity_invited_friend.xml" value="0.22447916666666667" />
         <entry key="app/src/main/res/layout/activity_loading.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.5" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_nickname_setting.xml" value="0.2388888888888889" />
         <entry key="app/src/main/res/layout/activity_page_grid_dialog.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_setting_background.xml" value="0.25" />
@@ -41,7 +41,6 @@
         <entry key="app/src/main/res/layout/diary.xml" value="0.20488119498661514" />
         <entry key="app/src/main/res/layout/diary_text.xml" value="0.12916666666666668" />
         <entry key="app/src/main/res/layout/empty_friend.xml" value="0.21302083333333333" />
-        <entry key="app/src/main/res/layout/font_item.xml" value="0.17502258355916891" />
         <entry key="app/src/main/res/layout/fragment_character_blush_shape.xml" value="0.190625" />
         <entry key="app/src/main/res/layout/fragment_character_body_select.xml" value="0.18026089142300514" />
         <entry key="app/src/main/res/layout/fragment_character_body_shape_select.xml" value="0.1140625" />
@@ -49,13 +48,9 @@
         <entry key="app/src/main/res/layout/fragment_inner_page.xml" value="0.17291666666666666" />
         <entry key="app/src/main/res/layout/fragment_page_letter.xml" value="0.12552083333333333" />
         <entry key="app/src/main/res/layout/friend.xml" value="0.19375" />
-
         <entry key="app/src/main/res/layout/grid_view_item.xml" value="0.75" />
-
-        <entry key="app/src/main/res/layout/grid_view_item.xml" value="0.3587962962962963" />
-        <entry key="app/src/main/res/layout/page_image_item.xml" value="0.33" />
-
         <entry key="app/src/main/res/layout/page_letter.xml" value="0.375" />
+        <entry key="app/src/main/res/layout/page_letter_image_item.xml" value="0.25" />
         <entry key="app/src/main/res/layout/page_letter_item.xml" value="0.2521631644004944" />
         <entry key="app/src/main/res/layout/pending_friend.xml" value="0.19375" />
         <entry key="app/src/main/res/layout/user_character.xml" value="0.15833333333333333" />

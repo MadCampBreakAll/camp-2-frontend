@@ -4,7 +4,6 @@
     package="com.example.myapplication">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission." />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -22,9 +21,6 @@
             android:exported="false"
             android:windowSoftInputMode="adjustPan" />
         <activity
-            android:name=".ui.page.PageGridDialog"
-            android:exported="false" />
-        <activity
             android:name=".ui.setting.backfont.SettingFontActvitiy"
             android:exported="false" />
         <activity
@@ -32,9 +28,6 @@
             android:exported="false" />
         <activity
             android:name=".ui.join.NicknameSettingActivity"
-            android:exported="false" />
-        <activity
-            android:name=".ui.friend.SearchUserDialog"
             android:exported="false" />
         <activity
             android:name=".ui.friend.FriendActivity"
