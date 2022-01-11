@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.page
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -22,6 +23,8 @@ import com.example.myapplication.util.CharacterViewer
 import com.example.myapplication.util.SimpleDate
 import vadiole.colorpicker.ColorModel
 import vadiole.colorpicker.ColorPickerDialog
+import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 
 class PageLetterViewPageAdapter(private val context: Context, private val supportFragmentManager: FragmentManager): RecyclerView.Adapter<PageLetterViewPageAdapter.ViewHolder>() {
@@ -65,13 +68,13 @@ class PageLetterViewPageAdapter(private val context: Context, private val suppor
         private var writer = binding.innerPageWriteUserCharacter
         private var title = binding.pageTitle
 
-        @RequiresApi(Build.VERSION_CODES.O)
+        @RequiresApi(Build.VERSION_CODES.N)
+        @SuppressLint("SimpleDateFormat")
         fun bind(page: PageDto) {
             try {
                 val (_, _title, _body, color, img, user, createdAt, _nextUser) = page
-
-                writenDate.text = SimpleDate.of(createdAt!!)
-               dailyColor.setColorFilter(Color.parseColor(color))
+                writenDate.text = SimpleDate.getUTCTime(createdAt!!)
+                dailyColor.setColorFilter(Color.parseColor(color))
                 body.text = _body
                 title.text = _title
 
