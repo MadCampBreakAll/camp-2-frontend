@@ -7,25 +7,18 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
-import androidx.viewpager.widget.ViewPager
-import androidx.viewpager2.widget.ViewPager2
-import com.example.myapplication.R
 import com.example.myapplication.api.auth.DiaryApiService
 import com.example.myapplication.api.page.PageApiService
-import com.example.myapplication.api.page.dto.PageDto
 import com.example.myapplication.databinding.ActivityDiaryInnerBinding
 import com.example.myapplication.util.TokenManager
 import com.example.myapplication.util.ViewHandler
 import com.wajahatkarim3.easyflipviewpager.BookFlipPageTransformer2
 
-import android.R.string.no
 import android.graphics.Color
-import android.widget.Toast
 import androidx.lifecycle.Observer
-import com.example.myapplication.api.user.UserApiService
 import com.example.myapplication.ui.main.Setting
-import vadiole.colorpicker.ColorModel
-import vadiole.colorpicker.ColorPickerDialog
+import com.example.myapplication.ui.singleton.DiaryResponseSingleton
+import com.example.myapplication.ui.singleton.PageResponseSingleton
 
 class DiaryInnerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDiaryInnerBinding
@@ -53,11 +46,10 @@ class DiaryInnerActivity : AppCompatActivity() {
         pageApiService = PageApiService(tokenManager)
         pageLetterViewPageAdapter = PageLetterViewPageAdapter(this)
         binding.pagesLetterViewPager.adapter = pageLetterViewPageAdapter
-
         var bookFlipPageTransformer = BookFlipPageTransformer2()
 
-        bookFlipPageTransformer.setEnableScale(true)
-        bookFlipPageTransformer.setScaleAmountPercent(10f)
+        bookFlipPageTransformer.isEnableScale = true
+        bookFlipPageTransformer.scaleAmountPercent = 10f
 
         binding.pagesLetterViewPager.setPageTransformer(bookFlipPageTransformer)
 
@@ -73,10 +65,6 @@ class DiaryInnerActivity : AppCompatActivity() {
             updateBackground()
          })
 
-        binding.root.setOnRefreshListener {
-            update()
-            binding.root.isRefreshing = false
-        }
     }
 
     fun updateBackground() {
@@ -96,7 +84,16 @@ class DiaryInnerActivity : AppCompatActivity() {
             viewHandler.goCreatePageAcitivty(diaryId?:-1)
         }
         binding.goGridView.setOnClickListener{
-
+            val dialog = AllPageDialog(this, diaryId!!, this, {
+                val pages = PageResponseSingleton.getDiaryInnerPagesResponse.value?.pages!!
+                for(i: Int in pages.indices) {
+                    if(pages[i].id == it){
+                        binding.pagesLetterViewPager.currentItem = i
+                    }
+                }
+            })
+            dialog.window?.setLayout(800, 1200)
+            dialog.show()
         }
     }
 
@@ -107,7 +104,6 @@ class DiaryInnerActivity : AppCompatActivity() {
 
     @SuppressLint("NotifyDataSetChanged")
     private fun update(){
-
         pageApiService.getDiaryInnerPages(
             diaryId?:-1,
             success = {
