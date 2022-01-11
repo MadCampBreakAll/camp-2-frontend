@@ -30,6 +30,7 @@ import com.example.myapplication.util.CharacterViewer
 import com.example.myapplication.util.SimpleDate
 import com.example.myapplication.util.TokenManager
 import com.google.gson.annotations.SerializedName
+import okhttp3.MultipartBody
 
 class CreatePageActivity : AppCompatActivity() {
 
@@ -143,12 +144,12 @@ class CreatePageActivity : AppCompatActivity() {
             val body = binding.innerPageText.text
             val color = dailyColor
             pageApiService.createPage(
-                CreatePageRequestDto(
-                    diaryId!!,
-                    pageTitle.toString(),
-                    body.toString(),
-                    color
-                ),
+                MultipartBody.Part.createFormData("diaryId", diaryId!!.toString()),
+                MultipartBody.Part.createFormData("title", pageTitle.toString()),
+                MultipartBody.Part.createFormData("body", body.toString()),
+                MultipartBody.Part.createFormData("color", color),
+                // TODO img 형태로 전송
+                MultipartBody.Part.createFormData("img", color),
                 success = {dto ->
                     try {
                         if(dto!!.login != null && dto.login === false) {
