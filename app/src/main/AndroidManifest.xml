@@ -18,6 +18,9 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.page.PageGridDialog"
+            android:exported="false" />
+        <activity
             android:name=".ui.setting.backfont.SettingFontActvitiy"
             android:exported="false" />
         <activity

@@ -5,6 +5,7 @@ import com.example.myapplication.BuildConfig
 import com.example.myapplication.api.BasicApiService
 import com.example.myapplication.api.page.dto.CreatePageResponseDto
 import com.example.myapplication.api.page.dto.GetDiaryInnerPagesResponse
+import com.example.myapplication.ui.singleton.PageResponseSingleton
 import com.example.myapplication.util.TokenManager
 import okhttp3.MultipartBody
 import retrofit2.Call
@@ -89,7 +90,7 @@ class PageApiService : BasicApiService {
                     Log.d("DEBUG", "GET DIARY INNER PAGES SUCCESS")
                     Log.d("DEBUG", response.toString())
                     Log.d("DEBUG", response.body().toString())
-
+                    PageResponseSingleton.setGetDiaryInnerPagesResponse = response.body()
                     success(response.body());
                 }
 

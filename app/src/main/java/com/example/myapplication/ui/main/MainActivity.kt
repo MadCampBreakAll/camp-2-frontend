@@ -71,6 +71,11 @@ class MainActivity : AppCompatActivity() {
         initIconFixingButton()
     }
 
+    override fun onResume() {
+        super.onResume()
+        update()
+    }
+
     private fun update(){
         userApiService.getMe(
             success = getUserHandler,

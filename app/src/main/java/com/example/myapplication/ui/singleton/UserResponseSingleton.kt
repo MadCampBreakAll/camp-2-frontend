@@ -2,7 +2,6 @@ package com.example.myapplication.ui.singleton
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.myapplication.api.diary.dto.GetMyDiariesResponseDto
 import com.example.myapplication.api.user.dto.GetMeResponseDto
 
 object UserResponseSingleton {

@@ -51,7 +51,7 @@ class DiaryInnerActivity : AppCompatActivity() {
         tokenManager = TokenManager(this)
         diaryApiService = DiaryApiService(tokenManager)
         pageApiService = PageApiService(tokenManager)
-        pageLetterViewPageAdapter = PageLetterViewPageAdapter(this, supportFragmentManager)
+        pageLetterViewPageAdapter = PageLetterViewPageAdapter(this)
         binding.pagesLetterViewPager.adapter = pageLetterViewPageAdapter
 
         var bookFlipPageTransformer = BookFlipPageTransformer2()
@@ -69,9 +69,10 @@ class DiaryInnerActivity : AppCompatActivity() {
             finish()
         }
 
- Setting.setting.observe(this, Observer { setting ->
+         Setting.setting.observe(this, Observer { setting ->
             updateBackground()
- })
+         })
+
         binding.root.setOnRefreshListener {
             update()
             binding.root.isRefreshing = false
@@ -93,6 +94,9 @@ class DiaryInnerActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.pageAddBtn.setOnClickListener {
             viewHandler.goCreatePageAcitivty(diaryId?:-1)
+        }
+        binding.goGridView.setOnClickListener{
+
         }
     }
 

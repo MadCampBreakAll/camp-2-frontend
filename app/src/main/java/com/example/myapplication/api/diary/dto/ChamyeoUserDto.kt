@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 data class ChamyeoUserDto(
     @SerializedName("id")
-    val id: Long,
+    val id: Int?,
     @SerializedName("nickname")
     val nickname: String?,
     @SerializedName("body")

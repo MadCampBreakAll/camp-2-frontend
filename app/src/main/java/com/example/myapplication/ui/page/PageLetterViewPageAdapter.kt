@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.page
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -22,16 +23,20 @@ import com.example.myapplication.util.CharacterViewer
 import com.example.myapplication.util.SimpleDate
 import vadiole.colorpicker.ColorModel
 import vadiole.colorpicker.ColorPickerDialog
+import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 
-class PageLetterViewPageAdapter(private val context: Context, private val supportFragmentManager: FragmentManager): RecyclerView.Adapter<PageLetterViewPageAdapter.ViewHolder>() {
+class PageLetterViewPageAdapter(
+    private val context: Context
+) : RecyclerView.Adapter<PageLetterViewPageAdapter.ViewHolder>() {
     private var pageList = mutableListOf<PageDto>()
 
-    fun addAllPage(pages: List<PageDto>){
+    fun addAllPage(pages: List<PageDto>) {
         this.pageList.addAll(pages);
     }
 
-    fun clear(){
+    fun clear() {
         this.pageList.clear()
     }
 
@@ -64,21 +69,28 @@ class PageLetterViewPageAdapter(private val context: Context, private val suppor
         private var body = binding.innerPageText
         private var writer = binding.innerPageWriteUserCharacter
         private var title = binding.pageTitle
+        private var writerNickname = binding.writerNickname
+        private var nextUserNickname = binding.nextUserNickname
 
-        @RequiresApi(Build.VERSION_CODES.O)
+        @RequiresApi(Build.VERSION_CODES.N)
+        @SuppressLint("SimpleDateFormat")
         fun bind(page: PageDto) {
             try {
                 val (_, _title, _body, color, img, user, createdAt, _nextUser) = page
-
-                writenDate.text = SimpleDate.of(createdAt!!)
-               dailyColor.setColorFilter(Color.parseColor(color))
+                writenDate.text = SimpleDate.getUTCTime(createdAt!!)
+                dailyColor.setColorFilter(Color.parseColor(color))
                 body.text = _body
                 title.text = _title
 
-                background.setBackgroundColor(Color.parseColor(
-                    Setting.backgroundColor
-                ))
-                if(Setting.page == 0) {
+                writerNickname.text = user!!.nickname
+                nextUserNickname.text = _nextUser!!.nickname
+
+                background.setBackgroundColor(
+                    Color.parseColor(
+                        Setting.backgroundColor
+                    )
+                )
+                if (Setting.page == 0) {
                     monoon.visibility = View.INVISIBLE
                 } else {
                     monoon.visibility = View.VISIBLE
@@ -91,7 +103,7 @@ class PageLetterViewPageAdapter(private val context: Context, private val suppor
             }
         }
 
-        private fun bindNextUser(_nextUser: NextUserDto){
+        private fun bindNextUser(_nextUser: NextUserDto) {
             try {
                 val (_, _, body, bodyColor, blushColor, item) = _nextUser
                 CharacterViewer(
@@ -110,7 +122,7 @@ class PageLetterViewPageAdapter(private val context: Context, private val suppor
             }
         }
 
-        private fun bindWriter(_writer: UserDto){
+        private fun bindWriter(_writer: UserDto) {
             try {
                 val (_, _, body, bodyColor, blushColor, item) = _writer
                 val writerData = Character(body!!, bodyColor!!, blushColor!!, item!!)

@@ -7,12 +7,14 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MotionEvent
+import com.example.myapplication.R
 import com.example.myapplication.databinding.ActivityCreatePageBinding
 import vadiole.colorpicker.ColorModel
 import vadiole.colorpicker.ColorPickerDialog
 import android.widget.EditText
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.example.myapplication.util.ViewHandler
 import java.util.*
@@ -74,18 +76,29 @@ class CreatePageActivity : AppCompatActivity() {
 
         DiaryResponseSingleton.getMyDiariesResponseDto.observe(this, Observer { dto ->
             try {
-                println(dto!!.diaries?.findLast { it.id == diaryId }?.chamyeoUsers!!)
-//                val nextUser = binding.innerPageNextUserCharacter
-//                CharacterViewer(
-//                    this,
-//                    nextUser,
-//                    Character(
-//                        body!!,
-//                        bodyColor!!,
-//                        blushColor!!,
-//                        item!!
-//                    )
-//                ).show()
+                val diary = dto!!.diaries?.findLast { it.id == diaryId }!!
+                val chameyeos = diary.chamyeoUsers
+                val nextUser = diary.nextUser
+                var nextNextUserIndex = -1
+                for(chameyoIndex: Int in 0 until chameyeos.size) {
+                    if(chameyeos.get(chameyoIndex).id!! == nextUser.id!!) {
+                        nextNextUserIndex = (chameyoIndex + chameyeos.size + 1)%chameyeos.size
+                    }
+                }
+                val nextNextUser = chameyeos[nextNextUserIndex]
+                val (_, nickname, body, bodyColor, blushColor, item) = nextNextUser
+                binding.nextUserNickname.text = nickname
+                val nextNextUserCharacter = binding.innerPageNextUserCharacter
+                CharacterViewer(
+                    this,
+                    nextNextUserCharacter,
+                    Character(
+                        body!!,
+                        bodyColor!!,
+                        blushColor!!,
+                        item!!
+                    )
+                ).show()
             } catch (e: Throwable) {
                 e.printStackTrace()
             }
@@ -94,6 +107,7 @@ class CreatePageActivity : AppCompatActivity() {
         UserResponseSingleton.getMeResponseDto.observe(this, Observer { dto ->
             try {
                 val (_, _, body, bodyColor, blushColor, item) = dto!!.user!!
+                binding.writerNickname.text = dto.user!!.nickname
                 val nextUser = binding.innerPageWriteUserCharacter
                 CharacterViewer(
                     this,
@@ -152,6 +166,11 @@ class CreatePageActivity : AppCompatActivity() {
             val pageTitle = binding.pageTitle.text
             val body = binding.innerPageText.text
             val color = dailyColor
+
+            if(pageTitle.isBlank()){
+                Toast.makeText(this, "오늘 하루의 제목을 정해주세요!!", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
 
             var file: File? = null
             if (uri != null) {
