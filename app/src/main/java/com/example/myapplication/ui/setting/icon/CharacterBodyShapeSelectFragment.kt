@@ -61,6 +61,7 @@ class CharacterBodyShapeSelectFragment : Fragment() {
                     character_body_binding.body.setImageResource(R.drawable.body_shape_triangle)
                     character_body_binding.face.setImageResource(R.drawable.face_traingle)
                     character_body_binding.blush.setImageResource(R.drawable.blush_triangle)
+                    character_body_binding.bodyBoundary.setImageResource(R.drawable.body_shape_triangle_boundary)
 
                     item_changed_following_shape()
                     clickButton(button)
@@ -73,6 +74,7 @@ class CharacterBodyShapeSelectFragment : Fragment() {
                     character_body_binding.body.setImageResource(R.drawable.body_shape_cloud)
                     character_body_binding.face.setImageResource(R.drawable.face_cloud)
                     character_body_binding.blush.setImageResource(R.drawable.blush_cloud)
+                    character_body_binding.bodyBoundary.setImageResource(R.drawable.body_shape_cloud_boundary)
 
                     item_changed_following_shape()
                     clickButton(button)
@@ -84,6 +86,7 @@ class CharacterBodyShapeSelectFragment : Fragment() {
                     character_body_binding.body.setImageResource(R.drawable.body_shape_bean)
                     character_body_binding.face.setImageResource(R.drawable.face_bean_bread_square)
                     character_body_binding.blush.setImageResource(R.drawable.blush_bean_bread_square)
+                    character_body_binding.bodyBoundary.setImageResource(R.drawable.body_shape_bean_boundary)
 
                     item_changed_following_shape()
                     clickButton(button)
@@ -95,6 +98,7 @@ class CharacterBodyShapeSelectFragment : Fragment() {
                     character_body_binding.body.setImageResource(R.drawable.body_shape_square)
                     character_body_binding.face.setImageResource(R.drawable.face_bean_bread_square)
                     character_body_binding.blush.setImageResource(R.drawable.blush_bean_bread_square)
+                    character_body_binding.bodyBoundary.setImageResource(R.drawable.body_shape_square_boundary)
 
                     item_changed_following_shape()
                     clickButton(button)
@@ -106,6 +110,7 @@ class CharacterBodyShapeSelectFragment : Fragment() {
                     character_body_binding.body.setImageResource(R.drawable.body_shape_bread)
                     character_body_binding.face.setImageResource(R.drawable.face_bean_bread_square)
                     character_body_binding.blush.setImageResource(R.drawable.blush_bean_bread_square)
+                    character_body_binding.bodyBoundary.setImageResource(R.drawable.body_shape_bread_boundary)
 
                     item_changed_following_shape()
                     clickButton(button)

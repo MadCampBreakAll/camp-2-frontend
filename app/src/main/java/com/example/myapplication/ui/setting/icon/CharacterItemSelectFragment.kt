@@ -104,6 +104,7 @@ class CharacterItemSelectFragment : Fragment() {
                 binding.bodyColorOneBtn.setOnClickListener {
                     character_body_binding.userCharacterInit.item.visibility = View.INVISIBLE
                     CharacterFixActivity.character_init_item = 1
+
                     clickButton(button)
                 }
 
