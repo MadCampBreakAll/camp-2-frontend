@@ -17,22 +17,18 @@ import com.wajahatkarim3.easyflipviewpager.BookFlipPageTransformer2
 
 import android.graphics.Color
 import androidx.lifecycle.Observer
-<<<<<<< HEAD
 import co.aenterhy.toggleswitch.ToggleSwitchButton
 import com.example.myapplication.api.user.UserApiService
 import com.example.myapplication.ui.main.Setting
 import vadiole.colorpicker.ColorModel
 import vadiole.colorpicker.ColorPickerDialog
 import com.example.myapplication.ui.main.MainActivity
-
 import android.R.id.toggle
+import android.widget.Toast
 import co.aenterhy.toggleswitch.ToggleSwitchButton.OnTriggerListener
-
-=======
-import com.example.myapplication.ui.main.Setting
 import com.example.myapplication.ui.singleton.DiaryResponseSingleton
 import com.example.myapplication.ui.singleton.PageResponseSingleton
->>>>>>> ea2c43de7c54fc70c4584f0ee4cb7ed9e0d37cd8
+
 
 class DiaryInnerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDiaryInnerBinding
@@ -102,6 +98,7 @@ class DiaryInnerActivity : AppCompatActivity() {
 
             override fun toggledDown() {
                 Toast.makeText(this@DiaryInnerActivity, "Image", Toast.LENGTH_SHORT).show()
+                viewHandler.goCreateImagePageActivity(diaryId?:-1)
             }
         })
 //        binding.pageAddBtn.setOnClickListener {
