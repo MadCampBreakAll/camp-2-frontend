@@ -55,7 +55,7 @@
             android:layout_height="match_parent"
             >
         </androidx.viewpager2.widget.ViewPager2>
-
+        
         <ImageButton
             android:id="@+id/pageAddBtn"
             android:layout_width="40dp"
