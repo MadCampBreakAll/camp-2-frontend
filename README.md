@@ -14,7 +14,8 @@
   <p align="center"><img src ="./images/그림일기생성.png" width = "300" height="" ></p>
   - 일기 생성 화면
   <p align="center"><img src ="./images/일기생성.png" width = "300" height="" ></p>
-  - 그리드 뷰 화면 
+  - 배경 화면 설정 화면
+  <p align="center"><img src ="./images/배경화면.png" width = "300" height="" ></p>
 ## 프로젝트 개발 진행 과정
   - Backend : Express.js
   - Frotend : Kotlin + Android Studio
