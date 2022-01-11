@@ -52,19 +52,22 @@
             android:layout_height="match_parent"
             >
         </androidx.viewpager2.widget.ViewPager2>
-        
-        <ImageButton
+        <co.aenterhy.toggleswitch.ToggleSwitchButton
             android:id="@+id/pageAddBtn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"
-            android:background="@color/transparent"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintVertical_bias="0.95"
-            android:backgroundTint="@color/transparent"
-            android:src="@drawable/add"/>
+            app:layout_constraintVertical_bias="0.97"
+            app:layout_constraintHorizontal_bias="0.9"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            app:outerRadius="50dp"
+            app:handleDrawable="@drawable/test"
+            app:upper="@drawable/test"
+            app:bottom="@drawable/test"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

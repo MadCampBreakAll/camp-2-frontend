@@ -1,5 +1,6 @@
 package com.example.myapplication.ui.page
 
+import android.R.id
 import android.annotation.SuppressLint
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -13,9 +14,16 @@ import com.example.myapplication.databinding.ActivityDiaryInnerBinding
 import com.example.myapplication.util.TokenManager
 import com.example.myapplication.util.ViewHandler
 import com.wajahatkarim3.easyflipviewpager.BookFlipPageTransformer2
-
 import android.graphics.Color
 import androidx.lifecycle.Observer
+import co.aenterhy.toggleswitch.ToggleSwitchButton
+import com.example.myapplication.api.user.UserApiService
+import com.example.myapplication.ui.main.Setting
+import vadiole.colorpicker.ColorModel
+import vadiole.colorpicker.ColorPickerDialog
+import com.example.myapplication.ui.main.MainActivity
+import android.R.id.toggle
+import co.aenterhy.toggleswitch.ToggleSwitchButton.OnTriggerListener
 import com.example.myapplication.ui.main.Setting
 import com.example.myapplication.ui.singleton.DiaryResponseSingleton
 import com.example.myapplication.ui.singleton.PageResponseSingleton
@@ -80,9 +88,19 @@ class DiaryInnerActivity : AppCompatActivity() {
 
     private fun bind(){
         setContentView(binding.root)
-        binding.pageAddBtn.setOnClickListener {
-            viewHandler.goCreatePageAcitivty(diaryId?:-1)
-        }
+        binding.pageAddBtn.setOnTriggerListener(object : OnTriggerListener {
+            override fun toggledUp() {
+                Toast.makeText(this@DiaryInnerActivity, "Letter", Toast.LENGTH_SHORT).show()
+                viewHandler.goCreatePageAcitivty(diaryId?:-1)
+            }
+
+            override fun toggledDown() {
+                Toast.makeText(this@DiaryInnerActivity, "Image", Toast.LENGTH_SHORT).show()
+            }
+        })
+//        binding.pageAddBtn.setOnClickListener {
+//            viewHandler.goCreatePageAcitivty(diaryId?:-1)
+//        }
         binding.goGridView.setOnClickListener{
             val dialog = AllPageDialog(this, diaryId!!, this, {
                 val pages = PageResponseSingleton.getDiaryInnerPagesResponse.value?.pages!!
