@@ -23,10 +23,11 @@ import vadiole.colorpicker.ColorModel
 import vadiole.colorpicker.ColorPickerDialog
 import com.example.myapplication.ui.main.MainActivity
 import android.R.id.toggle
+import android.widget.Toast
 import co.aenterhy.toggleswitch.ToggleSwitchButton.OnTriggerListener
-import com.example.myapplication.ui.main.Setting
 import com.example.myapplication.ui.singleton.DiaryResponseSingleton
 import com.example.myapplication.ui.singleton.PageResponseSingleton
+
 
 class DiaryInnerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDiaryInnerBinding
@@ -96,6 +97,7 @@ class DiaryInnerActivity : AppCompatActivity() {
 
             override fun toggledDown() {
                 Toast.makeText(this@DiaryInnerActivity, "Image", Toast.LENGTH_SHORT).show()
+                viewHandler.goCreateImagePageActivity(diaryId?:-1)
             }
         })
 //        binding.pageAddBtn.setOnClickListener {
