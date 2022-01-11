@@ -9,6 +9,7 @@ import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.LifecycleOwner
+import androidx.viewpager2.widget.ViewPager2
 import com.example.myapplication.api.page.dto.PageDto
 import com.example.myapplication.databinding.ActivityPageGridDialogBinding
 import com.example.myapplication.ui.singleton.PageResponseSingleton
@@ -16,7 +17,8 @@ import com.example.myapplication.ui.singleton.PageResponseSingleton
 class AllPageDialog(
     private val _context: Context,
     private val diaryId: Int,
-    private val lifecycle: LifecycleOwner
+    private val lifecycle: LifecycleOwner,
+    private val setPageHandler: (Int) -> Unit
 ) : Dialog(_context){
     private lateinit var binding: ActivityPageGridDialogBinding
     private lateinit var adapter: GridPageAdapter
@@ -35,6 +37,10 @@ class AllPageDialog(
     private fun init() {
         binding = ActivityPageGridDialogBinding.inflate(layoutInflater)
         adapter = GridPageAdapter(context)
+        adapter.onItemClickListener = {
+            setPageHandler(it)
+            dismiss()
+        }
         binding.pages.adapter = adapter
 
         PageResponseSingleton.getDiaryInnerPagesResponse.observe(lifecycle, {

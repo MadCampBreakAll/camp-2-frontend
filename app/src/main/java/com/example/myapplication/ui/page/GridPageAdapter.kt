@@ -22,7 +22,7 @@ class GridPageAdapter(
     private val context: Context
 ) : RecyclerView.Adapter<GridPageAdapter.ViewHolder>() {
     private var pageList = mutableListOf<PageDto>()
-
+    var onItemClickListener : ((Int) -> Unit)? = null
     fun addPage(page: PageDto){
         pageList.add(page)
     }
@@ -66,6 +66,9 @@ class GridPageAdapter(
                     item!!
                 )
             ).show()
+            binding.root.setOnClickListener {
+                onItemClickListener?.invoke(pageDto.id!!)
+            }
         }
     }
 }
