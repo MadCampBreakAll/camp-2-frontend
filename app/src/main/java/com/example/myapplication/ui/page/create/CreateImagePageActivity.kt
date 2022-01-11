@@ -208,6 +208,8 @@ class CreateImagePageActivity : AppCompatActivity() {
                 )
             }
 
+
+            Toast.makeText(this, "일기를 생성 중이에요.", Toast.LENGTH_SHORT).show()
             pageApiService.createPage(
                 MultipartBody.Part.createFormData("diaryId", diaryId!!.toString()),
                 MultipartBody.Part.createFormData("title", pageTitle.toString()),

@@ -30,6 +30,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 >
+                <ImageButton
+                    android:id="@+id/innerPageCompleteBtn"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:alpha="0.7"
+                    android:background="@drawable/check1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintHorizontal_bias="0.9"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.02" />
                 <TextView
                     android:id="@+id/innerPageWrittenDate"
                     android:layout_width="0dp"
@@ -42,19 +54,6 @@
                     app:layout_constraintWidth_percent="0.73"
                     android:text="2022.1.7"
                     android:textSize="13dp"/>
-
-                <ImageButton
-                    android:id="@+id/innerPageCompleteBtn"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
-                    android:alpha="0.7"
-                    android:background="@drawable/check1"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintHorizontal_bias="0.9"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.03" />
 
                 <FrameLayout
                     android:id="@+id/innerPageWriteUserCharacterFrame"
@@ -192,6 +191,7 @@
                         android:layout_height="match_parent"
                         android:layout_width="match_parent"
                         android:layout_gravity="center"
+                        android:layout_marginTop="60dp"
                         android:hint="오늘은 하루종일 코딩을 했다. 정말 죽는 줄 알았다. \n 근데 세상에 똑똑한 사람이 너무 많다. \n 다들 어디서 이걸 다 배운걸까 \n 오늘도 잠 자긴 글렀겠지 \n 그래도 재밌군!"
                         android:lineSpacingExtra="20dp"
                         android:gravity="center"
