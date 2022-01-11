@@ -85,6 +85,7 @@ class DiaryCoverAdapter(private val context: Context): RecyclerView.Adapter<Diar
             bindNextUser(nextUser)
             bindChamyeonUsers(chamyeoUsers)
 
+            binding.alarmNextWriter.visibility = View.INVISIBLE
             if(myId != null && nextUser!!.id!! == myId){
                 binding.alarmNextWriter.visibility = View.VISIBLE
             }

@@ -19,7 +19,8 @@ import com.example.myapplication.util.ViewHandler
 
 class SearchUserDialog(
     private val _context: Context,
-    private val viewHandler: ViewHandler
+    private val viewHandler: ViewHandler,
+    private val updateView: () -> Unit
 ) : Dialog(_context) {
 
     private lateinit var binding: ActivityInvitedFriendBinding
@@ -92,6 +93,7 @@ class SearchUserDialog(
                     return@handler
                 }
                 Toast.makeText(context, "친구 요청을 보냈습니다.", Toast.LENGTH_SHORT).show()
+                updateView()
             } catch (e: Throwable) {
                 viewHandler.goLoginActivityAndRemoveTokens()
                 e.printStackTrace()
