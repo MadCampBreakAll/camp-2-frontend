@@ -14,7 +14,6 @@ import com.example.myapplication.databinding.ActivityDiaryInnerBinding
 import com.example.myapplication.util.TokenManager
 import com.example.myapplication.util.ViewHandler
 import com.wajahatkarim3.easyflipviewpager.BookFlipPageTransformer2
-
 import android.graphics.Color
 import androidx.lifecycle.Observer
 import co.aenterhy.toggleswitch.ToggleSwitchButton

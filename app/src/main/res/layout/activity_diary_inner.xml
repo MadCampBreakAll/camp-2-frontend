@@ -67,6 +67,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             app:outerRadius="50dp"
+
             app:bottom="@drawable/bottom_image"
             app:upper="@drawable/upper_letter"
             app:handleDrawable="@drawable/test" />
