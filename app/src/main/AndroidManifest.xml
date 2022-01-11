@@ -17,6 +17,9 @@
         android:theme="@style/Theme.MyApplication"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.page.PageGridDialog"
+            android:exported="false" />
+        <activity
             android:name=".ui.setting.backfont.SettingFontActvitiy"
             android:exported="false" />
         <activity
@@ -73,8 +76,8 @@
             android:label="@string/title_activity_login" />
         <activity
             android:name=".ui.page.create.CreatePageActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".ui.setting.icon.CharacterFixActivity"
             android:exported="false" />
