@@ -73,7 +73,6 @@ class ViewHandler {
     fun goCreateDiaryActivity() : Boolean {
         val intent = Intent(activity, CreateDiaryActivity::class.java)
         activity.startActivity(intent)
-        activity.finish()
         return true;
     }
 
@@ -133,6 +132,5 @@ class ViewHandler {
         val intent = Intent(activity, CreatePageActivity::class.java)
         intent.putExtra("diaryId", diaryId)
         activity.startActivity(intent)
-        activity.finish()
     }
 }

@@ -56,7 +56,7 @@ class FriendActivity : AppCompatActivity() {
         }
     }
 
-    private fun update(){
+    private val update : () -> Unit = {
         updateFriends()
         updateRequestFriends()
     }
@@ -184,7 +184,7 @@ class FriendActivity : AppCompatActivity() {
     }
 
     private fun createSearchUserDialog() {
-        var dialog = SearchUserDialog(this, viewHandler)
+        var dialog = SearchUserDialog(this, viewHandler, update)
         dialog.show()
         dialog.window?.setLayout(750, 650)
     }
