@@ -14,13 +14,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/inner_page_background">
-
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/monoonBackground"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/monoon_background"
-                android:visibility="visible">
+                android:visibility="invisible"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <TextView
                     android:fontFamily="@font/babymind"
