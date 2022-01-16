@@ -26,19 +26,20 @@ class AuthApiService : BasicApiService{
 
     private final val apiProvider: AuthApiProvider
     private val tokenManager: TokenManager
-
+    private val uri = "https://9807b284-a706-49a2-8000-589e749e30d3.mock.pstmn.io"
     constructor(tokenManager: TokenManager){
         this.tokenManager = tokenManager
         this.apiProvider = getProvider(tokenManager)
     }
 
     private fun getProvider(tokenManager: TokenManager): AuthApiProvider {
+
         val httpClient = getBasicHttpClientBuilder().addInterceptor(
             getApiInterceptorWithJWT(tokenManager.getJWT())
         ).build()
 
         return Retrofit.Builder()
-            .baseUrl(BuildConfig.BASE_URI)
+            .baseUrl(uri)
             .client(httpClient)
             .addConverterFactory(GsonConverterFactory
                 .create(getBasicGson()))
